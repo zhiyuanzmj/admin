@@ -1,14 +1,12 @@
 <script setup lang="ts">
+defineProps<{ name: string }>()
 </script>
 
 <template>
-  <div>
-    not-found
-  </div>
+  <div>{{ name }}</div>
 </template>
 
 <route lang="yaml">
 meta:
-  layout: 404
-  hidden: true
+  title: 用户管理
 </route>

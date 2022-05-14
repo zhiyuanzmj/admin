@@ -9,10 +9,13 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Markdown from 'vite-plugin-md'
 import { VitePWA } from 'vite-plugin-pwa'
 import Inspect from 'vite-plugin-inspect'
-import Inspector from 'vite-plugin-vue-inspector'
+// import Inspector from 'vite-plugin-vue-inspector'
 import Prism from 'markdown-it-prism'
 import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import { presetAttributify, presetIcons, presetUno, transformerDirectives } from 'unocss'
+import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
@@ -35,7 +38,7 @@ export default defineConfig({
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
-    Layouts(),
+    Layouts({ defaultLayout: 'index' }),
 
     // https://github.com/antfu/unplugin-auto-import
     AutoImport({
@@ -56,11 +59,39 @@ export default defineConfig({
       // allow auto import and register components used in markdown
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
       dts: 'src/components.d.ts',
+      resolvers: [
+        ElementPlusResolver(),
+      ],
     }),
 
     // https://github.com/antfu/unocss
     // see unocss.config.ts for config
-    Unocss(),
+    Unocss({
+      theme: {
+        colors: {
+          blue: { 500: '#409EFF' },
+        },
+      },
+      transformers: [
+        transformerDirectives(),
+      ],
+      presets: [
+        presetUno(),
+        presetAttributify(),
+        presetIcons({
+          prefix: '',
+          scale: 1.2,
+          extraProperties: {
+            display: 'inline-block',
+          },
+          collections: {
+            custom: FileSystemIconLoader(
+              './src/assets/icons',
+            ),
+          },
+        }),
+      ],
+    }),
 
     // https://github.com/antfu/vite-plugin-md
     // Don't need this? Try vitesse-lite: https://github.com/antfu/vitesse-lite
@@ -113,9 +144,9 @@ export default defineConfig({
     // Visit http://localhost:3333/__inspect/ to see the inspector
     Inspect(),
     // https://github.com/webfansplz/vite-plugin-vue-inspector
-    Inspector({
-      enabled: false,
-    }),
+    // Inspector({
+    //   enabled: false,
+    // }),
   ],
 
   // https://github.com/antfu/vite-ssg
