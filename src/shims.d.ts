@@ -1,5 +1,5 @@
 import 'pinia'
-import type { RouteLocationNormalizedLoaded } from 'vue-router'
+import type { RouteLocationNormalizedLoaded, Router } from 'vue-router'
 
 declare interface Window {
   // extend the window
@@ -16,6 +16,18 @@ declare module '*.vue' {
   import { type DefineComponent } from 'vue'
   const component: DefineComponent<{}, {}, any>
   export default component
+}
+declare module 'vue-router' {
+  interface RouteMeta {
+    // is optional
+    hidden?: boolean
+    permission?: string | true
+    title?: string
+    label?: string
+    class?: string
+    transitionEnter?: string
+    transitionLeave?: string
+  }
 }
 
 declare module 'pinia' {

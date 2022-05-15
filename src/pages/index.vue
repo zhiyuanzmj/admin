@@ -1,5 +1,5 @@
 <template>
-  <div />
+  <div>{{ $route.meta.title }}</div>
 </template>
 
 <route lang="yaml">

@@ -7,7 +7,7 @@ import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
 
-const routes = setupLayouts(generatedRoutes)
+const routes = setupLayouts(generatedRoutes.filter(i => !i.meta?.permission))
 
 // https://github.com/antfu/vite-ssg
 export const createApp = ViteSSG(

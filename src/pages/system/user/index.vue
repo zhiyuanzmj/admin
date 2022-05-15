@@ -1,12 +1,12 @@
 <script setup lang="ts">
-defineProps<{ name: string }>()
 </script>
 
 <template>
-  <div>{{ name }}</div>
+  <div>{{ $route.meta.title }}</div>
 </template>
 
 <route lang="yaml">
 meta:
+  permission: /get/user
   title: 用户管理
 </route>

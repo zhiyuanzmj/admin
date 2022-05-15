@@ -5,7 +5,7 @@ export function resolve(val: string) {
   return val.replace(/\/$/, '')
 }
 
-export default defineStore('tagsview', {
+export const useTagsviewStore = defineStore('tagsview', {
   state: () => ({
     viewKey: 0,
     cachedViews: [] as string[],

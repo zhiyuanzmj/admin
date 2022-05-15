@@ -2,9 +2,9 @@
 import type { RouteLocationNormalized } from 'vue-router'
 import draggable from 'vuedraggable'
 import ScrollPane from './ScrollPane.vue'
-import useTagsview, { resolve } from '~/stores/useTagsview'
+import { resolve, useTagsviewStore } from '~/stores/tagsview'
 
-const tagsView = useTagsview()
+const tagsView = useTagsviewStore()
 tagsView.$subscribe((_, state) => {
   localStorage.setItem('visitedViews', JSON.stringify(state.visitedViews.map(i => ({ ...i, matched: [] }))))
 })
@@ -21,15 +21,15 @@ const route = useRoute()
 const router = useRouter()
 
 watch(() => route.path, () => {
-  if (route.name === 'Login' || route.name === '404')
+  if (route.name === 'login' || route.name === '404')
     return
   tagsView.addView(route)
   moveToCurrentTag()
-  const index = tagsView.visitedViews.findIndex(i => i.path === route.path)
+  const index = visitedViews.findIndex(i => i.path === route.path)
   if (index < 0)
     return
-  if (route.fullPath !== tagsView.visitedViews[index].fullPath)
-    tagsView.visitedViews[index] = route
+  if (route.fullPath !== visitedViews[index].fullPath)
+    visitedViews[index] = route
 })
 
 onMounted(() => {
@@ -48,7 +48,7 @@ function tagClick(tag: RouteLocationNormalized) {
     router.push(tag)
 }
 
-const tags = $ref<RouteLocationNormalized[]>([])
+const tags = $shallowRef<{ to: RouteLocationNormalized }[]>([])
 const scrollPaneRef = $ref<any>()
 async function moveToCurrentTag() {
   await nextTick()
@@ -74,7 +74,10 @@ function closeSelectedTag(view: RouteLocationNormalized) {
     toLastView()
 }
 
-const selectedTag = $ref<RouteLocationNormalized>()
+const selectedTag = $computed(() => {
+  const tag = tags.find((i: any) => i.to?.path === route.path) || tags[0]
+  return tag?.to
+})
 function closeOthersTags() {
   router.push(selectedTag)
   tagsView.delOthersViews(selectedTag)
@@ -95,7 +98,7 @@ function closeAllTags() {
         v-model="visitedViews"
         item-key="path"
         animation="200"
-        class="flex gap-1 mt-[0px] px-2 flex-1"
+        class="flex gap-1 px-2 flex-1"
       >
         <template #item="{ element: tag, index: i }">
           <span
