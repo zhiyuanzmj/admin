@@ -10,35 +10,39 @@ axios.interceptors.request.use((config) => {
   NProgress.start()
   const userStore = useUserStore()
   if (userStore.token && config.headers)
-    config.headers['X-Access-Token'] = userStore.token
+    config.headers.Authorization = userStore.token
   return config
 })
+
 const whiteList = ['/sys/user/queryUserRole']
 axios.interceptors.response.use(
   (response) => {
+    NProgress.done()
     const data = response.data
 
-    if (data.code === 401) {
-      const userStore = useUserStore()
-      userStore.logout()
-      return Promise.reject(data)
-    }
     if (['blob', 'text'].includes(response.config.responseType!))
       return response
     if (data.code === 0 || data.code === 200 || whiteList.includes(response.config.url as string)) {
       response.data = {
         message: response.data.message,
-        data: response.data.result?.records ?? response.data.result,
-        total: response.data.result?.total,
+        data: response.data.data,
+        total: response.data.total,
       }
       return response
     }
     response.config?.params?.noMessage || response.config.data?.noMessage || ElMessage({ message: data?.message || '服务器错误', type: 'error' })
-    NProgress.done()
     return Promise.reject(data)
   },
   async (error) => {
+    NProgress.done()
     const response = error.response
+
+    if (response.status === 401) {
+      const userStore = useUserStore()
+      userStore.logout()
+      return Promise.reject(response.data)
+    }
+
     if (['blob', 'text'].includes(response.config.responseType!))
       response.data = JSON.parse(await response.data.text())
 
@@ -49,7 +53,6 @@ axios.interceptors.response.use(
       response.data = { data: {}, message: response?.data?.message }
     }
 
-    NProgress.done()
     return Promise.reject(response.data)
   },
 )

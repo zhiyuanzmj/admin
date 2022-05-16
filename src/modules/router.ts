@@ -35,8 +35,10 @@ export const install: UserModule = ({ isClient, router }) => {
 
       // /** 生成动态路由 */
       handleKeepAlive(to)
-      if (!userStore.permissionList?.length)
+      if (!userStore.permissionList?.length) {
         await useRouteStore().generateRoutes()
+        return to.fullPath
+      }
     })
   }
 }

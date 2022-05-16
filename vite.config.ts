@@ -164,4 +164,11 @@ export default defineConfig({
       inline: ['@vue', '@vueuse', 'vue-demi'],
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://120.76.79.136:8669',
+      },
+    },
+  },
 })
