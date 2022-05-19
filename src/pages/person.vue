@@ -5,7 +5,6 @@
 <route lang="yaml">
 redirect: /system/user
 meta:
-  permission: true
-  icon: ic:baseline-settings
-  title: 系统管理
+  icon: fa-solid:user
+  title: 人员管理
 </route>

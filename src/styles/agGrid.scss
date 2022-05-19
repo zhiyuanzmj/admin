@@ -1,0 +1,79 @@
+@import "ag-grid-community/src/styles/ag-grid";
+@import "ag-grid-community/src/styles/ag-theme-material/sass/ag-theme-material-mixin";
+
+$row-hover-color: #fff7dd;
+
+.ag-theme-material {
+  @include ag-theme-material(
+    (
+      // use theme parameters where possible
+      material-accent-color: #0091ea,
+      // range-selection-border-color:transparent,
+      grid-size: 6px,
+      borders: true,
+      // borders-critical: 1px #e2e2e2 solid,
+      cell-horizontal-padding: 10px,
+      cell-horizontal-border: 1px #e2e2e2 solid,
+      header-column-separator: true,
+      header-column-separator-color: #e2e2e2,
+      odd-row-background-color: #fcfcfc,
+      row-hover-color: $row-hover-color
+    )
+  );
+
+  .ag-row {
+    border-width: 0;
+    border-bottom-width: 1px;
+  }
+
+  .ag-pinned-right-cols-container {
+    .ag-cell:last-child {
+      border-right-width: 0;
+    }
+  }
+
+  .ag-row-hover.ag-row {
+    background: $row-hover-color !important;
+  }
+
+  .ag-selection-checkbox {
+    margin-right: 0 !important;
+  }
+
+  .ag-header-cell {
+    font-size: 14px;
+  }
+
+  // cell居中
+  // .ag-cell-wrapper {
+  //   justify-content: center;
+  // }
+
+  .ag-cell.center {
+    .ag-cell-wrapper {
+      justify-content: center;
+    }
+  }
+
+  .ag-header-cell.center {
+    .ag-header-cell-label {
+      justify-content: center;
+    }
+  }
+
+  .ag-header-group-cell.center {
+    .ag-header-group-cell-label {
+      justify-content: center;
+    }
+  }
+
+  // 底部固定行样式
+  .ag-row-pinned {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  button:focus {
+    box-shadow: unset;
+  }
+}

@@ -118,7 +118,7 @@ function closeAllTags() {
         </template>
       </draggable>
     </scroll-pane>
-    <el-dropdown bg-white px-1 rounded my-auto mr-2 shadow>
+    <el-dropdown bg-white px-1 rounded my-auto mr-2 shadow cursor-pointer>
       <i text-xs mt=".5" fa6-solid:angle-down />
       <template #dropdown>
         <el-dropdown-menu>
@@ -143,29 +143,42 @@ function closeAllTags() {
 <style lang="scss" scoped>
 .tab-item {
   --color: transparent;
-  @apply relative text-sm h-7 cursor-pointer rounded-t-lg -mx-.75
-  relative inline-flex items-center px-3 bg-[var(--color)] transition-colors;
-  &::before, &::after {
+
+  @apply relative text-sm h-7 cursor-pointer rounded-t-lg -mx-0.75
+    relative inline-flex items-center px-3 bg-[var(--color)] transition-colors;
+
+  &::before,
+  &::after {
     @apply absolute bottom-0 content-none rounded-full w-5 h-5 transition-all;
+
     box-shadow: 0 0 0 4px var(--color);
   }
+
   &::before {
     @apply -left-5;
+
     clip-path: inset(50% -10px 0 50%);
   }
+
   &::after {
     @apply -right-5;
+
     clip-path: inset(50% 50% 0 -10px);
   }
+
   &:hover {
     --color: #f3f4f6;
   }
-  &:first-child .split{
+
+  &:first-child .split {
     @apply hidden;
   }
+
   &.active {
     --color: white;
+
     @apply z-1;
+
     .split {
       @apply hidden;
     }

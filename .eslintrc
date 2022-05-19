@@ -1,3 +1,7 @@
 {
-  "extends": "@antfu"
+  "extends": "@antfu",
+  "rules": {
+    "no-sequences": "off",
+    "react/display-name": "off"
+  }
 }

@@ -16,6 +16,7 @@ import Unocss from 'unocss/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { presetAttributify, presetIcons, presetUno, transformerDirectives } from 'unocss'
 import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
@@ -31,6 +32,8 @@ export default defineConfig({
       include: [/\.vue$/, /\.md$/],
       reactivityTransform: true,
     }),
+
+    vueJsx(),
 
     // https://github.com/hannoeru/vite-plugin-pages
     Pages({

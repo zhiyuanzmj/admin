@@ -35,7 +35,7 @@ function toggleExpand() {
     <i fa6-solid:magnifying-glass hover:text-gray-500 cursor-pointer />
     <i :class="expand ? 'fa6-solid:compress' : 'fa6-solid:expand'" hover:text-gray-500 cursor-pointer @click="toggleExpand" />
     <el-dropdown>
-      <div flex items-center gap-1>
+      <div flex items-center gap-1 cursor-pointer>
         <i fa6-solid:circle-user text-xl text-gray-300 mx-1 />
         admin
         <i fa-solid:sort-down self-start />

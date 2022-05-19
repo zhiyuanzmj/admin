@@ -18,13 +18,13 @@ defineProps<{ list: RouteRecordRaw[] }>()
   <template v-for="i in list" :key="i.path">
     <el-sub-menu v-if="i.children?.length" :index="$router.resolve(i)?.path">
       <template #title>
-        <el-icon :class="i.meta?.class" />
+        <el-icon :class="i.meta?.icon" />
         <span>{{ i.meta?.title }}</span>
       </template>
       <VItem :list="i.children" />
     </el-sub-menu>
     <el-menu-item v-else :index="$router.resolve(i)?.path">
-      <el-icon :class="i.meta?.class" />
+      <el-icon :class="i.meta?.icon" />
       {{ i.meta?.title }}
     </el-menu-item>
   </template>

@@ -11,15 +11,13 @@ export const useUserStore = defineStore('main', {
     permissionList: [] as string[],
   }),
   actions: {
-    async login(data: any) {
+    async login(body: any) {
       const loading = ElLoading.service({ fullscreen: true })
-      const { data: { token, ...userInfo } } = await request({
+      const { data: { token, ...userInfo } } = await request<{ token: string }>('/login', {
         method: 'post',
-        url: '/login',
-        data,
+        body,
       }).finally(() => loading.close())
-
-      this.token = `Bearer ${token}`
+      this.token = token ? `Bearer ${token}` : ''
       this.userInfo = userInfo
       this.router.push(<string> this.route.query.redirect || '/')
     },
