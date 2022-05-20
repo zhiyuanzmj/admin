@@ -14,9 +14,8 @@ import Prism from 'markdown-it-prism'
 import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import { presetAttributify, presetIcons, presetUno, transformerDirectives } from 'unocss'
-import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import DefineOptions from 'unplugin-vue-define-options/vite'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
@@ -34,6 +33,8 @@ export default defineConfig({
     }),
 
     vueJsx(),
+
+    DefineOptions(),
 
     // https://github.com/hannoeru/vite-plugin-pages
     Pages({
@@ -69,32 +70,7 @@ export default defineConfig({
 
     // https://github.com/antfu/unocss
     // see unocss.config.ts for config
-    Unocss({
-      theme: {
-        colors: {
-          blue: { 500: '#409EFF' },
-        },
-      },
-      transformers: [
-        transformerDirectives(),
-      ],
-      presets: [
-        presetUno(),
-        presetAttributify(),
-        presetIcons({
-          prefix: '',
-          scale: 1.2,
-          extraProperties: {
-            display: 'inline-block',
-          },
-          collections: {
-            custom: FileSystemIconLoader(
-              './src/assets/icons',
-            ),
-          },
-        }),
-      ],
-    }),
+    Unocss(),
 
     // https://github.com/antfu/vite-plugin-md
     // Don't need this? Try vitesse-lite: https://github.com/antfu/vitesse-lite

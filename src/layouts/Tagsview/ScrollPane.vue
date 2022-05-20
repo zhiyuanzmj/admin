@@ -2,7 +2,7 @@
 import type { RouteLocationNormalized } from 'vue-router'
 
 const { tagList = [] } = defineProps<{ tagList: any[] }>()
-const scrollContainer = $ref<any>()
+const scrollContainer = $shallowRef<any>()
 
 const scrollWrapper = $computed(() => scrollContainer.wrap$)
 function handleScroll(e: WheelEvent) {
@@ -63,11 +63,12 @@ defineExpose({
 </template>
 
 <style scoped>
-::v-deep(.el-scrollbar__wrap){
+::v-deep(.el-scrollbar__wrap) {
+  flex: 1;
   height: auto;
-  flex:1;
 }
-::v-deep(.el-scrollbar__bar){
+
+::v-deep(.el-scrollbar__bar) {
   bottom: -6px;
 }
 </style>

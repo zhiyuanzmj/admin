@@ -1,8 +1,9 @@
 import type { LocationQueryValue } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import { omit, pick } from 'lodash/fp'
-import type { ColDef, ColumnApi, ColumnPinnedEvent, ColumnState, GridApi, GridReadyEvent, ICellRendererParams } from 'ag-grid-community'
+import type { ColDef, ColumnApi, ColumnPinnedEvent, ColumnState, GridApi, GridOptions, GridReadyEvent, ICellRendererParams } from 'ag-grid-community'
 import TableSet from '~/components/TableSet.vue'
+import { isDark } from '~/composables'
 
 interface Option { label: string; value: string | number }
 export type Overwrite<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U
@@ -20,7 +21,7 @@ export type Column<T = any> = Overwrite<ColDef, {
   cellRenderer?: { setup: ({ params }: { params: Params<T> }) => any }
 }>
 
-export const useAgGrid = function <T>(
+export const useAgGrid = function <T=any>(
   getColumnList: () => Column<T>[],
   fetchList: (rest: any) => Promise<{
     data: T[]
@@ -40,7 +41,7 @@ export const useAgGrid = function <T>(
   provide('columnApi', columnApi)
   const selectedList = ref<T[]>([])
   provide('selectedList', selectedList)
-  const list = ref<any[]>([])
+  const list = ref<T[]>([])
   provide('list', list)
   const total = ref(0)
   provide('total', total)
@@ -52,7 +53,7 @@ export const useAgGrid = function <T>(
     router.replace({ query: { ...route.query, ...params.value } })
     const { pageNo = '1', pageSize = '50', order, sort } = route.query
     const result = await fetchList({ pageNo, pageSize, order, sort, ...params.value, ...data }).finally(() => gridApi.value?.hideOverlay?.())
-    list.value = result?.data ?? []
+    list.value = (result?.data ?? []) as any
     total.value = result?.total ?? 0
     selectedList.value = []
 
@@ -124,21 +125,21 @@ export const useAgGrid = function <T>(
   }
   provide('autoSizeAll', autoSizeAll)
 
-  const agGridBind = {
-    style: 'flex:1',
-    rowBuffer: 1,
-    class: 'ag-theme-material',
+  const agGridBind = reactive<GridOptions & { class: any }>({
+    // rowBuffer: 1,
+    rowData: list as any,
+    class: computed(() => `flex-1 ag-theme-alpine${isDark.value ? '-dark' : ''}`),
     animateRows: true,
     rowSelection: 'multiple',
     suppressDragLeaveHidesColumns: true,
     suppressColumnVirtualisation: true,
     enableCellTextSelection: true,
     alwaysMultiSort: true,
+    getRowId: ({ data }) => data?.id,
     defaultColDef: {
       sortable: true,
       resizable: true,
-      comparator: () => {},
-      getRowId: ({ data }: any) => data?.id,
+      comparator: () => 0,
       ...defaultColDef,
     },
     context: {
@@ -147,7 +148,7 @@ export const useAgGrid = function <T>(
       autoSizeAll,
       columnStore,
     },
-  }
+  })
 
   const agGridOn = {
     /** table 渲染到document事件 */

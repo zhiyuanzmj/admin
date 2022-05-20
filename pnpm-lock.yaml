@@ -39,6 +39,7 @@ specifiers:
   unocss: ^0.33.2
   unplugin-auto-import: ^0.7.1
   unplugin-vue-components: ^0.19.5
+  unplugin-vue-define-options: ^0.6.1
   vite: ^2.9.8
   vite-plugin-inspect: ^0.5.0
   vite-plugin-md: ^0.13.1
@@ -98,6 +99,7 @@ devDependencies:
   unocss: 0.33.2_vite@2.9.8
   unplugin-auto-import: 0.7.1_zx3pfbbc5uei3k4c6zdezegtqm
   unplugin-vue-components: 0.19.5_vite@2.9.8+vue@3.2.33
+  unplugin-vue-define-options: 0.6.1_vite@2.9.8+vue@3.2.33
   vite: 2.9.8_sass@1.51.0
   vite-plugin-inspect: 0.5.0_vite@2.9.8
   vite-plugin-md: 0.13.1_vite@2.9.8
@@ -7488,6 +7490,23 @@ packages:
       - esbuild
       - rollup
       - supports-color
+      - vite
+      - webpack
+    dev: true
+
+  /unplugin-vue-define-options/0.6.1_vite@2.9.8+vue@3.2.33:
+    resolution: {integrity: sha512-YZQxE3vC7Tb4Ev10blfYPC23hR3t8UNynoVSt2bY9GtHB2usxpywPQqRj7xdUtuj6JsDfrZ9wRKKbEkcMEXI1A==}
+    engines: {node: '>=14.17.0'}
+    peerDependencies:
+      vue: ^3.2.25
+    dependencies:
+      '@rollup/pluginutils': 4.2.1
+      '@vue/compiler-sfc': 3.2.33
+      unplugin: 0.6.3_vite@2.9.8
+      vue: 3.2.33
+    transitivePeerDependencies:
+      - esbuild
+      - rollup
       - vite
       - webpack
     dev: true

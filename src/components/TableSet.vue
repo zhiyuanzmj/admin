@@ -4,9 +4,9 @@ import type { Column } from '~/composables'
 const { params } = defineProps<{
   params: IHeaderParams
 }>()
-const columnStore = computed<Column[]>(() => params.context.columnStore.value.filter((i: Column) => !i.unCheck))
+const columnStore = computed<Column[]>(() => params.context.columnStore.filter((i: Column) => !i.unCheck))
 function change(column: any, val: boolean) {
-  params.context.columnApi.value?.setColumnVisible(column.field, val)
+  params.context.columnApi?.setColumnVisible(column.field, val)
   params.context.autoSizeAll()
   column.hide = !val
 }

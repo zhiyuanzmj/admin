@@ -17,14 +17,14 @@ let pageNo = $computed({
   get: () => Number(pageNoStore),
   set: val => pageNoStore = val.toString(),
 })
-watch(pageNo, () => getList())
+watch(() => pageNo, () => getList())
 
 let pageSizeStore = $(useRouteQuery<string>('pageSize', '50'))
 const pageSize = $computed({
   get: () => Number(pageSizeStore),
   set: val => pageSizeStore = val.toString(),
 })
-watch(pageSize, () => getList())
+watch(() => pageSize, () => getList())
 
 const total = $(inject('total', ref(0)))
 watchEffect(() => {

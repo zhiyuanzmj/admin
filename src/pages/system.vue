@@ -1,3 +1,9 @@
+<script lang="ts">
+export default {
+  name: 'ChildrenLayout',
+}
+</script>
+
 <template>
   <router-view />
 </template>

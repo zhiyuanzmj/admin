@@ -49,7 +49,7 @@ function tagClick(tag: RouteLocationNormalized) {
 }
 
 const tags = $shallowRef<{ to: RouteLocationNormalized }[]>([])
-const scrollPaneRef = $ref<any>()
+const scrollPaneRef = $shallowRef<any>()
 async function moveToCurrentTag() {
   await nextTick()
   if (!tags.length)
@@ -92,7 +92,7 @@ function closeAllTags() {
 </script>
 
 <template>
-  <div px-1 bg-gray-200 relative flex flex-nowrap>
+  <div px-1 bg="gray-200 dark:zinc-800" relative flex flex-nowrap>
     <scroll-pane ref="scrollPaneRef" :tag-list="tags">
       <draggable
         v-model="visitedViews"
@@ -103,7 +103,7 @@ function closeAllTags() {
         <template #item="{ element: tag, index: i }">
           <span
             :ref="(val:any) => { if (val){ val.to = tag;tags[i] = val } }"
-            :class="isActive(tag) ? 'active' : ''"
+            :class="{ active: isActive(tag) }"
             class="tab-item"
             @click.middle="closeSelectedTag(tag)"
             @click="tagClick(tag)"
@@ -118,7 +118,7 @@ function closeAllTags() {
         </template>
       </draggable>
     </scroll-pane>
-    <el-dropdown bg-white px-1 rounded my-auto mr-2 shadow cursor-pointer>
+    <el-dropdown bg="white dark:zinc-600" px-1 rounded my-auto mr-2 shadow cursor-pointer>
       <i text-xs mt=".5" fa6-solid:angle-down />
       <template #dropdown>
         <el-dropdown-menu>
@@ -168,6 +168,10 @@ function closeAllTags() {
 
   &:hover {
     --color: #f3f4f6;
+
+    .dark & {
+      --color: #52525b;
+    }
   }
 
   &:first-child .split {
@@ -176,6 +180,10 @@ function closeAllTags() {
 
   &.active {
     --color: white;
+
+    .dark & {
+      --color: #121212;
+    }
 
     @apply z-1;
 
