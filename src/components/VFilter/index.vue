@@ -54,7 +54,7 @@ useResizeObserver(extend.value, ([entry]) => {
 </script>
 
 <template>
-  <el-form class="flex flex-nowrap" @submit="getList" @reset="reset">
+  <el-form class="flex flex-nowrap" label-position="left" @submit="getList" @reset="reset">
     <div ref="extend" class="v-extend gap-3 pt-1 mb-1 -mt-1" :class="{ active: show }">
       <el-form-item
         v-for="(column, i) in columnListRef"
@@ -80,17 +80,17 @@ useResizeObserver(extend.value, ([entry]) => {
     </div>
     <div class="ml-auto self-start flex flex-nowrap items-center whitespace-nowrap">
       <slot v-bind="{ getList }">
-        <el-button v-if="extendable || show" text mr="-3" @click="show = !show">
+        <el-button v-if="extendable || show" type="primary" text mr="-3" @click="show = !show">
           <template #icon>
             <i :class="show ? 'ep:arrow-up-bold' : 'ep:arrow-down-bold'" />
           </template>
           {{ show ? '收起' : '更多' }}
         </el-button>
-        <el-button type="primary" @click="getList()">
-          查 询
-        </el-button>
         <el-button @click="reset">
-          重 置
+          重置
+        </el-button>
+        <el-button type="primary" @click="getList()">
+          查询
         </el-button>
       </slot>
     </div>

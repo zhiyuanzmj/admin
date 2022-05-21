@@ -9,7 +9,7 @@ const tagsViewStore = useTagsviewStore()
 
 <template>
   <div text="gray-700 dark:gray-200" grid="~ cols-[12.5rem_auto] rows-1" h-screen>
-    <aside row-span-2 flex="~ col" b="0 r-1 r-zinc-200 dark:r-zinc-700" shadow-md>
+    <aside row-span-2 flex="~ col" b="0 r-1 r-zinc-200 dark:r-zinc-700" shadow-md z-1>
       <header h-12 flex gap-2 items-center px-3>
         <img src="/logo.png" w-8>
         <div>食堂管理系统</div>
@@ -19,7 +19,7 @@ const tagsViewStore = useTagsviewStore()
 
     <main grid="~ rows-[3rem_34px_auto]" overflow-x-hidden>
       <Navigation />
-      <Tagsview overflow-auto z-10 />
+      <Tagsview />
       <div relative>
         <router-view v-slot="{ Component, route }">
           <transition

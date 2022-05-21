@@ -92,7 +92,7 @@ function closeAllTags() {
 </script>
 
 <template>
-  <div px-1 bg="gray-200 dark:zinc-800" relative flex flex-nowrap>
+  <div px-1 bg="gray-200 dark:zinc-800" overflow-auto relative flex flex-nowrap>
     <scroll-pane ref="scrollPaneRef" :tag-list="tags">
       <draggable
         v-model="visitedViews"
@@ -182,7 +182,7 @@ function closeAllTags() {
     --color: white;
 
     .dark & {
-      --color: #121212;
+      --color: #18181b;
     }
 
     @apply z-1;

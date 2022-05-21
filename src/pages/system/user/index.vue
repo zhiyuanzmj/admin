@@ -49,20 +49,22 @@ function addHandler() {
 </script>
 
 <template>
-  <div flex="~ col nowrap" gap-3>
+  <div flex="~ col nowrap" bg="gray-200 dark:zinc-800">
     <VHeader>
       <el-button class="!ml-auto" type="primary" @click="addHandler">
         <div fluent:add-12-filled mr-1 />新增
       </el-button>
     </VHeader>
 
-    <VFilter />
-    <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
-    <Pagination>
-      <el-button type="primary" text>
-        删除
-      </el-button>
-    </Pagination>
+    <div p-3 pb-2 bg="white dark:zinc-900" shadow-lg rounded flex="~ 1 col" gap-2>
+      <VFilter />
+      <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
+      <Pagination>
+        <el-button type="primary" text>
+          删除
+        </el-button>
+      </Pagination>
+    </div>
 
     <VForm v-if="show" v-model:show="show" :row="row" />
   </div>
