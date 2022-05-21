@@ -18,6 +18,8 @@ function handleKeepAlive(to: any) {
 export const install: UserModule = ({ isClient, router }) => {
   if (isClient) {
     router.beforeEach(async (to, from) => {
+      if (to.path === from.path)
+        return
       /** 没有token 跳到登陆页 */
       const userStore = useUserStore()
       if (!userStore.token)
@@ -33,7 +35,7 @@ export const install: UserModule = ({ isClient, router }) => {
       to.meta.transitionEnter = result ? 'fadeInRight' : 'fadeInLeft'
       to.meta.transitionLeave = result ? 'fadeOutLeft' : 'fadeOutRight'
 
-      // /** 生成动态路由 */
+      /** 生成动态路由 */
       handleKeepAlive(to)
       if (!userStore.permissionList?.length) {
         await useRouteStore().generateRoutes()

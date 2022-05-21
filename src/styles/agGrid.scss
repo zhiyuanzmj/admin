@@ -2,16 +2,19 @@
 @import "ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin";
 @import "ag-grid-community/src/styles/ag-theme-alpine-dark/sass/ag-theme-alpine-dark-mixin";
 
-$params: (
-  cell-horizontal-padding: 12px,
-);
-
 .ag-theme-alpine {
-  @include ag-theme-alpine($params);
+  @include ag-theme-alpine((
+    cell-horizontal-padding: 12px,
+    border-color: #d4d4d8,
+    selected-row-background-color:#dbeafe,
+    header-background-color: white,
+  ));
 }
 
 .ag-theme-alpine-dark {
-  @include ag-theme-alpine-dark($params);
+  @include ag-theme-alpine-dark((
+    cell-horizontal-padding: 12px,
+  ));
 }
 
 .ag-row {

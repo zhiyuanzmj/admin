@@ -12,6 +12,6 @@ export default {
 redirect: /system/user
 meta:
   permission: true
-  icon: ic:baseline-settings
+  icon: ep:setting
   title: 系统管理
 </route>

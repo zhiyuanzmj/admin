@@ -8,7 +8,7 @@ import { isDark } from '~/composables'
 interface Option { label: string; value: string | number }
 export type Overwrite<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U
   type Params<T> = Overwrite<ICellRendererParams, { data: T; colDef: ColDef }>
-export type Column<T = any> = Overwrite<ColDef, {
+export type Column<T = object> = Overwrite<ColDef, {
   value?: string
   field: keyof T | 'select' | 'actions'
   unCheck?: boolean

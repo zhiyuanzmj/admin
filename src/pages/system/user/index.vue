@@ -2,8 +2,7 @@
 import { AgGridVue } from 'ag-grid-vue3'
 import type { Row } from './api'
 import { getUserList } from './api'
-import VForm from './VForm.vue'
-// import VFilter from '~/components/AgFilter/index.vue'
+import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
 defineOptions({ name: 'system-user' })
@@ -57,7 +56,7 @@ function addHandler() {
       </el-button>
     </VHeader>
 
-    <!-- <VFilter /> -->
+    <VFilter />
     <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
     <Pagination>
       <el-button type="primary" text>

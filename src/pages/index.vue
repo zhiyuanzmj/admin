@@ -4,6 +4,6 @@
 
 <route lang="yaml">
 meta:
-  icon: ic:baseline-home
+  icon: icons8:home
   title: 首页
 </route>

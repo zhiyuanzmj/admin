@@ -2,6 +2,7 @@
   "extends": "@antfu",
   "rules": {
     "no-sequences": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "vue/no-mutating-props": "off"
   }
 }

@@ -2,8 +2,8 @@
 import type { FormInstance } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
-import type { Row } from './api'
-import { put } from './api'
+import type { Row } from '../api'
+import { put } from '../api'
 
 const props = defineProps<{
   show: boolean

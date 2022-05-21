@@ -5,6 +5,6 @@
 <route lang="yaml">
 redirect: /system/user
 meta:
-  icon: fa-solid:user
+  icon: ep:user
   title: 人员管理
 </route>
