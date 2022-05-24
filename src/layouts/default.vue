@@ -9,7 +9,7 @@ const tagsViewStore = useTagsviewStore()
 
 <template>
   <div text="gray-700 dark:gray-200" grid="~ cols-[12.5rem_auto] rows-1" h-screen>
-    <aside row-span-2 flex="~ col" b="0 r-1 r-zinc-200 dark:r-zinc-700" shadow-md z-1>
+    <aside row-span-2 flex="~ col" b="0 r-1 r-zinc-200 dark:r-zinc-700" shadow-md z-3>
       <header h-12 flex gap-2 items-center px-3>
         <img src="/logo.png" w-8>
         <div>食堂管理系统</div>
@@ -20,18 +20,33 @@ const tagsViewStore = useTagsviewStore()
     <main grid="~ rows-[3rem_34px_auto]" overflow-x-hidden>
       <Navigation />
       <Tagsview />
-      <div relative>
-        <router-view v-slot="{ Component, route }">
-          <transition
-            :leave-active-class="`animated ${route.meta.transitionLeave} left-0 right-0 absolute animate-duration-500`"
-            :enter-active-class="`animated ${route.meta.transitionEnter} left-0 right-0 absolute animate-duration-500`"
-          >
-            <keep-alive :key="tagsViewStore.viewKey" :include="tagsViewStore.cachedViews" :max="20">
-              <component :is="Component" :key="$route.path" p-3 h-full />
-            </keep-alive>
-          </transition>
-        </router-view>
-      </div>
+      <router-view v-slot="{ Component, route }">
+        <transition mode="out-in" name="main" appear>
+          <keep-alive :key="tagsViewStore.viewKey" :include="tagsViewStore.cachedViews" :max="20">
+            <component :is="Component" :key="route.path" />
+          </keep-alive>
+        </transition>
+      </router-view>
     </main>
   </div>
 </template>
+
+<style scoped>
+.main-enter-active {
+  transition: 0.2s;
+}
+
+.main-leave-active {
+  transition: 0.15s;
+}
+
+.main-enter-from {
+  margin-left: -20px;
+  opacity: 0;
+}
+
+.main-leave-to {
+  margin-left: 20px;
+  opacity: 0;
+}
+</style>

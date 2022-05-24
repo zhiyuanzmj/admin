@@ -15,27 +15,23 @@ function toggleExpand() {
 </script>
 
 <template>
-  <nav flex gap-3 items-center text-sm px-3 text="gray-500 dark:gray-200">
+  <nav flex gap-3 items-center text-sm px-3>
     <i cursor-pointer :class="show ? 'line-md:menu-fold-right' : 'line-md:menu-fold-left'" @click="show = !show" />
 
-    <div flex gap-2 mr-auto relative>
-      <router-link :to="{ path: '/' }" hover:text-blue-500>
+    <el-breadcrumb mr-auto relative>
+      <el-breadcrumb-item :to="{ path: '/' }">
         首页
-      </router-link>
-      <transition-group v-if="$route.path !== '/'" name="breadcrumb">
-        <span v-for="(i, index) in $route.matched.slice(1)" :key="i.name" flex items-center gap-3 last:text="gray-700 dark:gray-400">
-          /
-          <router-link :to="i" hover:text-blue-500="!" flex items-center>
-            {{ i.meta?.title }}
-            <i v-if="index === $route.matched.length - 2" fa6-solid:rotate-right text-xs ml=".5" />
-          </router-link>
-        </span>
+      </el-breadcrumb-item>
+      <transition-group v-if="$route.path !== '/'" name="breadcrumb" appear>
+        <el-breadcrumb-item v-for="(i) in $route.matched.slice(1)" :key="i.name" :to="i">
+          {{ i.meta?.title }}
+        </el-breadcrumb-item>
       </transition-group>
-    </div>
+    </el-breadcrumb>
 
-    <i fa6-solid:magnifying-glass hover:text-gray-500 cursor-pointer />
-    <i hover:text-gray-500 cursor-pointer fa6-solid:sun dark:fa6-solid-moon @click="toggleDark()" />
-    <i :class="expand ? 'fa6-solid:compress' : 'fa6-solid:expand'" hover:text-gray-500 cursor-pointer @click="toggleExpand" />
+    <button fa6-solid:magnifying-glass btn text-sm />
+    <button btn text-sm fa6-solid:sun dark:fa6-solid-moon @click="toggleDark()" />
+    <button btn text-sm :class="expand ? 'fa6-solid:compress' : 'fa6-solid:expand'" @click="toggleExpand" />
     <el-dropdown>
       <div flex items-center gap-1 cursor-pointer>
         <i fa6-solid:circle-user text-xl text-gray-300 mx-1 />
@@ -55,20 +51,18 @@ function toggleExpand() {
 </template>
 
 <style>
+.el-breadcrumb__inner {
+  font-weight: normal !important;
+}
+
 /* breadcrumb transition */
-.breadcrumb-move,
-.breadcrumb-enter-active,
-.breadcrumb-leave-active {
-  transition: all 0.5s;
+.breadcrumb-enter-active {
+  transition: all 0.25s;
 }
 
 .breadcrumb-enter-from,
 .breadcrumb-leave-to {
   opacity: 0;
-  transform: translateX(30px);
-}
-
-.breadcrumb-leave-active {
-  position: absolute;
+  transform: translateX(30px) skewX(-50deg);
 }
 </style>

@@ -27,8 +27,6 @@ declare module 'vue-router' {
     title?: string
     label?: string
     class?: string
-    transitionEnter?: string
-    transitionLeave?: string
   }
 }
 

@@ -17,8 +17,8 @@ export default defineConfig({
     },
   },
   shortcuts: [
-    ['btn', 'px-4 py-1 rounded inline-block bg-gray-500 dark:bg-gray-200 text-base cursor-pointer hover:bg-blue-500 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
-    ['icon-btn', 'inline-block cursor-pointer select-none opacity-75 transition duration-200 ease-in-out hover:opacity-100 hover:text-blue-500'],
+    // ['btn', 'px-4 py-1 rounded inline-block transition duration-200 ease-in-out bg-gray-500 dark:bg-gray-200 text-base cursor-pointer hover:!bg-blue-500 disabled:cursor-default disabled:bg-gray-600 disabled:opacity-50'],
+    ['btn', 'inline-block cursor-pointer text-base select-none transition duration-200 ease-in-out hover:text-blue-500 text-gray-500  dark:text-gray-200'],
   ],
   presets: [
     presetUno(),

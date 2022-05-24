@@ -1,5 +1,4 @@
 import { useRouteStore } from '~/stores/route'
-import { useTagsviewStore } from '~/stores/tagsview'
 import { useUserStore } from '~/stores/user'
 import type { UserModule } from '~/types'
 
@@ -32,16 +31,6 @@ export const install: UserModule = ({ isClient, router }) => {
 
       /** 生成动态路由 */
       handleKeepAlive(to)
-
-      if (to.path !== from.path) {
-        /** 路由切换动画效果 */
-        const tagsView = useTagsviewStore()
-        const fromIndex = tagsView.visitedViews.findIndex(i => i.path === from.path)
-        const toIndex = tagsView.visitedViews.findIndex(i => i.path === to.path)
-        const result = toIndex === -1 ? true : toIndex > fromIndex
-        to.meta.transitionEnter = result ? 'fadeInRight' : 'fadeInLeft'
-        to.meta.transitionLeave = result ? 'fadeOutLeft' : 'fadeOutRight'
-      }
     })
   }
 }

@@ -14,7 +14,7 @@ function change(column: any, val: boolean) {
 
 <template>
   <el-dropdown class="table-set" w-full :hide-on-click="false">
-    <div flex justify-between @click="params.context.autoSizeAll()">
+    <div flex justify-between items-center @click="params.context.autoSizeAll()">
       {{ params.displayName }}
       <i fa6-solid:gear cursor-pointer />
     </div>

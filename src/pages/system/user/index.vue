@@ -21,10 +21,10 @@ const { agGridBind, agGridOn, selectedList } = useAgGrid<Row>(
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '账号', field: 'username', value: '' },
     { headerName: '姓名', field: 'nickname', value: '' },
-    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 76, maxWidth: 76, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
+    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))
       return () =>
-        <div className="flex items-center -mx-1">
+        <div className="flex items-center justify-between">
           <button className="fa6-solid:pen-to-square btn" onClick={() => {
             show = true
             row = params.data
@@ -43,14 +43,14 @@ function addHandler() {
 </script>
 
 <template>
-  <div flex="~ col nowrap" bg="gray-100 dark:zinc-800">
+  <div flex="~ col nowrap" bg="zinc-100 dark:zinc-800">
     <VHeader>
       <el-button class="!ml-auto" type="primary" @click="addHandler">
         <div fluent:add-12-filled mr-1 />新增
       </el-button>
     </VHeader>
 
-    <div p-3 pb-2 bg="white dark:zinc-900" shadow-lg rounded flex="~ 1 col" gap-2>
+    <div m-3 p-3 pb-2 bg="white dark:zinc-900" shadow rounded flex="~ 1 col" gap-2>
       <VFilter />
       <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
       <Pagination>

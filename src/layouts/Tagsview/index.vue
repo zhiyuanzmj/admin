@@ -74,13 +74,13 @@ function closeAllTags() {
 </script>
 
 <template>
-  <div px-1 bg="gray-200 dark:zinc-800" overflow-auto relative flex flex-nowrap>
+  <div px-1 bg="gray-200 dark:zinc-800" overflow-auto relative flex flex-nowrap z-2>
     <scroll-pane ref="scrollPaneRef" :tag-list="tags">
       <draggable
         v-model="visitedViews"
         item-key="path"
         animation="200"
-        class="flex gap-1 px-2 flex-1"
+        class="flex gap-1 px-2.5 flex-1"
       >
         <template #item="{ element: tag, index: i }">
           <span
