@@ -19,7 +19,7 @@ const list = $computed(() => options.map(i => ({ ...i, value: `${i.value}` })))
 async function getList(value: string) {
   if (!isFunction(props.column.options))
     return []
-  const { data, total } = await props.column.options({ pageNo: page, pageSize: 50, status: 1, value })
+  const { data, total } = await props.column.options({ pageIndex: page, pageSize: 50, status: 1, value })
   lastPage = Math.ceil(total / 50)
   return data.map((i: any) => ({ label: i.label, value: `${i.value}` }))
 }

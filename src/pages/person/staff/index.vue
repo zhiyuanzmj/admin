@@ -1,9 +1,8 @@
-<script setup lang="ts">
+<script setup lang="ts" name="person-staff">
 import { getUserList } from './api'
 
 async function getList() {
-  const a = await getUserList()
-  console.log(a)
+  await getUserList()
 }
 getList()
 </script>

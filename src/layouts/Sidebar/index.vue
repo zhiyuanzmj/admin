@@ -12,7 +12,7 @@ const list = computed(() => getList(cloneDeep(routes)))
 </script>
 
 <template>
-  <el-menu router :default-active="$route.path" b-r-none="!" overflow-auto>
+  <el-menu :default-active="$route.path" b-r-none="!" overflow-auto>
     <VItem :key="$route.path" :list="list" />
   </el-menu>
 </template>

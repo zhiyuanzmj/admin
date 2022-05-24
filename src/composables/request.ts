@@ -34,6 +34,7 @@ const _fetch = $fetch.create({
       const userStore = useUserStore()
       userStore.logout()
     }
+    throw new Error(data)
   },
 })
 

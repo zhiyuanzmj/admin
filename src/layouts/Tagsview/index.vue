@@ -1,51 +1,33 @@
 <script setup lang="ts">
 import type { RouteLocationNormalized } from 'vue-router'
+import { onBeforeRouteUpdate } from 'vue-router'
 import draggable from 'vuedraggable'
 import ScrollPane from './ScrollPane.vue'
-import { resolve, useTagsviewStore } from '~/stores/tagsview'
+import { useTagsviewStore } from '~/stores/tagsview'
 
 const tagsView = useTagsviewStore()
 tagsView.$subscribe((_, state) => {
   localStorage.setItem('visitedViews', JSON.stringify(state.visitedViews.map(i => ({ ...i, matched: [] }))))
 })
 const visitedViews = $computed<RouteLocationNormalized[]>({
-  get() {
-    return tagsView.visitedViews
-  },
-  set(val) {
-    tagsView.visitedViews = val
-  },
+  get: () => tagsView.visitedViews,
+  set: val => tagsView.visitedViews = val,
 })
 
 const route = useRoute()
 const router = useRouter()
 
 watch(() => route.path, () => {
-  if (route.name === 'login' || route.name === '404')
-    return
   tagsView.addView(route)
   moveToCurrentTag()
-  const index = visitedViews.findIndex(i => i.path === route.path)
-  if (index < 0)
-    return
-  if (route.fullPath !== visitedViews[index].fullPath)
-    visitedViews[index] = route
-})
+}, { immediate: true })
 
-onMounted(() => {
-  tagsView.addView(route)
-  moveToCurrentTag()
+onBeforeRouteUpdate((view) => {
+  tagsView.updateView(view)
 })
 
 function isActive(tag: RouteLocationNormalized) {
-  return resolve(tag.path) === resolve(route.path)
-}
-
-function tagClick(tag: RouteLocationNormalized) {
-  if (isActive(tag))
-    tagsView.refresh()
-  else
-    router.push(tag)
+  return tag.name === route.name
 }
 
 const tags = $shallowRef<{ to: RouteLocationNormalized }[]>([])
@@ -106,7 +88,7 @@ function closeAllTags() {
             :class="{ active: isActive(tag) }"
             class="tab-item"
             @click.middle="closeSelectedTag(tag)"
-            @click="tagClick(tag)"
+            @click="tagsView.push(tag.name)"
           >
             <span class="split" absolute left="-6px" z="-1" text-gray-500>｜</span>
             {{ tag.meta.title }}
@@ -122,7 +104,7 @@ function closeAllTags() {
       <i text-xs mt=".5" fa6-solid:angle-down />
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item @click="tagClick(selectedTag)">
+          <el-dropdown-item @click="tagsView.push(selectedTag.name)">
             刷新
           </el-dropdown-item>
           <el-dropdown-item @click="closeSelectedTag(selectedTag)">

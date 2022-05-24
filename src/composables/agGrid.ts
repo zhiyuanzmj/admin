@@ -51,8 +51,8 @@ export const useAgGrid = function <T=any>(
     await nextTick()
     gridApi.value?.showLoadingOverlay?.()
     router.replace({ query: { ...route.query, ...params.value } })
-    const { pageNo = '1', pageSize = '50', order, sort } = route.query
-    const result = await fetchList({ pageNo, pageSize, order, sort, ...params.value, ...data }).finally(() => gridApi.value?.hideOverlay?.())
+    const { pageIndex = '1', pageSize = '50', order, sort } = route.query
+    const result = await fetchList({ pageIndex, pageSize, order, sort, ...params.value, ...data }).finally(() => gridApi.value?.hideOverlay?.())
     list.value = (result?.data ?? []) as any
     total.value = result?.total ?? 0
     selectedList.value = []

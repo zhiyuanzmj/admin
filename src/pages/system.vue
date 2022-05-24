@@ -1,6 +1,6 @@
 <script lang="ts">
 export default {
-  name: 'ChildrenLayout',
+  name: 'KeepAlive',
 }
 </script>
 

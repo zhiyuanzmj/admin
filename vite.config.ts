@@ -15,7 +15,7 @@ import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import DefineOptions from 'unplugin-vue-define-options/vite'
+import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
@@ -34,11 +34,12 @@ export default defineConfig({
 
     vueJsx(),
 
-    DefineOptions(),
+    vueSetupExtend(),
 
     // https://github.com/hannoeru/vite-plugin-pages
     Pages({
       extensions: ['vue', 'md'],
+      exclude: ['**/components/*.vue'],
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts

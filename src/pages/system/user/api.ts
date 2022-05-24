@@ -5,13 +5,14 @@ export interface Row {
   username?: string
   nickname?: string
   password?: string
+  state: 0 | 1
   confirmPassword?: string
 }
 
-export function getUserList() {
+export function getUserList(body: object) {
   return request<Row[]>('/getUsers', {
     method: 'post',
-    body: { pageIndex: 1, pageSize: 10 },
+    body,
   })
 }
 
@@ -25,6 +26,20 @@ export function put(body: object) {
 export function post(body: object) {
   return request('/addUsers', {
     method: 'post',
+    body,
+  })
+}
+
+export function drop(id: any) {
+  return request(`/users/del/${id}`, {
+    method: 'delete',
+    params: { noMessage: true },
+  })
+}
+
+export function editPassword(body: object) {
+  return request('/users/password', {
+    method: 'put',
     body,
   })
 }

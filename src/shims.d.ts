@@ -12,11 +12,13 @@ declare module '*.md' {
   export default component
 }
 
-declare module '*.vue' {
-  import { type DefineComponent } from 'vue'
-  const component: DefineComponent<{}, {}, any>
-  export default component
+declare module 'vue' {
+  interface ComponentCustomProperties {
+    $router: Router
+    $route: RouteLocationNormalizedLoaded
+  }
 }
+
 declare module 'vue-router' {
   interface RouteMeta {
     // is optional

@@ -12,12 +12,12 @@ const {
 
 const getList = inject('getList', () => {})
 
-let pageNoStore = $(useRouteQuery<string>('pageNo', '1'))
-let pageNo = $computed({
+let pageNoStore = $(useRouteQuery<string>('pageIndex', '1'))
+let pageIndex = $computed({
   get: () => Number(pageNoStore),
   set: val => pageNoStore = val.toString(),
 })
-watch(() => pageNo, () => getList())
+watch(() => pageIndex, () => getList())
 
 let pageSizeStore = $(useRouteQuery<string>('pageSize', '50'))
 const pageSize = $computed({
@@ -29,8 +29,8 @@ watch(() => pageSize, () => getList())
 const total = $(inject('total', ref(0)))
 watchEffect(() => {
   const max = Math.ceil(total / pageSize)
-  if (max && pageNo > max)
-    pageNo = max
+  if (max && pageIndex > max)
+    pageIndex = max
 })
 
 const selectedList = $(inject('selectedList', ref([])))
@@ -51,7 +51,7 @@ const deselectAll = inject('deselectAll', () => {})
         :indeterminate="selectedList.length > 0 && selectedList.length < list.length"
         @change="() => isSelectAll ? deselectAll() : selectAll() "
       >
-        <span>{{ selectedList.length ? '全选' : '取消' }}</span>
+        <span>{{ isSelectAll ? '取消' : '全选' }}</span>
       </el-checkbox>
       <slot />
       <span v-if="selectedList.length" text-sm whitespace-nowrap>
@@ -59,7 +59,7 @@ const deselectAll = inject('deselectAll', () => {})
       </span>
     </div>
     <el-pagination
-      v-model:current-page="pageNo"
+      v-model:current-page="pageIndex"
       v-model:page-size="pageSize"
       ml-auto
       :class="{ 'flex-1': !$slots.default }"

@@ -1,9 +1,15 @@
+<script lang="ts">
+export default {
+  name: 'KeepAlive',
+}
+</script>
+
 <template>
   <router-view />
 </template>
 
 <route lang="yaml">
-redirect: /system/user
+redirect: /person/staff
 meta:
   icon: ep:user
   title: 人员管理

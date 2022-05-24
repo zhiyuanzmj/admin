@@ -3,6 +3,9 @@
   "rules": {
     "no-sequences": "off",
     "react/display-name": "off",
-    "vue/no-mutating-props": "off"
+    "vue/no-mutating-props": "off",
+    "object-property-newline": "off",
+    "object-curly-newline": "off",
+    "@typescript-eslint/brace-style": "off"
   }
 }

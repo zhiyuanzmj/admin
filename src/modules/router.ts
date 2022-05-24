@@ -8,7 +8,7 @@ function handleKeepAlive(to: any) {
     return
   for (let i = 0; i < to.matched.length; i++) {
     const element = to.matched[i]
-    if (element?.components?.default?.name === 'ChildrenLayout') {
+    if (element?.components?.default?.name === 'KeepAlive') {
       to.matched.splice(i, 1)
       handleKeepAlive(to)
     }
@@ -18,8 +18,6 @@ function handleKeepAlive(to: any) {
 export const install: UserModule = ({ isClient, router }) => {
   if (isClient) {
     router.beforeEach(async (to, from) => {
-      if (to.path === from.path)
-        return
       /** 没有token 跳到登陆页 */
       const userStore = useUserStore()
       if (!userStore.token)
@@ -27,19 +25,22 @@ export const install: UserModule = ({ isClient, router }) => {
       if (to.name === 'login')
         return '/'
 
-      /** 路由切换动画效果 */
-      const tagsView = useTagsviewStore()
-      const fromIndex = tagsView.visitedViews.findIndex(i => i.path === from.path)
-      const toIndex = tagsView.visitedViews.findIndex(i => i.path === to.path)
-      const result = toIndex === -1 ? true : toIndex > fromIndex
-      to.meta.transitionEnter = result ? 'fadeInRight' : 'fadeInLeft'
-      to.meta.transitionLeave = result ? 'fadeOutLeft' : 'fadeOutRight'
-
-      /** 生成动态路由 */
-      handleKeepAlive(to)
       if (!userStore.permissionList?.length) {
         await useRouteStore().generateRoutes()
         return to.fullPath
+      }
+
+      /** 生成动态路由 */
+      handleKeepAlive(to)
+
+      if (to.path !== from.path) {
+        /** 路由切换动画效果 */
+        const tagsView = useTagsviewStore()
+        const fromIndex = tagsView.visitedViews.findIndex(i => i.path === from.path)
+        const toIndex = tagsView.visitedViews.findIndex(i => i.path === to.path)
+        const result = toIndex === -1 ? true : toIndex > fromIndex
+        to.meta.transitionEnter = result ? 'fadeInRight' : 'fadeInLeft'
+        to.meta.transitionLeave = result ? 'fadeOutLeft' : 'fadeOutRight'
       }
     })
   }

@@ -1,29 +1,21 @@
 <script setup lang="ts">
 import type { RouteRecordRaw } from 'vue-router'
-// import { useRoute } from 'vue-router'
-// import { updateViewKey } from '../index.vue'
-// import useTagsview, { resolve } from '~/store/useTagsview'
+import { useTagsviewStore } from '~/stores/tagsview'
 defineProps<{ list: RouteRecordRaw[] }>()
-// const route = useRoute()
-// const updateView = inject(updateViewKey)
-// function clickHandler(view: RouteRecordRaw) {
-//   if (resolve(view.path) === resolve(route.path))
-//     updateView?.()
-// }
 
-// const tagsView = useTagsview()
+const tagsView = useTagsviewStore()
 </script>
 
 <template>
   <template v-for="i in list" :key="i.path">
-    <el-sub-menu v-if="i.children?.length" :index="$router.resolve(i)?.path">
+    <el-sub-menu v-if="i.children?.length" :index="$router.resolve(i).path">
       <template #title>
         <el-icon :class="i.meta?.icon" />
         <span>{{ i.meta?.title }}</span>
       </template>
       <VItem :list="i.children" />
     </el-sub-menu>
-    <el-menu-item v-else :index="$router.resolve(i)?.path">
+    <el-menu-item v-else :index="$router.resolve(i).path" @click="tagsView.push(i.name)">
       <el-icon :class="i.meta?.icon" />
       {{ i.meta?.title }}
     </el-menu-item>
