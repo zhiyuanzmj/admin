@@ -12,7 +12,7 @@ const _fetch = $fetch.create({
     const userStore = useUserStore()
     options.params = options.params && JSON.parse(JSON.stringify(options.params))
     options.body = options.body && JSON.parse(JSON.stringify(options.body))
-    options.headers = { Authorization: userStore.token }
+    options.headers = { Authorization: userStore.token, ...options.headers }
   },
   async onResponse({ response, options, request }) {
     NProgress.done()

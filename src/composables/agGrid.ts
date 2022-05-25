@@ -14,7 +14,7 @@ export type Column<T = object> = Overwrite<ColDef, {
   unCheck?: boolean
   hide?: boolean
   order?: string
-  options?: ((rest: Record<string, any>) => Promise<{ data: Option[]; total: number }>) | Readonly<Option[]>
+  options?: ((rest: Record<string, any>) => Promise<{ data: Option[]; total: number }>) | Option[]
   formWidth?: string
   formType?: string
   formProps?: any

@@ -8,15 +8,8 @@ import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
 let row = $ref<DepartmentRow>()
-async function onDrop(list: DepartmentRow[]) {
-  await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
-  const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
-    .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
-  fulfilled && ElMessage.success(`删除成功 ${fulfilled} 条`); await nextTick()
-  rejected && ElMessage.error(`删除失败 ${rejected} 条`)
-}
 
-const { agGridBind, agGridOn, selectedList } = useAgGrid<DepartmentRow>(
+const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '部门', field: 'departmentName', value: '' },
@@ -36,6 +29,15 @@ const { agGridBind, agGridOn, selectedList } = useAgGrid<DepartmentRow>(
   ],
   getDepartmentList,
 )
+
+async function onDrop(list: DepartmentRow[]) {
+  await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
+  const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
+    .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
+  fulfilled && ElMessage.success(`删除成功 ${fulfilled} 条`); await nextTick()
+  rejected && ElMessage.error(`删除失败 ${rejected} 条`)
+  getList()
+}
 
 function addHandler() {
   show = true

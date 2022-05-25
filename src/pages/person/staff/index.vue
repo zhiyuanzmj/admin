@@ -9,21 +9,17 @@ import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
 let row = $ref<Row>()
-async function onDrop(list: Row[]) {
-  await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
-  const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
-    .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
-  fulfilled && ElMessage.success(`删除成功 ${fulfilled} 条`); await nextTick()
-  rejected && ElMessage.error(`删除失败 ${rejected} 条`)
-}
 
-const { agGridBind, agGridOn, selectedList } = useAgGrid<Row>(
+const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Row>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '姓名', field: 'name', value: '' },
-    { headerName: '部门', valueGetter: 'data.department.departmentName', field: 'department', value: '', options: ({ value: departmentName, ...params }) => {
-      return getDepartmentList({ ...params, departmentName })
-    } },
+    { headerName: '部门', valueGetter: 'data.department.departmentName', field: 'department', value: '', options: ({ value: departmentName, ...params }) =>
+      getDepartmentList({ ...params, departmentName }).then(({ data, total }) => ({
+        data: data.map(i => ({ label: i.departmentName, value: i.id })),
+        total,
+      })),
+    },
     { headerName: '性别', field: 'sex', valueGetter: ({ value }: any) => value ? '男' : '女' },
     { headerName: '手机号', field: 'phone', value: '' },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
@@ -40,6 +36,15 @@ const { agGridBind, agGridOn, selectedList } = useAgGrid<Row>(
   ],
   getPersonList,
 )
+
+async function onDrop(list: Row[]) {
+  await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
+  const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
+    .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
+  fulfilled && ElMessage.success(`删除成功 ${fulfilled} 条`); await nextTick()
+  rejected && ElMessage.error(`删除失败 ${rejected} 条`)
+  getList()
+}
 
 function addHandler() {
   show = true

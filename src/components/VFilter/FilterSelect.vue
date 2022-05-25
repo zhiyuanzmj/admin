@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { isFunction } from 'lodash'
+import { isFunction } from 'lodash-es'
 import type { PropType } from 'vue'
 import type { Column } from '~/composables'
 const props = defineProps({
@@ -19,30 +19,27 @@ const list = $computed(() => options.map(i => ({ ...i, value: `${i.value}` })))
 async function getList(value: string) {
   if (!isFunction(props.column.options))
     return []
-  const { data, total } = await props.column.options({ pageIndex: page, pageSize: 50, status: 1, value })
+  loading = true
+  const { data, total } = await props.column.options({ pageIndex: page, pageSize: 50, status: 1, value }).finally(() => loading = false)
   lastPage = Math.ceil(total / 50)
   return data.map((i: any) => ({ label: i.label, value: `${i.value}` }))
 }
 
-const onFilter = async (value = '', update: Function = () => {}) => {
+const onFilter = async (value = '') => {
   if (!isFunction(props.column.options))
-    return update()
+    return
   if (loading)
-    return update()
+    return
   page = 1
   options = await getList(inputValue = value)
-  update()
 }
-async function onScroll({ to, ref }: any) {
+async function onScroll() {
   if (
-    !loading && page + 1 <= lastPage && to === options?.length - 1
+    !loading && page + 1 <= lastPage
   ) {
-    loading = true
     page++
     const data = await getList(inputValue)
     options.push(...data)
-    ref.refresh()
-    setTimeout(() => loading = false)
   }
 }
 
@@ -56,24 +53,27 @@ const model = $computed<any>({
   get: () => props.column.formProps?.multiple ? (props.column.value ? props.column.value?.split(',') : []) : props.column.value,
   set: val => props.column.value = props.column.formProps?.multiple ? (val?.join(',') || '') : val,
 })
+
+const bottomRef = ref()
+useIntersectionObserver(bottomRef, ([{ isIntersecting }]) => {
+  if (isIntersecting)
+    onScroll()
+})
 </script>
 
 <template>
   <el-select
     v-model="model"
     :loading="loading"
-    :hide-selected="!column.formProps?.multiple"
-    fill-input
-    use-input
-    emit-value
-    map-options
     clearable
+    filterable
     v-bind="column.formProps"
-    @virtual-scroll="onScroll"
-    @filter="onFilter"
+    :remote-method="onFilter"
+    @focus="onFilter()"
     @clear="getListInject()"
     @update:model-value="getListInject()"
   >
-    <el-option v-for="i in list" :key="i.label" v-bind="i" />
+    <el-option v-for="i in list" :key="i.value" v-bind="i" />
+    <div ref="bottomRef" />
   </el-select>
 </template>

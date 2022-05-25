@@ -36,13 +36,13 @@ async function submit() {
 </script>
 
 <template>
-  <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}用户`">
+  <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}人员信息`">
     <el-form ref="formRef" label-width="auto" :model="row" grid="~ cols-2 gap-x-5" @submit.prevent="submit">
       <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="name" label="姓名">
         <el-input v-model="row.name" />
       </el-form-item>
 
-      <el-form-item label="部门" prop="depId">
+      <el-form-item label="部门" :rules="{ required: true, message: '不能为空' }" prop="department.id">
         <el-select v-model="row.department" w-full value-key="id">
           <el-option v-for="i in departmentList" :key="i.id" :label="i.departmentName" :value="i" />
         </el-select>
