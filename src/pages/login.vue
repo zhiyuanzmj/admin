@@ -38,5 +38,4 @@ async function submit() {
 meta:
   hidden: true
   layout: home
-  white: true
 </route>

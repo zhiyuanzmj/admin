@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import type { RouteRecordRaw } from 'vue-router'
-import { cloneDeep } from 'lodash-es'
 import VItem from './VItem.vue'
-import routes from '~pages'
-const getList = (list: RouteRecordRaw[]) =>
-  list.filter((i) => {
-    i.children && (i.children = getList(i.children))
-    return !i.meta?.hidden
-  })
-const list = computed(() => getList(cloneDeep(routes)))
+import { useRouteStore } from '~/stores/route'
+const routeStore = useRouteStore()
 </script>
 
 <template>
   <el-menu :default-active="$route.path" b-r-none="!" overflow-auto>
-    <VItem :key="$route.path" :list="list" />
+    <VItem :key="$route.path" :list="routeStore.list" />
   </el-menu>
 </template>
+
+<style scoped>
+::v-deep(.el-menu-item.is-active) {
+  background: linear-gradient(to left, #60a5fa 2%, transparent 2%);
+
+  @apply bg-blue-50 dark:bg-gray-800;
+}
+</style>

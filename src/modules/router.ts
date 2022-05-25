@@ -16,11 +16,13 @@ function handleKeepAlive(to: any) {
 
 export const install: UserModule = ({ isClient, router }) => {
   if (isClient) {
-    router.beforeEach(async (to, from) => {
+    router.beforeEach(async (to) => {
+      // @ts-expect-error ignore
+      window.router = router
       /** 没有token 跳到登陆页 */
       const userStore = useUserStore()
       if (!userStore.token)
-        return to.meta.white ? true : { name: 'login' }
+        return to.name === 'login' ? true : { name: 'login' }
       if (to.name === 'login')
         return '/'
 

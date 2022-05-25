@@ -11,7 +11,7 @@ import './styles/main.css'
 import './styles/agGrid.scss'
 import 'uno.css'
 
-const routes = setupLayouts(generatedRoutes.filter(i => !i.meta?.permission))
+const routes = setupLayouts(generatedRoutes.filter(i => i.name === 'login'))
 
 // https://github.com/antfu/vite-ssg
 export const createApp = ViteSSG(

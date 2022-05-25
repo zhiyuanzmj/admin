@@ -52,10 +52,10 @@ async function submit() {
       <el-form-item label="用户名" prop="nickname">
         <el-input v-model="row.nickname" />
       </el-form-item>
-      <el-form-item label="密码" :rules="[{ message: '不能为空', required: true }, { min: 8, message: '密码长度不能低于8位', trigger: 'blur' }]" prop="password">
+      <el-form-item label="密码" :rules="[{ message: '不能为空', required: !row.id }, { min: 8, message: '密码长度不能低于8位', trigger: 'blur' }]" prop="password">
         <el-input v-model="row.password" type="password" show-password autocomplete="new-password" />
       </el-form-item>
-      <el-form-item label="确认密码" :rules="{ validator: validatePass, trigger: 'blur' }" required prop="confirmPassword">
+      <el-form-item label="确认密码" :rules="{ validator: validatePass, trigger: 'blur' }" :required="!row.id" prop="confirmPassword">
         <el-input v-model="row.confirmPassword" type="password" show-password />
       </el-form-item>
       <span mt-3 mb="-2" text-right col-span-2>
