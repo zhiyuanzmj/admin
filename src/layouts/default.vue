@@ -5,20 +5,25 @@ import Navigation from './Navigation/index.vue'
 import { useTagsviewStore } from '~/stores/tagsview'
 
 const tagsViewStore = useTagsviewStore()
+const isCollapse = $ref(false)
 </script>
 
 <template>
-  <div text="gray-700 dark:gray-200" grid="~ cols-[12.5rem_auto] rows-1" h-screen>
+  <div text="gray-700 dark:gray-200" flex h-screen>
     <aside row-span-2 flex="~ col" b="0 r-1 r-zinc-200 dark:r-zinc-700" shadow-md z-3>
-      <header h-12 flex gap-2 items-center px-3>
-        <img src="/logo.png" w-8>
-        <div>食堂管理系统</div>
+      <header h-12 flex items-center gap-2 px-3 cursor-pointer @click="$router.push('/')">
+        <img src="/logo.png" w-8 ml-1>
+        <div relative overflow-hidden>
+          <transition enter-active-class="absolute" :duration="300" leave-active-class="absolute">
+            <h1 v-if="!isCollapse">食堂管理系统</h1>
+          </transition>
+        </div>
       </header>
-      <Sidebar row-span-2 flex-1 />
+      <Sidebar row-span-2 flex-1 :collapse="isCollapse" />
     </aside>
 
-    <main grid="~ rows-[3rem_34px_auto]" overflow-x-hidden>
-      <Navigation />
+    <main flex-1 grid="~ rows-[3rem_34px_auto]" overflow-x-hidden>
+      <Navigation v-model:isCollapse="isCollapse" />
       <Tagsview />
       <router-view v-slot="{ Component, route }">
         <transition mode="out-in" name="main" appear>

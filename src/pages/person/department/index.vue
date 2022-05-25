@@ -1,15 +1,14 @@
 <script setup lang="tsx" name="system-user">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { getDepartmentList } from '../department/api'
-import type { Row } from './api'
-import { drop, getPersonList } from './api'
+import type { DepartmentRow } from './api'
+import { drop, getDepartmentList } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
-let row = $ref<Row>()
-async function onDrop(list: Row[]) {
+let row = $ref<DepartmentRow>()
+async function onDrop(list: DepartmentRow[]) {
   await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
   const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
     .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
@@ -17,15 +16,12 @@ async function onDrop(list: Row[]) {
   rejected && ElMessage.error(`删除失败 ${rejected} 条`)
 }
 
-const { agGridBind, agGridOn, selectedList } = useAgGrid<Row>(
+const { agGridBind, agGridOn, selectedList } = useAgGrid<DepartmentRow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '姓名', field: 'name', value: '' },
-    { headerName: '部门', valueGetter: 'data.department.departmentName', field: 'department', value: '', options: ({ value: departmentName, ...params }) => {
-      return getDepartmentList({ ...params, departmentName })
-    } },
-    { headerName: '性别', field: 'sex', valueGetter: ({ value }: any) => value ? '男' : '女' },
+    { headerName: '部门', field: 'departmentName', value: '' },
     { headerName: '手机号', field: 'phone', value: '' },
+    { headerName: '描述', field: 'description', value: '' },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))
       return () =>
@@ -38,12 +34,12 @@ const { agGridBind, agGridOn, selectedList } = useAgGrid<Row>(
         </div>
     } } },
   ],
-  getPersonList,
+  getDepartmentList,
 )
 
 function addHandler() {
   show = true
-  row = { } as Row
+  row = { status: 1 } as DepartmentRow
 }
 </script>
 
@@ -71,5 +67,5 @@ function addHandler() {
 
 <route lang="yaml">
 meta:
-  title: 人员信息
+  title: 部门管理
 </route>

@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useUserStore } from '~/stores/user'
 import { toggleDark } from '~/composables'
-
-const show = ref(false)
+const props = defineProps<{
+  isCollapse: boolean
+}>()
+const isCollapse = useVModel(props, 'isCollapse')
 const user = useUserStore()
 
 let expand = $ref(false)
@@ -16,7 +18,7 @@ function toggleExpand() {
 
 <template>
   <nav flex gap-3 items-center text-sm px-3>
-    <i cursor-pointer :class="show ? 'line-md:menu-fold-right' : 'line-md:menu-fold-left'" @click="show = !show" />
+    <i cursor-pointer :class="isCollapse ? 'line-md:menu-fold-right' : 'line-md:menu-fold-left'" @click="isCollapse = !isCollapse" />
 
     <el-breadcrumb mr-auto relative>
       <el-breadcrumb-item :to="{ path: '/' }">
@@ -35,7 +37,7 @@ function toggleExpand() {
     <el-dropdown>
       <div flex items-center gap-1 cursor-pointer>
         <i fa6-solid:circle-user text-xl text-gray-300 mx-1 />
-        admin
+        {{ user.userInfo.nickname }}
         <i fa-solid:sort-down self-start />
       </div>
       <template #dropdown>

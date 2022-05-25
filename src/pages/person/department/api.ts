@@ -1,40 +1,38 @@
-import type { DepartmentRow } from '../department/api'
 import { request } from '~/composables/request'
 
-export interface Row {
+export interface DepartmentRow {
   id: string
-  department: DepartmentRow
-  name: string
+  depId: number
+  description: string
+  departmentName: string
   phone: string
   photoName: string
-  birthday: string
-  sex: 0 | 1
   status: 0 | 1
   type: 0 | 1
 }
 
-export function getPersonList(params: object) {
-  return request<Row[]>('/person/getPersonList', {
+export function getDepartmentList(params: object) {
+  return request<DepartmentRow[]>('/dep/getDepList', {
     params,
   })
 }
 
 export function put(body: object) {
-  return request('/person/updatePerson', {
+  return request('/dep/updateDep', {
     method: 'put',
     body,
   })
 }
 
 export function post(body: object) {
-  return request('/person/insertPerson', {
+  return request('/dep/insertDep', {
     method: 'post',
     body,
   })
 }
 
 export function drop(id: any) {
-  return request('/person/deletePerson', {
+  return request('/dep/deleteDep', {
     method: 'delete',
     params: { noMessage: true, id },
   })

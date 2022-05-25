@@ -9,7 +9,7 @@ import { useAgGrid } from '~/composables'
 let show = $ref(false)
 let row = $ref<Row>()
 async function onDrop(list: Row[]) {
-  await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
+  await ElMessageBox.confirm(`确定删除 ${list.length} 条数据？`, '提示')
   const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
     .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
   fulfilled && ElMessage.success(`删除成功 ${fulfilled} 条`); await nextTick()

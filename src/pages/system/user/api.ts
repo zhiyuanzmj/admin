@@ -9,10 +9,9 @@ export interface Row {
   confirmPassword?: string
 }
 
-export function getUserList(body: object) {
+export function getUserList(params: object) {
   return request<Row[]>('/getUsers', {
-    method: 'post',
-    body,
+    params,
   })
 }
 
@@ -34,12 +33,5 @@ export function drop(id: any) {
   return request(`/users/del/${id}`, {
     method: 'delete',
     params: { noMessage: true },
-  })
-}
-
-export function editPassword(body: object) {
-  return request('/users/password', {
-    method: 'put',
-    body,
   })
 }

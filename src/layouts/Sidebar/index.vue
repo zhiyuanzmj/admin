@@ -5,8 +5,8 @@ const routeStore = useRouteStore()
 </script>
 
 <template>
-  <el-menu :default-active="$route.path" b-r-none="!" overflow-auto>
-    <VItem :key="$route.path" :list="routeStore.list" />
+  <el-menu :default-active="$route.name" b-r-none="!" overflow-auto>
+    <VItem v-for="i in routeStore.list" :key="i.path" :route="i" />
   </el-menu>
 </template>
 
@@ -15,5 +15,9 @@ const routeStore = useRouteStore()
   background: linear-gradient(to left, #60a5fa 2%, transparent 2%);
 
   @apply bg-blue-50 dark:bg-gray-800;
+}
+
+.el-menu:not(.el-menu--collapse) {
+  width: 200px;
 }
 </style>

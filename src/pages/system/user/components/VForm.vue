@@ -3,7 +3,7 @@ import type { FormInstance } from 'element-plus'
 import { ElLoading, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import type { Row } from '../api'
-import { editPassword, post, put } from '../api'
+import { post, put } from '../api'
 
 const props = defineProps<{
   show: boolean
@@ -15,9 +15,9 @@ const getList = inject('getList', () => {})
 const formRef = $shallowRef<FormInstance>()
 
 const validatePass = (_: any, value: any, callback: any) => {
-  if (!value)
-    callback(new Error('不能为空'))
-  else if (value !== row.password)
+  if (row.id && !row.password && !value)
+    return callback()
+  if (value !== row.password)
     callback(new Error('两次密码不一致'))
   else
     callback()
@@ -27,12 +27,10 @@ async function submit() {
   await formRef?.validate()
   const loading = ElLoading.service({ fullscreen: true })
   try {
-    if (row.id) {
-      await editPassword({ newPwd: row.password, oldPwd: row.confirmPassword })
+    if (row.id)
       await put(row)
-    } else {
+    else
       await post(row)
-    }
 
     ElMessage.success('操作成功')
     show = false
@@ -55,7 +53,7 @@ async function submit() {
       <el-form-item label="密码" :rules="[{ message: '不能为空', required: !row.id }, { min: 8, message: '密码长度不能低于8位', trigger: 'blur' }]" prop="password">
         <el-input v-model="row.password" type="password" show-password autocomplete="new-password" />
       </el-form-item>
-      <el-form-item label="确认密码" :rules="{ validator: validatePass, trigger: 'blur' }" :required="!row.id" prop="confirmPassword">
+      <el-form-item label="确认密码" :rules="[{ message: '不能为空', required: !row.id }, { validator: validatePass, trigger: 'blur' }]" prop="confirmPassword">
         <el-input v-model="row.confirmPassword" type="password" show-password />
       </el-form-item>
       <span mt-3 mb="-2" text-right col-span-2>
