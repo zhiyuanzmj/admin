@@ -1,9 +1,9 @@
-<script setup lang="tsx" name="system-user">
+<script setup lang="tsx" name="system-staff">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getDepartmentList } from '../department/api'
 import type { Row } from './api'
-import { drop, getPersonList } from './api'
+import { drop, getPersonList, put } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
@@ -22,22 +22,34 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Row>(
     },
     { headerName: '性别', field: 'sex', valueGetter: ({ value }: any) => value ? '男' : '女' },
     { headerName: '手机号', field: 'phone', value: '' },
+    { headerName: '状态', field: 'status', value: '', cellRenderer: { setup: props => () =>
+        <el-switch
+          model-value={props.params.value}
+          onClick={async () => {
+            await ElMessageBox.confirm('确定修改状态?', '提示')
+            await put({ ...props.params.data, status: !props.params.value ? 1 : 0 })
+            ElMessage.success('操作成功')
+            getList()
+          } }
+          active-value={1}
+          inactive-value={0}
+        />,
+    } },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
-      const { params } = $(toRefs(props))
       return () =>
         <div className="flex items-center justify-between">
           <button className="fa6-solid:pen-to-square btn" onClick={() => {
             show = true
-            row = params.data
+            row = props.params.data
           }}/>
-          <button className="fa6-solid:trash-can btn" onClick={() => onDrop([params.data])}/>
+          <button className="fa6-solid:trash-can btn" onClick={() => onDrop([props.params.data])}/>
         </div>
     } } },
   ],
   getPersonList,
 )
 
-async function onDrop(list: Row[]) {
+async function onDrop(list = [row]) {
   await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
   const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
     .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
@@ -48,7 +60,7 @@ async function onDrop(list: Row[]) {
 
 function addHandler() {
   show = true
-  row = { } as Row
+  row = { sex: 0 }
 }
 </script>
 

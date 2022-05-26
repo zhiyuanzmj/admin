@@ -2,15 +2,15 @@ import type { DepartmentRow } from '../department/api'
 import { request } from '~/composables/request'
 
 export interface Row {
-  id: string
-  department: DepartmentRow
-  name: string
-  phone: string
-  photoName: string
-  birthday: string
-  sex: 0 | 1
-  status: 0 | 1
-  type: 0 | 1
+  id?: string
+  department?: DepartmentRow
+  name?: string
+  phone?: string
+  photoName?: string
+  birthday?: string
+  sex?: 0 | 1
+  status?: 0 | 1
+  type?: 0 | 1
 }
 
 export function getPersonList(params: object) {

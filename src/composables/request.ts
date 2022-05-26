@@ -5,14 +5,19 @@ import { useUserStore } from '~/stores/user'
 export const baseURL = '/api'
 
 const whiteList = ['/api/sys/user/queryUserRole']
+
+export function getHeaders() {
+  const userStore = useUserStore()
+  return { Authorization: `Bearer ${`${userStore.token}`}`, RefreshToken: userStore.userInfo.refreshToken }
+}
+
 const _fetch = $fetch.create({
   baseURL,
   async onRequest({ options }) {
     NProgress.start()
-    const userStore = useUserStore()
     options.params = options.params && JSON.parse(JSON.stringify(options.params))
     options.body = options.body && JSON.parse(JSON.stringify(options.body))
-    options.headers = { Authorization: `Bearer ${`${userStore.token}`}`, RefreshToken: userStore.userInfo.refreshToken, ...options.headers }
+    options.headers = getHeaders()
   },
   async onResponse({ response, options, request }) {
     NProgress.done()

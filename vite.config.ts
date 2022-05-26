@@ -16,6 +16,7 @@ import Unocss from 'unocss/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import vueSetupExtend from 'vite-plugin-vue-setup-extend'
+import ElementPlus from 'unplugin-element-plus/vite'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
@@ -67,6 +68,10 @@ export default defineConfig({
       resolvers: [
         ElementPlusResolver(),
       ],
+    }),
+
+    ElementPlus({
+      defaultLocale: 'zh-cn',
     }),
 
     // https://github.com/antfu/unocss

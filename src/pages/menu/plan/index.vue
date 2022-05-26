@@ -1,33 +1,19 @@
-<script setup lang="tsx" name="person-department">
+<script setup lang="tsx" name="menu-plan">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import type { DepartmentRow } from './api'
-import { drop, getDepartmentList, put } from './api'
+import type { Plan } from './api'
+import { drop, getDepartmentList } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
-let row = $ref<DepartmentRow>()
+let row = $ref<Plan>()
 
-const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>(
+const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Plan>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '部门', field: 'departmentName', value: '' },
-    { headerName: '手机号', field: 'phone', value: '' },
-    { headerName: '描述', field: 'description', value: '' },
-    { headerName: '状态', field: 'status', value: '', cellRenderer: { setup: props => () =>
-        <el-switch
-          model-value={props.params.value}
-          onClick={async () => {
-            await ElMessageBox.confirm('确定修改状态?', '提示')
-            await put({ ...props.params.data, status: !props.params.value ? 1 : 0 })
-            ElMessage.success('操作成功')
-            getList()
-          } }
-          active-value={1}
-          inactive-value={0}
-        />,
-    } },
+    { headerName: '时间', field: 'date', value: '' },
+    { headerName: '菜品', valueGetter: ({ data }) => data.foodEnum.map(i => i.name), field: 'foodEnum', value: '' },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))
       return () =>
@@ -43,7 +29,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>
   getDepartmentList,
 )
 
-async function onDrop(list: DepartmentRow[]) {
+async function onDrop(list: Plan[]) {
   await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
   const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
     .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
@@ -54,7 +40,7 @@ async function onDrop(list: DepartmentRow[]) {
 
 function addHandler() {
   show = true
-  row = { status: 1 } as DepartmentRow
+  row = { status: 1 } as Plan
 }
 </script>
 
@@ -82,5 +68,5 @@ function addHandler() {
 
 <route lang="yaml">
 meta:
-  title: 部门管理
+  title: 每日菜单
 </route>

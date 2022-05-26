@@ -35,11 +35,7 @@ async function submit() {
   await formRef?.validate()
   const loading = ElLoading.service({ fullscreen: true })
   try {
-    console.log(row.roles, '...')
-    if (row.id)
-      await put(row)
-    else
-      await post(row)
+    row.id ? await put(row) : await post(row)
 
     ElMessage.success('操作成功')
     show = false

@@ -2,7 +2,6 @@
 // https://github.com/vueuse/head
 // you can use this to manipulate the document head in any components,
 // they will be rendered correctly in the html results with vite-ssg
-import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import { useUserStore } from './stores/user'
 import { isDark } from '~/composables'
 
@@ -25,7 +24,5 @@ userStore.$subscribe((_, state) => {
 </script>
 
 <template>
-  <el-config-provider :locale="zhCn">
-    <RouterView />
-  </el-config-provider>
+  <RouterView />
 </template>

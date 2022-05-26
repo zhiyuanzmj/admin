@@ -1,20 +1,25 @@
-<script setup lang="tsx" name="person-department">
+<script setup lang="tsx" name="food">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import type { DepartmentRow } from './api'
-import { drop, getDepartmentList, put } from './api'
+import { fetchFoodTypeList } from '../food-type/api'
+import { type FoodRow, drop, getPersonList, put } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
-let row = $ref<DepartmentRow>()
+let row = $ref<FoodRow>()
 
-const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>(
+const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<FoodRow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '部门', field: 'departmentName', value: '' },
-    { headerName: '手机号', field: 'phone', value: '' },
-    { headerName: '描述', field: 'description', value: '' },
+    { headerName: '名称', field: 'name', value: '' },
+    { headerName: '类型', valueGetter: ({ data }) => data.foodEnums.map(i => i.enumName).join(','), field: 'foodEnums', value: '', options: ({ value: enumName, ...params }) =>
+      fetchFoodTypeList({ ...params, enumName }).then(({ data, total }) => ({
+        data: data.map(i => ({ label: i.enumName, value: i.id })),
+        total,
+      })),
+    },
+    { headerName: '卡路里', field: 'calorie', value: '' },
     { headerName: '状态', field: 'status', value: '', cellRenderer: { setup: props => () =>
         <el-switch
           model-value={props.params.value}
@@ -29,21 +34,20 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>
         />,
     } },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
-      const { params } = $(toRefs(props))
       return () =>
         <div className="flex items-center justify-between">
           <button className="fa6-solid:pen-to-square btn" onClick={() => {
             show = true
-            row = params.data
+            row = props.params.data
           }}/>
-          <button className="fa6-solid:trash-can btn" onClick={() => onDrop([params.data])}/>
+          <button className="fa6-solid:trash-can btn" onClick={() => onDrop([props.params.data])}/>
         </div>
     } } },
   ],
-  getDepartmentList,
+  getPersonList,
 )
 
-async function onDrop(list: DepartmentRow[]) {
+async function onDrop(list: FoodRow[]) {
   await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
   const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
     .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
@@ -54,7 +58,7 @@ async function onDrop(list: DepartmentRow[]) {
 
 function addHandler() {
   show = true
-  row = { status: 1 } as DepartmentRow
+  row = { } as FoodRow
 }
 </script>
 
@@ -82,5 +86,5 @@ function addHandler() {
 
 <route lang="yaml">
 meta:
-  title: 部门管理
+  title: 菜品管理
 </route>

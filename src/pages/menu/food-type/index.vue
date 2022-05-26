@@ -1,22 +1,20 @@
-<script setup lang="tsx" name="person-department">
+<script setup lang="tsx" name="menu-food-type">
 import { AgGridVue } from 'ag-grid-vue3'
-import { ElMessage, ElMessageBox } from 'element-plus'
-import type { DepartmentRow } from './api'
-import { drop, getDepartmentList, put } from './api'
+import { ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
+import type { FoodTypeRow } from './api'
+import { drop, fetchFoodTypeList, put } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
-let row = $ref<DepartmentRow>()
+let row = $ref<FoodTypeRow>()
 
-const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>(
+const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<FoodTypeRow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '部门', field: 'departmentName', value: '' },
-    { headerName: '手机号', field: 'phone', value: '' },
-    { headerName: '描述', field: 'description', value: '' },
+    { headerName: '名称', field: 'enumName', value: '' },
     { headerName: '状态', field: 'status', value: '', cellRenderer: { setup: props => () =>
-        <el-switch
+        <ElSwitch
           model-value={props.params.value}
           onClick={async () => {
             await ElMessageBox.confirm('确定修改状态?', '提示')
@@ -40,10 +38,10 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>
         </div>
     } } },
   ],
-  getDepartmentList,
+  fetchFoodTypeList,
 )
 
-async function onDrop(list: DepartmentRow[]) {
+async function onDrop(list: FoodTypeRow[]) {
   await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
   const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
     .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
@@ -54,7 +52,7 @@ async function onDrop(list: DepartmentRow[]) {
 
 function addHandler() {
   show = true
-  row = { status: 1 } as DepartmentRow
+  row = { } as FoodTypeRow
 }
 </script>
 
@@ -82,5 +80,5 @@ function addHandler() {
 
 <route lang="yaml">
 meta:
-  title: 部门管理
+  title: 菜品类型
 </route>

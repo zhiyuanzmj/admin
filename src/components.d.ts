@@ -10,7 +10,6 @@ declare module '@vue/runtime-core' {
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
-    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElDatePicker: typeof import('element-plus/es')['ElDatePicker']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
@@ -29,6 +28,8 @@ declare module '@vue/runtime-core' {
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     FilterCheckbox: typeof import('./components/VFilter/FilterCheckbox.vue')['default']
     FilterDate: typeof import('./components/VFilter/FilterDate.vue')['default']
     FilterInput: typeof import('./components/VFilter/FilterInput.vue')['default']
@@ -42,6 +43,7 @@ declare module '@vue/runtime-core' {
     TableSet: typeof import('./components/TableSet.vue')['default']
     VFilter: typeof import('./components/VFilter/index.vue')['default']
     VHeader: typeof import('./components/VHeader.vue')['default']
+    VUpload: typeof import('./components/VUpload.vue')['default']
   }
 }
 

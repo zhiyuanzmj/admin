@@ -1,13 +1,13 @@
 import type { LocationQueryValue } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import { omit, pick } from 'lodash/fp'
-import type { ColDef, ColumnApi, ColumnPinnedEvent, ColumnState, GridApi, GridOptions, GridReadyEvent, ICellRendererParams } from 'ag-grid-community'
+import type { ColDef, ColumnApi, ColumnPinnedEvent, ColumnState, GridApi, GridOptions, GridReadyEvent, ICellRendererParams, ValueGetterParams } from 'ag-grid-community'
 import TableSet from '~/components/TableSet.vue'
 import { isDark } from '~/composables'
 
 interface Option { label: string; value: string | number }
 export type Overwrite<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U
-  type Params<T> = Overwrite<ICellRendererParams, { data: T; colDef: ColDef }>
+  type Params<T> = Overwrite<ICellRendererParams, { data: T ; colDef: ColDef }>
 export type Column<T = object> = Overwrite<ColDef, {
   value?: string
   field: keyof T | 'select' | 'actions'
@@ -18,6 +18,7 @@ export type Column<T = object> = Overwrite<ColDef, {
   formWidth?: string
   formType?: string
   formProps?: any
+  valueGetter?: ((params: Overwrite<ValueGetterParams, { data: T }>) => any) | string
   cellRenderer?: { setup: ({ params }: { params: Params<T> }) => any }
 }>
 
@@ -48,7 +49,6 @@ export const useAgGrid = function <T=any>(
 
   const params = computed(() => columnList.reduce((a: any, b) => (a[b.field] = b.value || undefined, a), {}))
   async function getList(data?: any) {
-    await nextTick()
     gridApi.value?.showLoadingOverlay?.()
     router.replace({ query: { ...route.query, ...params.value } })
     const { pageIndex = '1', pageSize = '50', order, sort } = route.query
@@ -57,6 +57,7 @@ export const useAgGrid = function <T=any>(
     total.value = result?.total ?? 0
     selectedList.value = []
 
+    await nextTick()
     autoSizeAll()
     gridApi.value?.refreshCells({ force: true })
   }
@@ -135,6 +136,7 @@ export const useAgGrid = function <T=any>(
     suppressColumnVirtualisation: true,
     enableCellTextSelection: true,
     alwaysMultiSort: true,
+    // enableCellChangeFlash: true,
     getRowId: ({ data }) => data?.id,
     defaultColDef: {
       sortable: true,
@@ -209,8 +211,4 @@ export const useAgGrid = function <T=any>(
     agGridBind,
     agGridOn,
   }
-}
-
-export function useParams<T=any>() {
-  return toReactive(ref(<Params<T>>getCurrentInstance()?.props.params))
 }
