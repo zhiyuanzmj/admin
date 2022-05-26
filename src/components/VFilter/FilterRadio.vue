@@ -22,6 +22,6 @@ else {
     v-model="column.value"
     class="flex whitespace-nowrap items-center !w-auto"
     :options="options"
-    @update:modelValue="getList"
+    @update:model-value="getList"
   />
 </template>

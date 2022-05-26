@@ -13,7 +13,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<FoodTypeRow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '名称', field: 'enumName', value: '' },
-    { headerName: '状态', field: 'status', value: '', cellRenderer: { setup: props => () =>
+    { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
         <ElSwitch
           model-value={props.params.value}
           onClick={async () => {

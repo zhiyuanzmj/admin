@@ -12,13 +12,11 @@ const getList = inject('getList', () => {})
 </script>
 
 <template>
-  <q-toggle
+  <el-switch
     v-model="column.value"
-    checked-icon="check"
-    true-value="1"
-    false-value="0"
-    toggle-indeterminate
+    active-value="1"
+    :inactive-value="undefined"
     class="!w-auto"
-    @update:modelValue="getList"
+    @update:model-value="getList"
   />
 </template>

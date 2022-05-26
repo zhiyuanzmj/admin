@@ -2,7 +2,7 @@
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { fetchFoodTypeList } from '../food-type/api'
-import { type FoodRow, drop, getPersonList, put } from './api'
+import { type FoodRow, drop, fetchFoodList, put } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
@@ -13,14 +13,14 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<FoodRow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '名称', field: 'name', value: '' },
-    { headerName: '类型', valueGetter: ({ data }) => data.foodEnums.map(i => i.enumName).join(','), field: 'foodEnums', value: '', options: ({ value: enumName, ...params }) =>
+    { headerName: '类型', valueGetter: ({ data }) => data.foodEnums.map(i => i.name), field: 'foodEnums', value: '', options: ({ value: enumName, ...params }) =>
       fetchFoodTypeList({ ...params, enumName }).then(({ data, total }) => ({
-        data: data.map(i => ({ label: i.enumName, value: i.id })),
+        data: data.map(i => ({ label: i.name, value: i.id })),
         total,
       })),
     },
-    { headerName: '卡路里', field: 'calorie', value: '' },
-    { headerName: '状态', field: 'status', value: '', cellRenderer: { setup: props => () =>
+    { headerName: '能量', field: 'calorie', value: '' },
+    { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
         <el-switch
           model-value={props.params.value}
           onClick={async () => {
@@ -44,7 +44,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<FoodRow>(
         </div>
     } } },
   ],
-  getPersonList,
+  fetchFoodList,
 )
 
 async function onDrop(list: FoodRow[]) {

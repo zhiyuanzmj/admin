@@ -16,7 +16,7 @@ export type Column<T = object> = Overwrite<ColDef, {
   order?: string
   options?: ((rest: Record<string, any>) => Promise<{ data: Option[]; total: number }>) | Option[]
   formWidth?: string
-  formType?: string
+  formType?: 'switch' | 'radio' | 'checkbox' | 'date' | 'input' | 'select' | 'textarea'
   formProps?: any
   valueGetter?: ((params: Overwrite<ValueGetterParams, { data: T }>) => any) | string
   cellRenderer?: { setup: ({ params }: { params: Params<T> }) => any }

@@ -49,7 +49,7 @@ async function submit() {
           <el-option v-for="i in foodTypeList" :key="i.id" :label="i.enumName" :value="i" />
         </el-select>
       </el-form-item>
-      <el-form-item label="卡路里" w="3/4" prop="calorie">
+      <el-form-item label="能量" w="3/4" prop="calorie">
         <el-input v-model="row.calorie" type="number" />
       </el-form-item>
 

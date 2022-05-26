@@ -10,7 +10,7 @@ export interface FoodRow {
   status?: 0 | 1
 }
 
-export function getPersonList(params: object) {
+export function fetchFoodList(params: object) {
   return request<FoodRow[]>('/food/getFoods', {
     params,
   })

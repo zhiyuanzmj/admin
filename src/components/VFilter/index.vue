@@ -63,7 +63,7 @@ useResizeObserver(extend.value, ([entry]) => {
         :label="column.headerName"
       >
         <component
-          :is="column.formType === 'toggle' ? FilterToggle
+          :is="column.formType === 'switch' ? FilterToggle
             : column.formType === 'checkbox' ? FilterCheckbox
               : column.formType === 'date' ? FilterDate
                 : column.options ? column.formType === 'radio' ? FilterRadio : FilterSelect
