@@ -2,12 +2,12 @@
 import type { FormInstance } from 'element-plus'
 import { ElLoading, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
-import type { DepartmentRow } from '../api'
+import type { RoleRow } from '../api'
 import { post, put } from '../api'
 
 const props = defineProps<{
   show: boolean
-  row: DepartmentRow
+  row: RoleRow
 }>()
 const row = $ref(cloneDeep({ ...props.row, password: '' }))
 let show = $(useVModel(props, 'show'))
@@ -29,16 +29,13 @@ async function submit() {
 </script>
 
 <template>
-  <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}部门`">
+  <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}用户`">
     <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="submit">
-      <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="departmentName" label="名称">
-        <el-input v-model="row.departmentName" />
+      <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="roleName" label="账号">
+        <el-input v-model="row.roleName" />
       </el-form-item>
-      <el-form-item label="手机号" prop="nickname">
-        <el-input v-model="row.phone" />
-      </el-form-item>
-      <el-form-item label="描述" prop="description">
-        <el-input v-model="row.description" />
+      <el-form-item label="描述" prop="roleNameZh">
+        <el-input v-model="row.roleNameZh" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">确认提交</el-button>

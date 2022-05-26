@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ElLoading } from 'element-plus'
 import { useRouteStore } from './route'
-// import { useColumnStore } from './column'
 import { request } from '~/composables/request'
 
 export const useUserStore = defineStore('main', {
@@ -22,14 +21,6 @@ export const useUserStore = defineStore('main', {
       this.router.push(<string> this.route.query.redirect || '/')
     },
     async getPermissionList() {
-      /** 获取用户自定义列设置 */
-      // const { getColumnStore } = useColumnStore()
-      // const columnStoreAsync = getColumnStore()
-      // await columnStoreAsync
-      // const loading = ElLoading.service({ fullscreen: true })
-      // const { data: { permission } } = await request({
-      //   url: '/sys/permission/getUserPermissionByToken',
-      // }).finally(() => loading.close())
       const permission = [{ url: '/get/user' }]
       return this.permissionList = permission.map((i: any) => i.url)
     },

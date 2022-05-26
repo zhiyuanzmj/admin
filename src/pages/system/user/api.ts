@@ -7,6 +7,7 @@ export interface Row {
   password?: string
   state: 0 | 1
   confirmPassword?: string
+  roles: string[]
 }
 
 export function getUserList(params: object) {
