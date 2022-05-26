@@ -17,7 +17,7 @@ export const useUserStore = defineStore('main', {
         method: 'post',
         body,
       }).finally(() => loading.close())
-      this.token = token ? `Bearer ${token}` : ''
+      this.token = token
       this.userInfo = userInfo
       this.router.push(<string> this.route.query.redirect || '/')
     },

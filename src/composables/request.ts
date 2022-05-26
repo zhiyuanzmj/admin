@@ -12,7 +12,7 @@ const _fetch = $fetch.create({
     const userStore = useUserStore()
     options.params = options.params && JSON.parse(JSON.stringify(options.params))
     options.body = options.body && JSON.parse(JSON.stringify(options.body))
-    options.headers = { Authorization: userStore.token, ...options.headers }
+    options.headers = { Authorization: `Bearer ${`${userStore.token}`}`, RefreshToken: userStore.userInfo.refreshToken, ...options.headers }
   },
   async onResponse({ response, options, request }) {
     NProgress.done()
@@ -20,6 +20,10 @@ const _fetch = $fetch.create({
 
     if (['blob', 'text'].includes(options.responseType!))
       return
+
+    /** 续签Token */
+    if (response.status === 201)
+      useUserStore().token = response.headers.get('token')!
 
     if (data.code === 200 || whiteList.includes(request.toString())) {
       response._data = {
