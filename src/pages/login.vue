@@ -18,12 +18,12 @@ async function submit() {
 </script>
 
 <template>
-  <div class="flex flex-col flex-nowrap w-screen h-screen bg-no-repeat !bg-cover bg-gray-100 dark:bg-gray-900">
+  <div class="flex flex-col flex-nowrap w-screen h-screen bg-no-repeat !bg-cover bg-gray-100 dark:bg-zinc-900">
     <button absolute right-5 top-5 btn fa6-solid:sun dark:fa6-solid-moon @click="toggleDark()" />
     <el-form
       ref="formRef"
       size="large"
-      class="m-auto p-10 rounded-lg flex shadow-lg bg-white dark:bg-gray-800 "
+      class="m-auto p-10 rounded-lg flex shadow-lg bg-white dark:bg-zinc-800 "
       @submit.prevent="submit"
     >
       <div class="flex flex-col w-sm">
