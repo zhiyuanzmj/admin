@@ -10,6 +10,7 @@ export default {
 
 <route lang="yaml">
 redirect: /system/user
+component: ~/layouts/default.vue
 meta:
   permission: true
   icon: ep:setting

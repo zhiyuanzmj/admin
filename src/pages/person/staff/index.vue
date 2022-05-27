@@ -1,4 +1,4 @@
-<script setup lang="tsx" name="system-staff">
+<script setup lang="tsx" name="person-staff">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getDepartmentList } from '../department/api'

@@ -49,7 +49,13 @@ async function submit() {
 <template>
   <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}用户`">
     <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="submit">
-      <el-form-item :rules="[{ message: '不能为空', required: true }, { type: 'email', message: '无效的邮箱格式', trigger: 'blur' }]" prop="username" label="账号">
+      <el-form-item
+        :rules="[
+          { message: '不能为空', required: true },
+          // { type: 'email', message: '无效的邮箱格式', trigger: 'blur' },
+        ]"
+        prop="username" label="账号"
+      >
         <el-input v-model="row.username" />
       </el-form-item>
       <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="roles" label="角色">

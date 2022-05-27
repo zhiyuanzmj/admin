@@ -29,6 +29,7 @@ export const useUserStore = defineStore('main', {
     },
     async logout() {
       this.token = ''
+      this.userInfo = {}
       this.permissionList = []
       this.route.name !== 'login' && this.router.push({ path: '/login', query: { redirect: this.route.fullPath } })
 

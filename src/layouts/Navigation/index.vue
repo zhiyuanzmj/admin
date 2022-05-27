@@ -25,7 +25,7 @@ function toggleExpand() {
         首页
       </el-breadcrumb-item>
       <transition-group v-if="$route.path !== '/'" name="breadcrumb" appear>
-        <el-breadcrumb-item v-for="(i) in $route.matched.slice(1)" :key="i.name" :to="i">
+        <el-breadcrumb-item v-for="(i) in $route.matched" :key="i.name" :to="i">
           {{ i.meta?.title }}
         </el-breadcrumb-item>
       </transition-group>

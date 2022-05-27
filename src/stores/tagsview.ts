@@ -4,8 +4,6 @@ import type { RouteLocationNormalized, RouteRecordName, RouteRecordRaw } from 'v
 
 export const useTagsviewStore = defineStore('tagsview', {
   state: () => ({
-    viewKey: 0,
-    exclude: ['login', '404'] as RouteRecordName[],
     cachedViews: [] as any[],
     visitedViews: JSON.parse(localStorage.getItem('visitedViews') || '[]') as RouteLocationNormalized[],
   }),
@@ -15,7 +13,7 @@ export const useTagsviewStore = defineStore('tagsview', {
   actions: {
     addView(view: RouteLocationNormalized) {
       view = cloneDeep(view)
-      if (this.exclude.includes(view.name!))
+      if (view.meta.hidden)
         return
 
       if (!this.visitedViews.some(v => v.name === view.name))
@@ -60,7 +58,7 @@ export const useTagsviewStore = defineStore('tagsview', {
     push(name?: RouteRecordName | null, forceRefresh = false) {
       name ??= this.route.name
       if (name === this.route.name)
-        return this.viewKey++
+        return this.router.push('/reload')
       if (forceRefresh)
         this.dropCachedView(this.route)
       this.router.push(this.resolve({ name } as RouteLocationNormalized))

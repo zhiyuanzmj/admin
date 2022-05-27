@@ -10,6 +10,7 @@ export default {
 
 <route lang="yaml">
 redirect: /food/food
+component: ~/layouts/default.vue
 meta:
   icon: ep:food
   title: 菜单管理

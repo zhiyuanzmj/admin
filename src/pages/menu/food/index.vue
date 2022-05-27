@@ -1,4 +1,4 @@
-<script setup lang="tsx" name="food">
+<script setup lang="tsx" name="menu-food">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { fetchFoodTypeList } from '../food-type/api'

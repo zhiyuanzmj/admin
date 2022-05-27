@@ -15,7 +15,7 @@ const isCollapse = $ref(false)
         <img src="/logo.png" w-8 ml-1>
         <div relative overflow-hidden>
           <transition enter-active-class="absolute" :duration="300" leave-active-class="absolute">
-            <h1 v-if="!isCollapse">食堂管理系统</h1>
+            <h1 v-if="!isCollapse">菜谱预点餐系统</h1>
           </transition>
         </div>
       </header>
@@ -27,7 +27,7 @@ const isCollapse = $ref(false)
       <Tagsview />
       <router-view v-slot="{ Component, route }">
         <transition mode="out-in" name="main" appear>
-          <keep-alive :key="tagsViewStore.viewKey" :include="tagsViewStore.cachedViews" :max="20">
+          <keep-alive :include="tagsViewStore.cachedViews" :max="20">
             <component :is="Component" :key="route.path" />
           </keep-alive>
         </transition>
