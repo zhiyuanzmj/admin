@@ -1,4 +1,3 @@
-import { cloneDeep } from 'lodash'
 import { defineStore } from 'pinia'
 import type { RouteLocationNormalized, RouteRecordName, RouteRecordRaw } from 'vue-router'
 
@@ -12,12 +11,15 @@ export const useTagsviewStore = defineStore('tagsview', {
   },
   actions: {
     addView(view: RouteLocationNormalized) {
-      view = cloneDeep(view)
+      view = { ...view }
       if (view.meta.hidden)
         return
 
-      if (!this.visitedViews.some(v => v.name === view.name))
+      const index = this.visitedViews.findIndex(v => v.name === view.name)
+      if (index < 0)
         this.visitedViews.push(view)
+      else
+        this.visitedViews[index] = view
 
       if (
         view?.name && !view.meta?.noCache
@@ -25,16 +27,11 @@ export const useTagsviewStore = defineStore('tagsview', {
       )
         this.cachedViews.push(view?.name)
     },
-    updateView(view: RouteLocationNormalized) {
-      const index = this.visitedViews.findIndex(v => v.name === view.name)
-      if (index >= 0)
-        this.visitedViews[index] = view
-    },
     dropView(view: Pick<RouteLocationNormalized, 'name'>) {
-      this._dropVisitedView(view)
+      this.dropVisitedView(view)
       this.dropCachedView(view)
     },
-    _dropVisitedView(view: Pick<RouteLocationNormalized, 'name'>) {
+    dropVisitedView(view: Pick<RouteLocationNormalized, 'name'>) {
       const index = this.visitedViews.findIndex(v => v.name === view.name)
       if (index >= 0)
         this.visitedViews.splice(index, 1)

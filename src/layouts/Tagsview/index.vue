@@ -1,34 +1,21 @@
 <script setup lang="ts">
 import type { RouteLocationNormalized } from 'vue-router'
-import { onBeforeRouteUpdate } from 'vue-router'
 import draggable from 'vuedraggable'
 import ScrollPane from './ScrollPane.vue'
 import { useTagsviewStore } from '~/stores/tagsview'
 
 const tagsView = useTagsviewStore()
 tagsView.$subscribe((_, state) => {
-  localStorage.setItem('visitedViews', JSON.stringify(state.visitedViews.map(i => ({ ...i, matched: [] }))))
-})
-const visitedViews = $computed<RouteLocationNormalized[]>({
-  get: () => tagsView.visitedViews,
-  set: val => tagsView.visitedViews = val,
+  localStorage.setItem('visitedViews', JSON.stringify(state.visitedViews))
 })
 
 const route = useRoute()
 const router = useRouter()
 
-watch(() => route.path, () => {
+watch(() => route.fullPath, () => {
   tagsView.addView(route)
   moveToCurrentTag()
 }, { immediate: true })
-
-onBeforeRouteUpdate((view) => {
-  tagsView.updateView(view)
-})
-
-function isActive(tag: RouteLocationNormalized) {
-  return tag.name === route.name
-}
 
 const tags = $shallowRef<{ to: RouteLocationNormalized }[]>([])
 const scrollPaneRef = $shallowRef<any>()
@@ -42,17 +29,17 @@ async function moveToCurrentTag() {
 }
 
 function toLastView() {
-  const latestView = visitedViews.slice(-1)[0]
+  const latestView = tagsView.visitedViews.slice(-1)[0]
   if (latestView)
     router.push(latestView)
   else
     router.push('/')
 }
 
-function closeSelectedTag(view: RouteLocationNormalized) {
+function closeTag(view: RouteLocationNormalized) {
   tagsView.dropView(view)
 
-  if (isActive(view))
+  if (view.name === route.name)
     toLastView()
 }
 
@@ -77,7 +64,7 @@ function closeAllTags() {
   <div px-1 bg="gray-200 dark:zinc-800" overflow-auto relative flex flex-nowrap z-2>
     <scroll-pane ref="scrollPaneRef" :tag-list="tags">
       <draggable
-        v-model="visitedViews"
+        v-model="tagsView.visitedViews"
         item-key="path"
         animation="200"
         class="flex gap-1 px-2.5 flex-1"
@@ -85,16 +72,15 @@ function closeAllTags() {
         <template #item="{ element: tag, index: i }">
           <span
             :ref="(val:any) => { if (val){ val.to = tag;tags[i] = val } }"
-            :class="{ active: isActive(tag) }"
+            :class="{ active: tag.name === route.name }"
             class="tab-item"
-            @click.middle="closeSelectedTag(tag)"
             @click="tagsView.push(tag.name)"
           >
             <span class="split" absolute left="-6px" z="-1" text-gray-500>｜</span>
             {{ tag.meta.title }}
             {{ tag.query?.titleLabel ? ` : ${tag.query?.titleLabel}` : '' }}
             <span ml-1 text-xs flex items-center hover:bg-gray-300 rounded-full>
-              <i ic:baseline-close @click.prevent.stop="closeSelectedTag(tag)" />
+              <i ic:baseline-close @click.prevent.stop="closeTag(tag)" />
             </span>
           </span>
         </template>
@@ -107,7 +93,7 @@ function closeAllTags() {
           <el-dropdown-item @click="tagsView.push(selectedTag.name)">
             刷新
           </el-dropdown-item>
-          <el-dropdown-item @click="closeSelectedTag(selectedTag)">
+          <el-dropdown-item @click="closeTag(selectedTag)">
             关闭
           </el-dropdown-item>
           <el-dropdown-item @click="closeOthersTags">
