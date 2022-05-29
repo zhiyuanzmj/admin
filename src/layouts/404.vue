@@ -1,17 +1,28 @@
-<script setup lang="ts">
-const router = useRouter()
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'Error404',
+})
 </script>
 
 <template>
-  <main p="x4 y10" text="center teal-700 dark:gray-200">
-    <div text-4xl>
-      <div i-carbon-warning inline-block />
+  <div class="h-screen w-screen bg-blue text-white text-center flex flex-col items-center">
+    <div text="20vh">
+      404
     </div>
-    <RouterView />
-    <div>
-      <button btn text-sm m="3 t8" @click="router.back()">
-        button.back
-      </button>
+
+    <div class="text-lg" style="opacity: 0.7;">
+      Oops. Nothing here...
     </div>
-  </main>
+    <router-view />
+
+    <el-button
+      mt-3
+      size="large"
+      @click="$router.go(-1)"
+    >
+      返 回
+    </el-button>
+  </div>
 </template>

@@ -2,9 +2,7 @@
 </script>
 
 <template>
-  <div>
-    not-found
-  </div>
+  <div />
 </template>
 
 <route lang="yaml">
