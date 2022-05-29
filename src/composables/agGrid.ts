@@ -5,7 +5,7 @@ import type { ColDef, ColumnApi, ColumnPinnedEvent, ColumnState, GridApi, GridOp
 import TableSet from '~/components/TableSet.vue'
 import { isDark } from '~/composables'
 
-interface Option { label: string; value: string | number }
+interface Option { label?: string; value?: string | number }
 export type Overwrite<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U
   type Params<T> = Overwrite<ICellRendererParams, { data: T ; colDef: ColDef }>
 export type Column<T = object> = Overwrite<ColDef, {

@@ -70,4 +70,5 @@ function addHandler() {
 name: plan
 meta:
   title: 每日菜单
+  order: 3
 </route>
