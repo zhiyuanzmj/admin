@@ -1,4 +1,4 @@
-<script setup lang="tsx" name="person-staff">
+<script setup lang="tsx" name="staff">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { getDepartmentList } from '../department/api'
@@ -87,6 +87,8 @@ function addHandler() {
 </template>
 
 <route lang="yaml">
+name: staff
 meta:
   title: 人员信息
+  order: 1
 </route>

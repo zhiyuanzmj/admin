@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useUserStore } from '~/stores/user'
 import { toggleDark } from '~/composables'
+import UserForm from '~/pages/system/user/components/VForm.vue'
+
 const props = defineProps<{
   isCollapse: boolean
 }>()
@@ -14,6 +16,9 @@ function toggleExpand() {
     ? document.documentElement.requestFullscreen()
     : document.exitFullscreen()
 }
+
+const show = ref(false)
+const row = ref({ ...user.userInfo })
 </script>
 
 <template>
@@ -41,14 +46,18 @@ function toggleExpand() {
         <i fa-solid:sort-down self-start />
       </div>
       <template #dropdown>
-        <el-dropdown-item mt="!1.5">
-          修改密码
+        <el-dropdown-item mt="!1.5" @click="$router.push('/')">
+          控制台
+        </el-dropdown-item>
+        <el-dropdown-item @click="show = true">
+          个人设置
         </el-dropdown-item>
         <el-dropdown-item divided mb="!1.5" @click="user.logout()">
           退出登陆
         </el-dropdown-item>
       </template>
     </el-dropdown>
+    <UserForm v-model:show="show" :row="row" />
   </nav>
 </template>
 

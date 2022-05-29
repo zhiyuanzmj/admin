@@ -27,6 +27,7 @@ declare module 'vue-router' {
     title?: string
     label?: string
     class?: string
+    order?: number
   }
 }
 

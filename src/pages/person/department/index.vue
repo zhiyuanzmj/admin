@@ -1,4 +1,4 @@
-<script setup lang="tsx" name="person-department">
+<script setup lang="tsx" name="department">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { DepartmentRow } from './api'
@@ -81,6 +81,8 @@ function addHandler() {
 </template>
 
 <route lang="yaml">
+name: department
 meta:
   title: 部门管理
+  order: 2
 </route>

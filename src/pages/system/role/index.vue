@@ -1,4 +1,4 @@
-<script setup lang="tsx" name="system-role">
+<script setup lang="tsx" name="role">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { RoleRow } from './api'
@@ -65,6 +65,8 @@ function addHandler() {
 </template>
 
 <route lang="yaml">
+name: role
 meta:
   title: 角色管理
+  order: 2
 </route>

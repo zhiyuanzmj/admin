@@ -6,11 +6,6 @@ import { useUserStore } from './user'
 import { useTagsviewStore } from './tagsview'
 import routes from '~pages'
 
-/**
- * Use meta.role to determine if the current user has permission
- * @param permissions
- * @param route
- */
 function hasPermission(permissions: any[] = [], route: RouteRecordRaw) {
   if (!route.meta?.permission)
     return true
@@ -24,25 +19,21 @@ function hasPermission(permissions: any[] = [], route: RouteRecordRaw) {
     return permissions.includes(route.meta?.permission)
 }
 
-/**
- * Filter asynchronous routing tables by recursion
- * @param routes
- * @param permissions
- */
 function filterAsyncRoutes(routes: RouteRecordRaw[], permissions: string[] = []) {
   const res: RouteRecordRaw[] = []
 
   routes.forEach((route) => {
     const tmp = { ...route }
-    if (hasPermission(permissions, tmp)) {
-      if (tmp.children)
-        tmp.children = filterAsyncRoutes(tmp.children, permissions)
+    if (!hasPermission(permissions, tmp))
+      return
+    if (tmp.children)
+      tmp.children = filterAsyncRoutes(tmp.children, permissions)
 
-      res.push(tmp)
-    }
+    res.push(tmp)
   })
 
-  return res
+  // @ts-expect-error ignore
+  return res.sort((a, b) => a.meta?.order - b!.meta?.order)
 }
 
 const getList = (routes: RouteRecordRaw[]) =>

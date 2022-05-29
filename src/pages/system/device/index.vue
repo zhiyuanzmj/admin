@@ -1,49 +1,51 @@
-<script setup lang="tsx" name="user">
+<script setup lang="tsx" name="device">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import type { Row } from './api'
-import { drop, getUserList, put } from './api'
+import { type Device, drop, fetchFoodList, put } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
-let row = $ref<Row>()
+let row = $ref<Device>()
 
-const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Row>(
+const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Device>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '账号', field: 'username', value: '' },
-    { headerName: '姓名', field: 'nickname', value: '' },
-    { headerName: '状态', field: 'state', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
+    { headerName: '名称', field: 'name', value: '' },
+    { headerName: '位置', field: 'address', value: '' },
+    { headerName: 'IP地址', field: 'addressIp', value: '' },
+    { headerName: '端口', field: 'port', value: '' },
+    { headerName: '登陆名', field: 'loginName', value: '' },
+    { headerName: '密码', field: 'loginPaw' },
+    { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
         <el-switch
           model-value={props.params.value}
           onClick={async () => {
             await ElMessageBox.confirm('确定修改状态?', '提示')
-            await put({ ...props.params.data, state: props.params.value ? 0 : 1 })
+            await put({ ...props.params.data, status: !props.params.value ? 1 : 0 })
             ElMessage.success('操作成功')
             getList()
           } }
-          active-value={0}
-          inactive-value={1}
+          active-value={1}
+          inactive-value={0}
         />,
     } },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
-      const { params } = $(toRefs(props))
       return () =>
         <div className="flex items-center justify-between">
           <button className="fa6-solid:pen-to-square btn" onClick={() => {
             show = true
-            row = params.data
+            row = props.params.data
           }}/>
-          <button className="fa6-solid:trash-can btn" onClick={() => onDrop([params.data])}/>
+          <button className="fa6-solid:trash-can btn" onClick={() => onDrop([props.params.data])}/>
         </div>
     } } },
   ],
-  getUserList,
+  fetchFoodList,
 )
 
-async function onDrop(list: Row[]) {
-  await ElMessageBox.confirm(`确定删除 ${list.length} 条数据？`, '提示')
+async function onDrop(list: Device[]) {
+  await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
   const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
     .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
   fulfilled && ElMessage.success(`删除成功 ${fulfilled} 条`); await nextTick()
@@ -53,7 +55,7 @@ async function onDrop(list: Row[]) {
 
 function addHandler() {
   show = true
-  row = { state: 0 }
+  row = { } as Device
 }
 </script>
 
@@ -80,9 +82,8 @@ function addHandler() {
 </template>
 
 <route lang="yaml">
-name: user
+name: device
 meta:
-  permission: /get/user
-  title: 用户管理
-  order: 1
+  title: 设备管理
+  order: 3
 </route>

@@ -1,4 +1,4 @@
-<script setup lang="tsx" name="menu-food-type">
+<script setup lang="tsx" name="food-type">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
 import type { FoodTypeRow } from './api'
@@ -79,6 +79,7 @@ function addHandler() {
 </template>
 
 <route lang="yaml">
+name: food-type
 meta:
   title: 菜品类型
 </route>

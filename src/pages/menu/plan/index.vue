@@ -1,4 +1,4 @@
-<script setup lang="tsx" name="menu-plan">
+<script setup lang="tsx" name="plan">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { Plan } from './api'
@@ -40,7 +40,7 @@ async function onDrop(list: Plan[]) {
 
 function addHandler() {
   show = true
-  row = { status: 1 } as Plan
+  row = { } as Plan
 }
 </script>
 
@@ -67,6 +67,7 @@ function addHandler() {
 </template>
 
 <route lang="yaml">
+name: plan
 meta:
   title: 每日菜单
 </route>
