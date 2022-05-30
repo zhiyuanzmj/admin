@@ -1,6 +1,6 @@
 <script setup lang="tsx" name="staff">
 import { AgGridVue } from 'ag-grid-vue3'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElImage, ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
 import { getDepartmentList } from '../department/api'
 import type { Row } from './api'
 import { drop, getPersonList, put } from './api'
@@ -23,12 +23,12 @@ const { agGridBind, agGridOn, selectedList, getList, list } = useAgGrid<Row>(
     },
     { headerName: '照片', field: 'photoName', cellRenderer: { setup(props) {
       const src = `/api/file${props.params.value}`
-      return () => <el-image v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list.value)} src={src} class="h-10 mt-4 cursor-pointer"/>
+      return () => <ElImage v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list.value)} src={src} class="h-10 mt-4 cursor-pointer"/>
     } } },
     { headerName: '性别', field: 'sex', valueGetter: ({ value }: any) => value ? '男' : '女' },
     { headerName: '手机号', field: 'phone', value: '' },
     { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
-        <el-switch
+        <ElSwitch
           model-value={props.params.value}
           onClick={async () => {
             await ElMessageBox.confirm('确定修改状态?', '提示')

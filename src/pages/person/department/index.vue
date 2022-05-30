@@ -1,6 +1,6 @@
 <script setup lang="tsx" name="department">
 import { AgGridVue } from 'ag-grid-vue3'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
 import type { DepartmentRow } from './api'
 import { drop, getDepartmentList, put } from './api'
 import VForm from './components/VForm.vue'
@@ -16,7 +16,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>
     { headerName: '手机号', field: 'phone', value: '' },
     { headerName: '描述', field: 'description', value: '' },
     { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
-        <el-switch
+        <ElSwitch
           model-value={props.params.value}
           onClick={async () => {
             await ElMessageBox.confirm('确定修改状态?', '提示')

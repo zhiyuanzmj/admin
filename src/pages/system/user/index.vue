@@ -1,6 +1,6 @@
 <script setup lang="tsx" name="user">
 import { AgGridVue } from 'ag-grid-vue3'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
 import type { Row } from './api'
 import { drop, getUserList, put } from './api'
 import VForm from './components/VForm.vue'
@@ -15,7 +15,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Row>(
     { headerName: '账号', field: 'username', value: '' },
     { headerName: '姓名', field: 'nickname', value: '' },
     { headerName: '状态', field: 'state', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
-        <el-switch
+        <ElSwitch
           model-value={props.params.value}
           onClick={async () => {
             await ElMessageBox.confirm('确定修改状态?', '提示')

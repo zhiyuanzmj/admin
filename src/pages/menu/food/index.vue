@@ -1,6 +1,6 @@
 <script setup lang="tsx" name="food">
 import { AgGridVue } from 'ag-grid-vue3'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElImage, ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
 import { fetchFoodTypeList } from '../food-type/api'
 import { type FoodRow, drop, fetchFoodList, put } from './api'
 import VForm from './components/VForm.vue'
@@ -15,7 +15,7 @@ const { agGridBind, agGridOn, selectedList, list, getList } = useAgGrid<FoodRow>
     { headerName: '名称', field: 'name', value: '' },
     { headerName: '图片', field: 'photoName', cellRenderer: { setup(props) {
       const src = `/api/file${props.params.value}`
-      return () => <el-image v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list.value)} src={src} class="h-10 mt-4 cursor-pointer"/>
+      return () => <ElImage v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list.value)} src={src} class="h-10 mt-4 cursor-pointer"/>
     } } },
     { headerName: '类型', valueGetter: ({ data }) => data.foodEnums.map(i => i.name), field: 'foodEnums', value: '', options: ({ value: enumName, ...params }) =>
       fetchFoodTypeList({ ...params, enumName }).then(({ data, total }) => ({
@@ -25,7 +25,7 @@ const { agGridBind, agGridOn, selectedList, list, getList } = useAgGrid<FoodRow>
     },
     { headerName: '能量', field: 'calorie', value: '' },
     { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
-        <el-switch
+        <ElSwitch
           model-value={props.params.value}
           onClick={async () => {
             await ElMessageBox.confirm('确定修改状态?', '提示')
