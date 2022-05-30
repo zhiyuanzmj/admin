@@ -3,7 +3,7 @@ import { request } from '~/composables/request'
 
 export interface FoodRow {
   id?: string
-  foodEnums: FoodTypeRow[]
+  foodEnums: FoodTypeRow & { name: string }[]
   name?: string
   calorie?: string
   photoName?: string

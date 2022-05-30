@@ -55,7 +55,7 @@ async function onDrop(list: Device[]) {
 
 function addHandler() {
   show = true
-  row = { } as Device
+  row = { status: 1 }
 }
 </script>
 

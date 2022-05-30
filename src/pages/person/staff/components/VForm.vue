@@ -10,7 +10,7 @@ const props = defineProps<{
   show: boolean
   row: Row
 }>()
-const row = $ref(cloneDeep({ ...props.row, password: '' }))
+const row = $ref(cloneDeep({ ...props.row }))
 let show = $(useVModel(props, 'show'))
 const getList = inject('getList', () => {})
 const formRef = $shallowRef<FormInstance>()

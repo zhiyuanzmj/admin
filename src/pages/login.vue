@@ -29,6 +29,7 @@ function reload() {
     <el-form
       ref="formRef"
       size="large"
+      :model="{ username, password }"
       m-auto p-10 bg="white dark:zinc-800" w-sm flex="~ col" box-content rounded-lg shadow-lg
       @submit.prevent="submit"
     >
@@ -45,14 +46,14 @@ function reload() {
       </div>
       <div text="center sm gray-400" mt-3 mb-7>—— 登陆界面 ——</div>
 
-      <el-form-item prop="username">
+      <el-form-item :rules="{ required: true, message: '不能为空' }" prop="username">
         <el-input v-model="username" placeholder="用户名">
           <template #prefix>
             <i ep:user />
           </template>
         </el-input>
       </el-form-item>
-      <el-form-item prop="password">
+      <el-form-item :rules="{ required: true, message: '不能为空' }" prop="password">
         <el-input v-model="password" type="password" :autocomplete="autocomplete" show-password placeholder="密码">
           <template #prefix>
             <i ep:lock />

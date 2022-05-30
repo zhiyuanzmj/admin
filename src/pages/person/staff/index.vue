@@ -60,7 +60,7 @@ async function onDrop(list = [row]) {
 
 function addHandler() {
   show = true
-  row = { sex: 0 }
+  row = { sex: 0, status: 1 }
 }
 </script>
 

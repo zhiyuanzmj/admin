@@ -52,7 +52,7 @@ async function onDrop(list: FoodTypeRow[]) {
 
 function addHandler() {
   show = true
-  row = { } as FoodTypeRow
+  row = { status: 1 } as FoodTypeRow
 }
 </script>
 

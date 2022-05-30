@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormInstance } from 'element-plus'
+import type { FormInstance, UploadInstance } from 'element-plus'
 import { ElLoading, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import type { FoodTypeRow } from '../../food-type/api'
@@ -12,7 +12,7 @@ const props = defineProps<{
   show: boolean
   row: FoodRow
 }>()
-const row = $ref(cloneDeep({ ...props.row, password: '' }))
+const row = $ref(cloneDeep({ ...props.row }))
 let show = $(useVModel(props, 'show'))
 const getList = inject('getList', () => {})
 const formRef = $shallowRef<FormInstance>()
@@ -23,6 +23,7 @@ async function getFoodTypeList() {
 }
 getFoodTypeList()
 
+const uploadRef = shallowRef<UploadInstance>()
 async function submit() {
   await formRef?.validate()
   const loading = ElLoading.service({ fullscreen: true })
@@ -35,11 +36,15 @@ async function submit() {
     loading.close()
   }
 }
+function onSuccess({ data }: any) {
+  row.photoName = data
+  submit()
+}
 </script>
 
 <template>
-  <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}人员信息`">
-    <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="submit">
+  <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}菜品`">
+    <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="() => uploadRef?.submit()">
       <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="name" label="名称">
         <el-input v-model="row.name" />
       </el-form-item>
@@ -54,7 +59,7 @@ async function submit() {
       </el-form-item>
 
       <el-form-item prop="photoName" label="图片">
-        <VUpload :photo-name="row.photoName" />
+        <VUpload ref="uploadRef" :photo-name="row.photoName" :on-success="onSuccess" />
       </el-form-item>
 
       <el-form-item>

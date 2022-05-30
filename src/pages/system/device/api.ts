@@ -2,13 +2,13 @@ import { request } from '~/composables/request'
 
 export interface Device {
   id?: string
-  address: string
-  addressIp: string
-  loginName: string
-  loginPaw: string
-  name: string
-  port: number
-  status: 0 | 1
+  address?: string
+  addressIp?: string
+  loginName?: string
+  loginPaw?: string
+  name?: string
+  port?: number
+  status?: 0 | 1
   // 'type': 0
 }
 

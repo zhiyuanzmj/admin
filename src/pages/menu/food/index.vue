@@ -8,14 +8,18 @@ import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
 let row = $ref<FoodRow>()
-
-const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<FoodRow>(
+const previewSrcList = $computed(() => (list: FoodRow[]) => list.map(i => `/api/file${i.photoName}`))
+const { agGridBind, agGridOn, selectedList, list, getList } = useAgGrid<FoodRow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '名称', field: 'name', value: '' },
+    { headerName: '图片', field: 'photoName', cellRenderer: { setup(props) {
+      const src = `/api/file${props.params.value}`
+      return () => <el-image v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list.value)} src={src} class="h-10 mt-4 cursor-pointer"/>
+    } } },
     { headerName: '类型', valueGetter: ({ data }) => data.foodEnums.map(i => i.name), field: 'foodEnums', value: '', options: ({ value: enumName, ...params }) =>
       fetchFoodTypeList({ ...params, enumName }).then(({ data, total }) => ({
-        data: data.map(i => ({ label: i.name, value: i.id })),
+        data: data.map(i => ({ label: i.enumName, value: i.id })),
         total,
       })),
     },
