@@ -1,3 +1,4 @@
+import type { RoleRow } from '../role/api'
 import { request } from '~/composables/request'
 
 export interface Row {
@@ -7,7 +8,7 @@ export interface Row {
   password?: string
   state?: 0 | 1
   confirmPassword?: string
-  roles?: string[]
+  roleIds?: string[]
 }
 
 export function getUserList(params: object) {
@@ -34,5 +35,10 @@ export function drop(id: any) {
   return request(`/users/del/${id}`, {
     method: 'delete',
     params: { noMessage: true },
+  })
+}
+
+export function getRolesByUserId(id: any) {
+  return request<RoleRow[]>(`/getRolesByUserId/${id}`, {
   })
 }

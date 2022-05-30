@@ -52,6 +52,7 @@ specifiers:
   vite-ssg-sitemap: ^0.2.6
   vitest: ^0.12.4
   vue: ^3.2.36
+  vue-countup-v3: ^1.0.13
   vue-router: ^4.0.15
   vue-tsc: ^0.34.12
   vuedraggable: ^4.1.0
@@ -69,6 +70,7 @@ dependencies:
   pinia: 2.0.14_7gwbvmtszsbbeay4sidijbp26i
   prism-theme-vars: 0.2.2
   vue: 3.2.36
+  vue-countup-v3: 1.0.13_vue@3.2.36
   vue-router: 4.0.15_vue@3.2.36
   vuedraggable: 4.1.0_vue@3.2.36
 
@@ -3062,6 +3064,10 @@ packages:
       path-type: 4.0.0
       yaml: 1.10.2
     dev: true
+
+  /countup.js/2.2.0:
+    resolution: {integrity: sha512-m0TvFNXm9/eFqJm+QiKVI8e0wRUHzlQSewz9dqVjlhl2DFoZtceLbomwzxHz0hJ1+r4zBC7wSpR/TpthG49h6g==}
+    dev: false
 
   /critters/0.0.16:
     resolution: {integrity: sha512-JwjgmO6i3y6RWtLYmXwO5jMd+maZt8Tnfu7VVISmEWyQqfLpB8soBswf8/2bu6SBXxtKA68Al3c+qIG1ApT68A==}
@@ -7920,6 +7926,15 @@ packages:
       - sass
       - stylus
     dev: true
+
+  /vue-countup-v3/1.0.13_vue@3.2.36:
+    resolution: {integrity: sha512-6ELoEl20Tk/BrYNxnWvYtxL1D46r8OsNvVRuUalRfC+LBuHBOf/AWUEQmpEgmva44CkjAquBQ5gpLOq48ZLOjw==}
+    peerDependencies:
+      vue: ^3.2.31
+    dependencies:
+      countup.js: 2.2.0
+      vue: 3.2.36
+    dev: false
 
   /vue-demi/0.12.5_vue@3.2.36:
     resolution: {integrity: sha512-BREuTgTYlUr0zw0EZn3hnhC3I6gPWv+Kwh4MCih6QcAeaTlaIX0DwOVN0wHej7hSvDPecz4jygy/idsgKfW58Q==}

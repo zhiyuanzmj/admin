@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash-es'
 import type { RoleRow } from '../../role/api'
 import { fetchRoleList } from '../../role/api'
 import type { Row } from '../api'
-import { post, put } from '../api'
+import { getRolesByUserId, post, put } from '../api'
 
 const props = defineProps<{
   show: boolean
@@ -30,6 +30,10 @@ async function getRoleList() {
   ({ data: roleList } = await fetchRoleList({ pageIndex: 1, pageSize: 100 }))
 }
 getRoleList()
+
+row.id && getRolesByUserId(row.id).then(({ data }) => {
+  row.roleIds = data.map(i => i.id!)
+})
 
 async function submit() {
   await formRef?.validate()
@@ -58,8 +62,8 @@ async function submit() {
       >
         <el-input v-model="row.username" />
       </el-form-item>
-      <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="roles" label="角色">
-        <el-select v-model="row.roles" multiple>
+      <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="roleIds" label="角色">
+        <el-select v-model="row.roleIds" multiple>
           <el-option v-for="i in roleList" :key="i.id" :label="i.roleNameZh" :value="i.id" />
         </el-select>
       </el-form-item>
@@ -71,7 +75,7 @@ async function submit() {
           <el-input v-model="row.password" type="password" show-password autocomplete="new-password" />
         </el-form-item>
         <el-form-item label="确认密码" :rules="[{ message: '不能为空', required: !row.id }, { validator: validatePass, trigger: 'blur' }]" prop="confirmPassword">
-          <el-input v-model="row.confirmPassword" type="password" show-password />
+          <el-input v-model="row.confirmPassword" type="password" show-password autocomplete="new-password" />
         </el-form-item>
       </div>
       <el-form-item>

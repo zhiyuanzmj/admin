@@ -8,7 +8,7 @@ import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
 let row = $ref<FoodRow>()
-const previewSrcList = $computed(() => (list: FoodRow[]) => list.map(i => `/api/file${i.photoName}`))
+const previewSrcList = $computed(() => (list: FoodRow[] = []) => list.map(i => `/api/file${i.photoName}`))
 const { agGridBind, agGridOn, selectedList, list, getList } = useAgGrid<FoodRow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },

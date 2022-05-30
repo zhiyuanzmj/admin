@@ -36,8 +36,9 @@ async function submit() {
     loading.close()
   }
 }
-function onSuccess({ data }: any) {
-  row.photoName = data
+function onSuccess({ data }: any = {}) {
+  if (data)
+    row.photoName = data
   submit()
 }
 </script>

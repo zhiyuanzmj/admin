@@ -10,7 +10,8 @@ import { useAgGrid } from '~/composables'
 let show = $ref(false)
 let row = $ref<Row>()
 
-const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Row>(
+const previewSrcList = $computed(() => (list: Row[] = []) => list.map(i => `/api/file${i.photoName}`))
+const { agGridBind, agGridOn, selectedList, getList, list } = useAgGrid<Row>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '姓名', field: 'name', value: '' },

@@ -4,9 +4,9 @@ import { getHeaders } from '~/composables/request'
 
 interface Props extends Partial<UploadProps> {
   photoName?: string
-  onSuccess: (_: any) => void
+  onSuccess: (_?: any) => void
 }
-const { photoName } = defineProps<Props>()
+const { photoName, onSuccess } = defineProps<Props>()
 
 let img = $ref(photoName ? `/api/file${photoName}` : '')
 let file = $ref<any>()
@@ -18,7 +18,7 @@ function onChange({ raw }: any) {
 const headers = getHeaders()
 const uploadRef = $shallowRef<UploadInstance>()
 defineExpose({
-  submit: () => file && uploadRef?.submit?.(),
+  submit: () => file ? uploadRef?.submit?.() : onSuccess(),
   abort: uploadRef?.abort,
   handleStart: uploadRef?.handleStart,
 })
