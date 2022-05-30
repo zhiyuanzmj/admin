@@ -20,6 +20,10 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Row>(
         total,
       })),
     },
+    { headerName: '照片', field: 'photoName', cellRenderer: { setup(props) {
+      const src = `/api/file${props.params.value}`
+      return () => <el-image v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list.value)} src={src} class="h-10 mt-4 cursor-pointer"/>
+    } } },
     { headerName: '性别', field: 'sex', valueGetter: ({ value }: any) => value ? '男' : '女' },
     { headerName: '手机号', field: 'phone', value: '' },
     { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>

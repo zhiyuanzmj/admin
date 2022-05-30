@@ -46,6 +46,10 @@ defineExpose({
 
 <style lang="scss">
 .avatar-uploader {
+  .el-upload {
+    display: flex;
+  }
+
   .avatar {
     display: block;
     width: 178px;

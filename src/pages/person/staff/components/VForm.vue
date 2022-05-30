@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormInstance } from 'element-plus'
+import type { FormInstance, UploadInstance } from 'element-plus'
 import { ElLoading, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import { type DepartmentRow, getDepartmentList } from '../../department/api'
@@ -21,8 +21,8 @@ async function fetchDepartmentList() {
 }
 fetchDepartmentList()
 
+const uploadRef = shallowRef<UploadInstance>()
 async function submit() {
-  await formRef?.validate()
   const loading = ElLoading.service({ fullscreen: true })
   try {
     row.id ? await put(row) : await post(row)
@@ -33,11 +33,15 @@ async function submit() {
     loading.close()
   }
 }
+function onSuccess({ data }: any) {
+  row.photoName = data
+  submit()
+}
 </script>
 
 <template>
   <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}人员信息`">
-    <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="submit">
+    <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="() => formRef?.validate().then(() => uploadRef?.submit())">
       <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="name" label="姓名">
         <el-input v-model="row.name" />
       </el-form-item>
@@ -61,6 +65,9 @@ async function submit() {
           v-model="row.birthday"
           value-format="YYYY-MM-DD"
         />
+      </el-form-item>
+      <el-form-item prop="photoName" label="照片">
+        <VUpload ref="uploadRef" :photo-name="row.photoName" :on-success="onSuccess" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">确认提交</el-button>
