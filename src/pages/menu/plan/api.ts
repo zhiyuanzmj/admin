@@ -4,12 +4,14 @@ import { request } from '~/composables/request'
 export interface Plan {
   id: string
   date: string
-  foodEnum: FoodRow[]
+  foodInfo: FoodRow[]
+  mealType: 1 | 2 | 3
+  status: 0 | 1
 }
 
 export function getDepartmentList(params: object) {
   return request<Plan[]>('/foodMenu/getMenu', {
-    params,
+    params: { status: 1, ...params },
   })
 }
 

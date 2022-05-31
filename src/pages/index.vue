@@ -13,7 +13,7 @@ const tagsView = useTagsviewStore()
 <template>
   <div p-10>
     <div grid="~ cols-4" gap-10>
-      <div v-for="i in list" :key="i.icon" class="group" b="0 t gray-50" cursor-pointer shadow-lg rounded-lg h-30 p-5 flex items-center @click="tagsView.push(i.to)">
+      <div v-for="i in list" :key="i.icon" class="group" b="0 t gray-50 dark:zinc-800" cursor-pointer shadow="lg dark:zinc-800" rounded-lg h-30 p-5 flex items-center @click="tagsView.push(i.to)">
         <div flex items-center mr-auto rounded px-3 py-1 transition-colors duration-500 :class="`group-hover:bg-${i.color}`">
           <i :class="`${i.icon} transition-colors duration-500 group-hover:text-white text-${i.color}`" text-5xl />
         </div>

@@ -8,7 +8,7 @@ export interface FoodTypeRow {
 
 export function fetchFoodTypeList(params: object) {
   return request<FoodTypeRow[]>('/enum/getFoodEnum', {
-    params,
+    params: { status: 1, ...params },
   })
 }
 
@@ -27,8 +27,8 @@ export function post(body: FoodTypeRow) {
 }
 
 export function drop(id: FoodTypeRow['id']) {
-  return request('/enum/deleteFoodEnum', {
+  return request(`/enum/deleteFoodEnum/${id}`, {
     method: 'delete',
-    params: { noMessage: true, id },
+    params: { noMessage: true },
   })
 }

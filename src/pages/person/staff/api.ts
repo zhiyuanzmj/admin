@@ -15,7 +15,7 @@ export interface Row {
 
 export function getPersonList(params: object) {
   return request<Row[]>('/person/getPersonList', {
-    params,
+    params: { status: 1, ...params },
   })
 }
 

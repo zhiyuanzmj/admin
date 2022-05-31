@@ -12,7 +12,7 @@ export interface FoodRow {
 
 export function fetchFoodList(params: object) {
   return request<FoodRow[]>('/food/getFoods', {
-    params,
+    params: { status: 1, ...params },
   })
 }
 

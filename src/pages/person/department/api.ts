@@ -13,7 +13,7 @@ export interface DepartmentRow {
 
 export function getDepartmentList(params: object) {
   return request<DepartmentRow[]>('/dep/getDepList', {
-    params,
+    params: { status: 1, ...params },
   })
 }
 

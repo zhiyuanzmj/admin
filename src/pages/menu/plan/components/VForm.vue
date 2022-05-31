@@ -40,10 +40,17 @@ async function submit() {
   <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}菜单`">
     <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="submit">
       <el-form-item label="日期" prop="date">
-        <el-date-picker v-model="row.date" type="date" placeholder="选择时间" />
+        <el-date-picker v-model="row.date" value-format="YYYY-MM-DD" type="date" placeholder="选择时间" />
       </el-form-item>
-      <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="foodEnum" label="菜品">
-        <el-select v-model="row.foodEnum" flex-1 value-key="id" multiple>
+      <el-form-item label="类型">
+        <el-radio-group v-model="row.mealType" class="ml-4">
+          <el-radio :label="1">早餐</el-radio>
+          <el-radio :label="2">午餐</el-radio>
+          <el-radio :label="3">晚餐</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item :rules="[{ message: '不能为空', required: true, trigger: 'blur' }]" prop="foodInfo" label="菜品">
+        <el-select v-model="row.foodInfo" flex-1 value-key="id" multiple>
           <el-option v-for="i in foodList" :key="i.id" :label="i.name" :value="i" />
         </el-select>
       </el-form-item>

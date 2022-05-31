@@ -12,8 +12,8 @@ specifiers:
   '@vueuse/core': ^8.4.2
   '@vueuse/head': ^0.7.6
   '@vueuse/router': ^8.5.0
-  ag-grid-community: ^27.2.1
-  ag-grid-vue3: ^27.2.1
+  ag-grid-community: ^27.3.0
+  ag-grid-vue3: ^27.3.0
   animate.css: ^4.1.1
   critters: ^0.0.16
   cross-env: ^7.0.3
@@ -61,8 +61,8 @@ dependencies:
   '@vueuse/core': 8.4.2_vue@3.2.36
   '@vueuse/head': 0.7.6_vue@3.2.36
   '@vueuse/router': 8.5.0_m4vbylfoxvsy5tjrj5sjio42gm
-  ag-grid-community: 27.2.1
-  ag-grid-vue3: 27.2.1
+  ag-grid-community: 27.3.0
+  ag-grid-vue3: 27.3.0
   animate.css: 4.1.1
   element-plus: 2.2.0_vue@3.2.36
   nprogress: 0.2.0
@@ -2371,14 +2371,14 @@ packages:
     hasBin: true
     dev: true
 
-  /ag-grid-community/27.2.1:
-    resolution: {integrity: sha512-MCnbqZHVDvd6KNRx1g6vjuz/X9tE8YUV7kaWKpRupFF1M1fPsAt+CqkfOr3X2ybOooorYao3Z/GGskRlGaHlFQ==}
+  /ag-grid-community/27.3.0:
+    resolution: {integrity: sha512-R5oZMXEHXnOLrmhn91J8lR0bv6IAnRcU6maO+wKLMJxffRWaAYFAuw1jt7bdmcKCv8c65F6LEBx4ykSOALa9vA==}
     dev: false
 
-  /ag-grid-vue3/27.2.1:
-    resolution: {integrity: sha512-UkLjhNJAwP7i8gYET+nolTs1MCa7rLFKG7ClsAZggsIvNjWocKhGLkKSCQmWx7DZYGMTauvE1wLWNssvnthumw==}
+  /ag-grid-vue3/27.3.0:
+    resolution: {integrity: sha512-hZ49uJ839Wun3TJbgZLhPDJd+AkkpHIMB97GFgVU5HBBYAeyYLat6D8ePXmU7usCp99Bz1/iaulvMSEgqGV4hw==}
     dependencies:
-      ag-grid-community: 27.2.1
+      ag-grid-community: 27.3.0
       vue: 3.2.36
     dev: false
 

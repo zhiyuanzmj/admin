@@ -9,6 +9,6 @@ export interface Meal {
 
 export function fetchMealList(params: object) {
   return request<Meal[]>('/foodMeal/getFoodMeal', {
-    params,
+    params: { status: 1, ...params },
   })
 }

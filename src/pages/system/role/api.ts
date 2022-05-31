@@ -12,9 +12,9 @@ export function fetchRoleList(params: object) {
   })
 }
 
-export function put({ id, ...body }: RoleRow) {
-  return request(`/roles/${id}/menu`, {
-    method: 'put',
+export function put(body: RoleRow) {
+  return request('/updateRole', {
+    method: 'POST',
     body,
   })
 }

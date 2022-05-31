@@ -15,7 +15,7 @@ const getList = inject('getList', () => {})
   <el-switch
     v-model="column.value"
     active-value="1"
-    :inactive-value="undefined"
+    inactive-value="0"
     class="!w-auto"
     @update:model-value="getList"
   />

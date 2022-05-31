@@ -1,6 +1,6 @@
 <script setup lang="tsx" name="plan">
 import { AgGridVue } from 'ag-grid-vue3'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox, dayjs } from 'element-plus'
 import type { Plan } from './api'
 import { drop, getDepartmentList } from './api'
 import VForm from './components/VForm.vue'
@@ -13,7 +13,8 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Plan>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '时间', field: 'date', value: '' },
-    { headerName: '菜品', valueGetter: ({ data }) => data.foodEnum.map(i => i.name), field: 'foodEnum', value: '' },
+    { headerName: '菜品', valueGetter: ({ data }) => data.foodInfo.map(i => i.name), field: 'foodInfo', value: '' },
+    { headerName: '类型', field: 'mealType', value: '', options: [{ label: '早餐', value: '1' }, { label: '午餐', value: '2' }, { label: '晚餐', value: '3' }] },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))
       return () =>
@@ -40,7 +41,7 @@ async function onDrop(list: Plan[]) {
 
 function addHandler() {
   show = true
-  row = { } as Plan
+  row = { status: 1, mealType: 2, date: dayjs().format('YYYY-MM-DD') } as Plan
 }
 </script>
 

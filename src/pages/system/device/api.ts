@@ -14,7 +14,7 @@ export interface Device {
 
 export function fetchFoodList(params: object) {
   return request<Device[]>('/device/getPersonList', {
-    params,
+    params: { status: 1, ...params },
   })
 }
 

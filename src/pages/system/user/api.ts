@@ -13,7 +13,7 @@ export interface Row {
 
 export function getUserList(params: object) {
   return request<Row[]>('/getUsers', {
-    params,
+    params: { state: 1, ...params },
   })
 }
 
