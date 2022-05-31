@@ -11,11 +11,11 @@ let row = $ref<Plan>()
 
 const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Plan>(
   () => [
-    { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
+    { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '时间', field: 'date', value: '' },
     { headerName: '菜品', valueGetter: ({ data }) => data.foodInfo.map(i => i.name), field: 'foodInfo', value: '' },
     { headerName: '类型', field: 'mealType', value: '', options: [{ label: '早餐', value: '1' }, { label: '午餐', value: '2' }, { label: '晚餐', value: '3' }] },
-    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
+    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))
       return () =>
         <div className="flex items-center justify-between">

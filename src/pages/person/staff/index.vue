@@ -13,7 +13,7 @@ let row = $ref<Row>()
 const previewSrcList = $computed(() => (list: Row[] = []) => list.map(i => `/api/file${i.photoName}`))
 const { agGridBind, agGridOn, selectedList, getList, list } = useAgGrid<Row>(
   () => [
-    { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
+    { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '姓名', field: 'name', value: '' },
     { headerName: '部门', valueGetter: 'data.department.departmentName', field: 'department', value: '', options: ({ value: departmentName, ...params }) =>
       getDepartmentList({ ...params, departmentName }).then(({ data, total }) => ({
@@ -40,7 +40,7 @@ const { agGridBind, agGridOn, selectedList, getList, list } = useAgGrid<Row>(
           inactive-value={0}
         />,
     } },
-    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
+    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', cellRenderer: { setup(props) {
       return () =>
         <div className="flex items-center justify-between">
           <button className="fa6-solid:pen-to-square btn" onClick={() => {

@@ -11,7 +11,7 @@ let row = $ref<DepartmentRow>()
 
 const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>(
   () => [
-    { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: true, valueGetter: '', unCheck: true, pinned: 'left', suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
+    { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '部门', field: 'departmentName', value: '' },
     { headerName: '手机号', field: 'phone', value: '' },
     { headerName: '描述', field: 'description', value: '' },
@@ -28,7 +28,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>
           inactive-value={0}
         />,
     } },
-    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, pinned: 'right', suppressMovable: true, lockPosition: true, cellRenderer: { setup(props) {
+    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))
       return () =>
         <div className="flex items-center justify-between">
