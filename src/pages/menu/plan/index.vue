@@ -9,7 +9,7 @@ import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
 let row = $ref<Plan>()
-
+const mealTypeList = [{ label: '早餐', value: 1 }, { label: '午餐', value: 2 }, { label: '晚餐', value: 3 }]
 const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Plan>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
@@ -20,7 +20,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Plan>(
         total,
       })),
     },
-    { headerName: '类型', field: 'mealType', value: '', options: [{ label: '早餐', value: '1' }, { label: '午餐', value: '2' }, { label: '晚餐', value: '3' }] },
+    { headerName: '类型', field: 'mealType', valueGetter: ({ data }) => mealTypeList.find(i => i.value === data.mealType)?.label, value: '', options: mealTypeList },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))
       return () =>
