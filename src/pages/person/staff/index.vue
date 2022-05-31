@@ -25,7 +25,7 @@ const { agGridBind, agGridOn, selectedList, getList, list } = useAgGrid<Row>(
       const src = `/api/file${props.params.value}`
       return () => <ElImage v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list.value)} src={src} class="h-10 mt-4 cursor-pointer"/>
     } } },
-    { headerName: '性别', field: 'sex', valueGetter: ({ value }: any) => value ? '男' : '女' },
+    { headerName: '性别', field: 'sex', valueGetter: ({ data }) => data.sex ? '男' : '女' },
     { headerName: '手机号', field: 'phone', value: '' },
     { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
         <ElSwitch
@@ -65,7 +65,7 @@ async function onDrop(list = [row]) {
 
 function addHandler() {
   show = true
-  row = { sex: 0, status: 1 }
+  row = { sex: 1, status: 1 }
 }
 </script>
 
