@@ -27,3 +27,7 @@ html.dark {
   background: rgb(13 148 136);
   opacity: 0.75;
 }
+
+.el-input__wrapper {
+  display: flex;
+}

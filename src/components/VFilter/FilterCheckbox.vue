@@ -9,17 +9,10 @@ const getList = inject('getList', () => {})
 </script>
 
 <template>
-  <q-checkbox
+  <el-checkbox
     v-model="column.value"
-    false-value=""
+    false-value="0"
     true-value="1"
-    class="!w-auto"
-    @update:modelValue="getList"
+    @update:model-value="getList"
   />
 </template>
-
-<style scoped>
-  :deep(.q-checkbox__inner--indet) {
-    @apply text-gray-400;
-  }
-</style>

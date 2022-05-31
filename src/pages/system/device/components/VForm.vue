@@ -29,8 +29,8 @@ async function submit() {
 </script>
 
 <template>
-  <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}人员信息`">
-    <el-form ref="formRef" label-position="top" label-width="auto" :model="row" @submit.prevent="submit">
+  <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}设备`">
+    <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="submit">
       <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="name" label="名称">
         <el-input v-model="row.name" />
       </el-form-item>

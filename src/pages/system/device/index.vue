@@ -71,7 +71,7 @@ function addHandler() {
       <VFilter />
       <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
       <Pagination>
-        <el-button type="primary" text @click="onDrop(selectedList)">
+        <el-button type="primary" :disabled="!selectedList.length" text @click="onDrop(selectedList)">
           删除
         </el-button>
       </Pagination>

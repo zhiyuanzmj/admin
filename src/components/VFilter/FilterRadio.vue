@@ -18,10 +18,12 @@ else {
 </script>
 
 <template>
-  <q-option-group
+  <el-radio-group
     v-model="column.value"
     class="flex whitespace-nowrap items-center !w-auto"
     :options="options"
     @update:model-value="getList"
-  />
+  >
+    <el-radio v-for="i in column.options" :key="i.value" :label="`${i.value}`">{{ i.label }}</el-radio>
+  </el-radio-group>
 </template>

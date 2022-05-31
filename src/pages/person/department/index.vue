@@ -13,7 +13,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '部门', field: 'departmentName', value: '' },
-    { headerName: '手机号', field: 'phone', value: '' },
+    { headerName: '电话号码', field: 'phone', value: '' },
     { headerName: '描述', field: 'description', value: '' },
     { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
         <ElSwitch
@@ -70,7 +70,7 @@ function addHandler() {
       <VFilter />
       <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
       <Pagination>
-        <el-button type="primary" text @click="onDrop(selectedList)">
+        <el-button type="primary" :disabled="!selectedList.length" text @click="onDrop(selectedList)">
           删除
         </el-button>
       </Pagination>

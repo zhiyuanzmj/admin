@@ -32,12 +32,10 @@ const { agGridBind, agGridOn, selectedList, getList, list } = useAgGrid<Row>(
           model-value={props.params.value}
           onClick={async () => {
             await ElMessageBox.confirm('确定修改状态?', '提示')
-            await put({ ...props.params.data, status: !props.params.value ? 1 : 0 })
+            await put({ ...props.params.data, status: !props.params.value })
             ElMessage.success('操作成功')
             getList()
           } }
-          active-value={1}
-          inactive-value={0}
         />,
     } },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', cellRenderer: { setup(props) {
@@ -81,7 +79,7 @@ function addHandler() {
       <VFilter />
       <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
       <Pagination>
-        <el-button type="primary" text @click="onDrop(selectedList)">
+        <el-button type="primary" :disabled="!selectedList.length" text @click="onDrop(selectedList)">
           删除
         </el-button>
       </Pagination>

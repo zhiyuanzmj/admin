@@ -13,14 +13,14 @@ const mealTypeList = [{ label: '早餐', value: 1 }, { label: '午餐', value: 2
 const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Plan>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '时间', field: 'date', value: '' },
+    { headerName: '时间', field: 'date', value: '', formType: 'date' },
     { headerName: '菜品', valueGetter: ({ data }) => data.foodInfo.map(i => i.name), field: 'foodInfo', value: '', options: ({ value: name, ...params }) =>
       getFoodList({ ...params, name }).then(({ data, total }) => ({
         data: data.map(i => ({ label: i.name, value: i.id })),
         total,
       })),
     },
-    { headerName: '类型', field: 'mealType', valueGetter: ({ data }) => mealTypeList.find(i => i.value === data.mealType)?.label, value: '', options: mealTypeList },
+    { headerName: '类型', field: 'mealType', formType: 'radio', valueGetter: ({ data }) => mealTypeList.find(i => i.value === data.mealType)?.label, value: '2', options: mealTypeList },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))
       return () =>
@@ -63,7 +63,7 @@ function addHandler() {
       <VFilter />
       <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
       <Pagination>
-        <el-button type="primary" text @click="onDrop(selectedList)">
+        <el-button type="primary" :disabled="!selectedList.length" text @click="onDrop(selectedList)">
           删除
         </el-button>
       </Pagination>
