@@ -69,7 +69,7 @@ useIntersectionObserver(bottomRef, ([{ isIntersecting }]) => {
     filterable
     v-bind="column.formProps"
     :remote-method="onFilter"
-    @focus="onFilter()"
+    @visible-change="(val:any) => val && onFilter()"
     @clear="getListInject()"
     @update:model-value="getListInject()"
   >

@@ -19,7 +19,7 @@ async function onDrop(list: RoleRow[]) {
 const { agGridBind, agGridOn, selectedList } = useAgGrid<RoleRow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '账号', field: 'roleName', value: '' },
+    { headerName: '名称', field: 'roleName', value: '' },
     { headerName: '描述', field: 'roleNameZh', value: '' },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))

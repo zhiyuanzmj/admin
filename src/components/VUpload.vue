@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { UploadInstance, UploadProps } from 'element-plus'
+import { ElLoading } from 'element-plus'
 import { getHeaders } from '~/composables/request'
 
 interface Props extends Partial<UploadProps> {
@@ -13,6 +14,14 @@ let file = $ref<any>()
 function onChange({ raw }: any) {
   file = raw
   img = URL.createObjectURL(raw)
+}
+
+let loading: any
+function beforeUpload() {
+  loading = ElLoading.service({ fullscreen: true })
+}
+function onError() {
+  loading?.close()
 }
 
 const headers = getHeaders()
@@ -38,6 +47,8 @@ defineExpose({
     cursor-pointer
     :on-change="onChange"
     :on-success="onSuccess"
+    :before-upload="beforeUpload"
+    :on-error="onError"
   >
     <el-image v-if="img" :src="img" class="avatar" width="300px" height="30px" />
     <el-icon v-else class="avatar-uploader-icon"><i class="ep:plus" text-3xl /></el-icon>

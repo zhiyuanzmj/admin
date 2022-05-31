@@ -40,10 +40,10 @@ async function submit() {
   <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}菜单`">
     <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="submit">
       <el-form-item label="日期" prop="date">
-        <el-date-picker v-model="row.date" value-format="YYYY-MM-DD" type="date" placeholder="选择时间" />
+        <el-date-picker v-model="row.date" :disabled="!!row.id" value-format="YYYY-MM-DD" type="date" placeholder="选择时间" />
       </el-form-item>
       <el-form-item label="类型">
-        <el-radio-group v-model="row.mealType" class="ml-4">
+        <el-radio-group v-model="row.mealType" :disabled="!!row.id" class="ml-4">
           <el-radio :label="1">早餐</el-radio>
           <el-radio :label="2">午餐</el-radio>
           <el-radio :label="3">晚餐</el-radio>

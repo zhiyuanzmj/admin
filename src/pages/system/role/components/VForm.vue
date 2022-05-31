@@ -31,7 +31,7 @@ async function submit() {
 <template>
   <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}角色`">
     <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="submit">
-      <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="roleName" label="账号">
+      <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="roleName" label="名称">
         <el-input v-model="row.roleName" />
       </el-form-item>
       <el-form-item label="描述" prop="roleNameZh">
