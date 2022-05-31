@@ -3,7 +3,7 @@ import type { FormInstance, UploadInstance } from 'element-plus'
 import { ElLoading, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import type { FoodTypeRow } from '../../food-type/api'
-import { fetchFoodTypeList } from '../../food-type/api'
+import { getFoodTypeList } from '../../food-type/api'
 import type { FoodRow } from '../api'
 import { post, put } from '../api'
 import VUpload from '~/components/VUpload.vue'
@@ -18,10 +18,10 @@ const getList = inject('getList', () => {})
 const formRef = $shallowRef<FormInstance>()
 
 let foodTypeList = $ref<FoodTypeRow[]>()
-async function getFoodTypeList() {
-  ({ data: foodTypeList } = await fetchFoodTypeList({ pageIndex: 1, pageSize: 1000 }))
+async function fetchFoodTypeList() {
+  ({ data: foodTypeList } = await getFoodTypeList({ pageIndex: 1, pageSize: 1000 }))
 }
-getFoodTypeList()
+fetchFoodTypeList()
 
 const uploadRef = shallowRef<UploadInstance>()
 async function submit() {

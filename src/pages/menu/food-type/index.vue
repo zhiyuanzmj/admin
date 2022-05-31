@@ -2,7 +2,7 @@
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
 import type { FoodTypeRow } from './api'
-import { drop, fetchFoodTypeList, put } from './api'
+import { drop, getFoodTypeList, put } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
@@ -38,7 +38,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<FoodTypeRow>(
         </div>
     } } },
   ],
-  fetchFoodTypeList,
+  getFoodTypeList,
 )
 
 async function onDrop(list: FoodTypeRow[]) {

@@ -3,7 +3,7 @@ import type { FormInstance } from 'element-plus'
 import { ElLoading, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import type { RoleRow } from '../../role/api'
-import { fetchRoleList } from '../../role/api'
+import { getRoleList } from '../../role/api'
 import type { Row } from '../api'
 import { getRolesByUserId, post, put } from '../api'
 
@@ -26,10 +26,10 @@ const validatePass = (_: any, value: any, callback: any) => {
 }
 
 let roleList = $ref<RoleRow[]>()
-async function getRoleList() {
-  ({ data: roleList } = await fetchRoleList({ pageIndex: 1, pageSize: 100 }))
+async function fetchRoleList() {
+  ({ data: roleList } = await getRoleList({ pageIndex: 1, pageSize: 100 }))
 }
-getRoleList()
+fetchRoleList()
 
 row.id && getRolesByUserId(row.id).then(({ data }) => {
   row.roleIds = data.map(i => i.id!)

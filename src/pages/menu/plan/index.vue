@@ -1,8 +1,9 @@
 <script setup lang="tsx" name="plan">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox, dayjs } from 'element-plus'
+import { getFoodList } from '../food/api'
 import type { Plan } from './api'
-import { drop, getDepartmentList } from './api'
+import { drop, getPlanList } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
@@ -13,7 +14,12 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Plan>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '时间', field: 'date', value: '' },
-    { headerName: '菜品', valueGetter: ({ data }) => data.foodInfo.map(i => i.name), field: 'foodInfo', value: '' },
+    { headerName: '菜品', valueGetter: ({ data }) => data.foodInfo.map(i => i.name), field: 'foodInfo', value: '', options: ({ value: name, ...params }) =>
+      getFoodList({ ...params, name }).then(({ data, total }) => ({
+        data: data.map(i => ({ label: i.name, value: i.id })),
+        total,
+      })),
+    },
     { headerName: '类型', field: 'mealType', value: '', options: [{ label: '早餐', value: '1' }, { label: '午餐', value: '2' }, { label: '晚餐', value: '3' }] },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))
@@ -27,7 +33,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Plan>(
         </div>
     } } },
   ],
-  getDepartmentList,
+  getPlanList,
 )
 
 async function onDrop(list: Plan[]) {

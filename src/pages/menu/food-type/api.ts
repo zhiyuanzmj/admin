@@ -6,7 +6,7 @@ export interface FoodTypeRow {
   status: 0 | 1
 }
 
-export function fetchFoodTypeList(params: object) {
+export function getFoodTypeList(params: object) {
   return request<FoodTypeRow[]>('/enum/getFoodEnum', {
     params: { status: 1, ...params },
   })

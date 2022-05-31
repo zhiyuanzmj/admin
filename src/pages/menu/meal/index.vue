@@ -1,7 +1,7 @@
 <script setup lang="tsx" name="meal">
 import { AgGridVue } from 'ag-grid-vue3'
-import { fetchFoodList } from '../food/api'
-import { type Meal, fetchMealList } from './api'
+import { getFoodList } from '../food/api'
+import { type Meal, getMealList } from './api'
 import { useAgGrid } from '~/composables'
 import { getUserList } from '~/pages/system/user/api'
 
@@ -14,13 +14,13 @@ const { agGridBind, agGridOn } = useAgGrid<Meal>(
         total,
       })) },
     { headerName: '菜品', field: 'foodName', value: '', options: ({ value: name, ...params }) =>
-      fetchFoodList({ ...params, name }).then(({ data, total }) => ({
+      getFoodList({ ...params, name }).then(({ data, total }) => ({
         data: data.map(i => ({ label: i.name, value: i.id })),
         total,
       })),
     },
   ],
-  fetchMealList,
+  getMealList,
 )
 </script>
 

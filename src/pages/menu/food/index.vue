@@ -1,8 +1,8 @@
 <script setup lang="tsx" name="food">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElImage, ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
-import { fetchFoodTypeList } from '../food-type/api'
-import { type FoodRow, drop, fetchFoodList, put } from './api'
+import { getFoodTypeList } from '../food-type/api'
+import { type FoodRow, drop, getFoodList, put } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
@@ -18,7 +18,7 @@ const { agGridBind, agGridOn, selectedList, list, getList } = useAgGrid<FoodRow>
       return () => <ElImage v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list.value)} src={src} class="h-10 mt-4 cursor-pointer"/>
     } } },
     { headerName: '类型', valueGetter: ({ data }) => data.foodEnums.map(i => i.name), field: 'foodEnums', value: '', options: ({ value: enumName, ...params }) =>
-      fetchFoodTypeList({ ...params, enumName }).then(({ data, total }) => ({
+      getFoodTypeList({ ...params, enumName }).then(({ data, total }) => ({
         data: data.map(i => ({ label: i.enumName, value: i.id })),
         total,
       })),
@@ -48,7 +48,7 @@ const { agGridBind, agGridOn, selectedList, list, getList } = useAgGrid<FoodRow>
         </div>
     } } },
   ],
-  fetchFoodList,
+  getFoodList,
 )
 
 async function onDrop(list: FoodRow[]) {

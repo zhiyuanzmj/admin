@@ -1,7 +1,7 @@
 <script setup lang="tsx" name="device">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { type Device, drop, fetchFoodList, put } from './api'
+import { type Device, drop, getDeviceList, put } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
@@ -41,7 +41,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Device>(
         </div>
     } } },
   ],
-  fetchFoodList,
+  getDeviceList,
 )
 
 async function onDrop(list: Device[]) {

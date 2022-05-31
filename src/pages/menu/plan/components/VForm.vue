@@ -3,7 +3,7 @@ import type { FormInstance } from 'element-plus'
 import { ElLoading, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import type { FoodRow } from '../../food/api'
-import { fetchFoodList } from '../../food/api'
+import { getFoodList } from '../../food/api'
 import type { Plan } from '../api'
 import { post, put } from '../api'
 
@@ -17,10 +17,10 @@ const getList = inject('getList', () => {})
 const formRef = $shallowRef<FormInstance>()
 
 let foodList = $ref<FoodRow[]>()
-async function getFoodList() {
-  ({ data: foodList } = await fetchFoodList({ pageIndex: 1, pageSize: 100 }))
+async function fetchFoodList() {
+  ({ data: foodList } = await getFoodList({ pageIndex: 1, pageSize: 100 }))
 }
-getFoodList()
+fetchFoodList()
 
 async function submit() {
   await formRef?.validate()

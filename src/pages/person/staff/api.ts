@@ -13,7 +13,7 @@ export interface Row {
   type?: 0 | 1
 }
 
-export function getPersonList(params: object) {
+export function getStaffList(params: object) {
   return request<Row[]>('/person/getPersonList', {
     params: { status: 1, ...params },
   })

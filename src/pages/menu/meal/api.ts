@@ -7,7 +7,7 @@ export interface Meal {
   status?: 0 | 1
 }
 
-export function fetchMealList(params: object) {
+export function getMealList(params: object) {
   return request<Meal[]>('/foodMeal/getFoodMeal', {
     params: { status: 1, ...params },
   })

@@ -2,7 +2,7 @@
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { RoleRow } from './api'
-import { drop, fetchRoleList } from './api'
+import { drop, getRoleList } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
@@ -33,7 +33,7 @@ const { agGridBind, agGridOn, selectedList } = useAgGrid<RoleRow>(
         </div>
     } } },
   ],
-  fetchRoleList,
+  getRoleList,
 )
 
 function addHandler() {

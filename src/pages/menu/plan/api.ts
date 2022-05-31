@@ -9,7 +9,7 @@ export interface Plan {
   status: 0 | 1
 }
 
-export function getDepartmentList(params: object) {
+export function getPlanList(params: object) {
   return request<Plan[]>('/foodMenu/getMenu', {
     params: { status: 1, ...params },
   })

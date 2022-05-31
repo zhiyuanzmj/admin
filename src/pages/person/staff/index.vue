@@ -3,7 +3,7 @@ import { AgGridVue } from 'ag-grid-vue3'
 import { ElImage, ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
 import { getDepartmentList } from '../department/api'
 import type { Row } from './api'
-import { drop, getPersonList, put } from './api'
+import { drop, getStaffList, put } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
@@ -51,7 +51,7 @@ const { agGridBind, agGridOn, selectedList, getList, list } = useAgGrid<Row>(
         </div>
     } } },
   ],
-  getPersonList,
+  getStaffList,
 )
 
 async function onDrop(list = [row]) {

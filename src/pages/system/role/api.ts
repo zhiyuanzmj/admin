@@ -6,7 +6,7 @@ export interface RoleRow {
   roleNameZh?: string
 }
 
-export function fetchRoleList(params: object) {
+export function getRoleList(params: object) {
   return request<RoleRow[]>('/getRoles', {
     params,
   })

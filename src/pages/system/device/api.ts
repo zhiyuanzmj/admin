@@ -12,28 +12,28 @@ export interface Device {
   // 'type': 0
 }
 
-export function fetchFoodList(params: object) {
-  return request<Device[]>('/device/getPersonList', {
+export function getDeviceList(params: object) {
+  return request<Device[]>('/device/list', {
     params: { status: 1, ...params },
   })
 }
 
 export function put(body: Device) {
-  return request('/device/updatePerson', {
+  return request('/device/edit', {
     method: 'put',
     body,
   })
 }
 
 export function post(body: Device) {
-  return request('/device/insertPerson', {
+  return request('/device/add', {
     method: 'post',
     body,
   })
 }
 
 export function drop(id: Device['id']) {
-  return request('/device/deletePerson', {
+  return request('/device/delete', {
     method: 'delete',
     params: { noMessage: true, id },
   })
