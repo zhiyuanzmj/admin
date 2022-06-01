@@ -7,7 +7,7 @@ import { getUserList } from '~/pages/system/user/api'
 
 const { agGridBind, agGridOn } = useAgGrid<Meal>(
   () => [
-    { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
+    { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '姓名', field: 'userName', value: '', options: ({ value: username, ...params }) =>
       getUserList({ ...params, username }).then(({ data, total }) => ({
         data: data.map(i => ({ label: i.username, value: i.id })),

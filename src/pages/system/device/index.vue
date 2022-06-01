@@ -10,7 +10,7 @@ let row = $ref<Device>()
 
 const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Device>(
   () => [
-    { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
+    { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '名称', field: 'name', value: '' },
     { headerName: '位置', field: 'address', value: '' },
     { headerName: 'IP地址', field: 'addressIp', value: '' },
@@ -30,7 +30,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Device>(
           inactive-value={0}
         />,
     } },
-    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', cellRenderer: { setup(props) {
+    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', pinned: 'right', cellRenderer: { setup(props) {
       return () =>
         <div className="flex items-center justify-between">
           <button className="fa6-solid:pen-to-square btn" onClick={() => {
