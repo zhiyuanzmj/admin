@@ -43,7 +43,7 @@ defineExpose({
     :show-file-list="false"
     :auto-upload="false"
     transition
-    b="~ dashed gray-300 rounded hover:blue-500"
+    b="~ dashed gray-300 rounded hover:primary"
     cursor-pointer
     :on-change="onChange"
     :on-success="onSuccess"

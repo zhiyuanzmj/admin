@@ -13,7 +13,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@vueuse/core": "^8.4.2",
+    "@vueuse/core": "^8.6.0",
     "@vueuse/head": "^0.7.6",
     "@vueuse/router": "^8.5.0",
     "ag-grid-community": "^27.3.0",

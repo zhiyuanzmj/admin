@@ -26,6 +26,21 @@ export default defineConfig({
       '~/': `${path.resolve(__dirname, 'src')}/`,
     },
   },
+  optimizeDeps: {
+    include: [
+      'element-plus/es',
+      'element-plus/es/components/message/style/css',
+      'element-plus/es/components/notification/style/css',
+      'element-plus/es/components/message-box/style/css',
+    ],
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@use "src/styles/element/index.scss" as *;@use "src/styles/element/dark.scss" as *;',
+      },
+    },
+  },
 
   plugins: [
     Vue({
@@ -72,6 +87,7 @@ export default defineConfig({
 
     ElementPlus({
       defaultLocale: 'zh-cn',
+      useSource: true,
     }),
 
     // https://github.com/antfu/unocss

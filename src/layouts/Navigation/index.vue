@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Palette from './Palette.vue'
 import { useUserStore } from '~/stores/user'
 import { toggleDark } from '~/composables'
 import UserForm from '~/pages/system/user/components/VForm.vue'
@@ -37,6 +38,7 @@ const row = ref({ ...user.userInfo })
     </el-breadcrumb>
 
     <button fa6-solid:magnifying-glass btn text-sm />
+    <Palette />
     <button btn text-sm fa6-solid:sun dark:fa6-solid-moon @click="toggleDark()" />
     <button btn text-sm :class="expand ? 'fa6-solid:compress' : 'fa6-solid:expand'" @click="toggleExpand" />
     <el-dropdown>
@@ -62,18 +64,18 @@ const row = ref({ ...user.userInfo })
 </template>
 
 <style>
-.el-breadcrumb__inner {
-  font-weight: normal !important;
-}
+  .el-breadcrumb__inner {
+    font-weight: normal !important;
+  }
 
-/* breadcrumb transition */
-.breadcrumb-enter-active {
-  transition: all 0.25s;
-}
+  /* breadcrumb transition */
+  .breadcrumb-enter-active {
+    transition: all 0.25s;
+  }
 
-.breadcrumb-enter-from,
-.breadcrumb-leave-to {
-  opacity: 0;
-  transform: translateX(30px) skewX(-50deg);
-}
+  .breadcrumb-enter-from,
+  .breadcrumb-leave-to {
+    opacity: 0;
+    transform: translateX(30px) skewX(-50deg);
+  }
 </style>

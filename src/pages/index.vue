@@ -6,8 +6,8 @@ import { getStaffList } from './person/staff/api'
 import { getDeviceList } from './system/device/api'
 import { useTagsviewStore } from '~/stores/tagsview'
 const list = $ref([
-  { icon: 'ic:outline-local-dining', color: 'teal-500', label: '预报餐', count: 0, to: 'meal' },
   { icon: 'ic:outline-menu-book mb-1', color: 'blue-500', label: '今日菜单', count: 0, to: 'plan' },
+  { icon: 'ic:outline-local-dining', color: 'teal-500', label: '预报餐', count: 0, to: 'meal' },
   { icon: 'ic:baseline-people-alt indigo-500', color: 'indigo-500', label: '人员信息', count: 0, to: 'staff' },
   { icon: 'ic:sharp-settings rose-500', color: 'rose-500', label: '设备管理', count: 0, to: 'device' },
 ])
@@ -17,13 +17,13 @@ async function getList() {
     { total: list[0].count },
     { total: list[1].count },
     { total: list[2].count },
+    { total: list[3].count },
   ] = await Promise.all([
     getMealList(params),
     getPlanList(params),
     getStaffList(params),
-    // getDeviceList(params),
+    getDeviceList(params),
   ]))
-  console.log(a)
 }
 getList()
 const tagsView = useTagsviewStore()
