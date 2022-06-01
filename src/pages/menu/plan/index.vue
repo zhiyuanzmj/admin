@@ -1,7 +1,6 @@
 <script setup lang="tsx" name="plan">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox, dayjs } from 'element-plus'
-import { getFoodList } from '../food/api'
 import type { Plan } from './api'
 import { drop, getPlanList } from './api'
 import VForm from './components/VForm.vue'
@@ -10,17 +9,12 @@ import { useAgGrid } from '~/composables'
 let show = $ref(false)
 let row = $ref<Plan>()
 const mealTypeList = [{ label: '早餐', value: 1 }, { label: '午餐', value: 2 }, { label: '晚餐', value: 3 }]
-const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Plan>(
+const { agGridBind, agGridOn, selectedList, getList, columnList } = useAgGrid<Plan>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '时间', field: 'date', value: '', formType: 'date' },
-    { headerName: '菜品', valueGetter: ({ data }) => data.foodInfo.map(i => i.name), field: 'foodInfo', value: '', options: ({ value: name, ...params }) =>
-      getFoodList({ ...params, name }).then(({ data, total }) => ({
-        data: data.map(i => ({ label: i.name, value: i.id })),
-        total,
-      })),
-    },
-    { headerName: '类型', field: 'mealType', formType: 'radio', valueGetter: ({ data }) => mealTypeList.find(i => i.value === data.mealType)?.label, value: '2', options: mealTypeList },
+    { headerName: '时间', valueGetter: 'data.date', field: 'minDate,maxDate', value: '', form: { type: 'date', width: '260px', props: { type: 'daterange' } } },
+    { headerName: '菜品', field: 'foodInfo', valueGetter: ({ data }) => data.foodInfo.map(i => i.name) },
+    { headerName: '类型', field: 'mealType', form: { type: 'radio' }, valueGetter: ({ data }) => mealTypeList.find(i => i.value === data.mealType)?.label, value: '2', options: mealTypeList },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))
       return () =>
@@ -47,7 +41,11 @@ async function onDrop(list: Plan[]) {
 
 function addHandler() {
   show = true
-  row = { status: 1, mealType: 2, date: dayjs().format('YYYY-MM-DD') } as Plan
+  row = {
+    status: 1,
+    mealType: Number(columnList.find(i => i.field === 'mealType')?.value),
+    date: dayjs().format('YYYY-MM-DD'),
+  } as Plan
 }
 </script>
 

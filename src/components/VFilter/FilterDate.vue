@@ -6,8 +6,25 @@ const { column } = defineProps<{
 }>()
 
 const getList = inject('getList', () => {})
+
+const route = useRoute()
+const value = computed({
+  set(val: any) {
+    column.value = val
+  },
+  get() {
+    if (column.field.includes(','))
+      return column.field?.split(',').map(v => route.query[v])
+
+    return column.value
+  },
+})
 </script>
 
 <template>
-  <el-date-picker v-model="column.value" value-format="YYYY-MM-DD" @update:model-value="getList" />
+  <el-date-picker
+    v-model="value"
+    value-format="YYYY-MM-DD"
+    @update:model-value="getList"
+  />
 </template>

@@ -8,6 +8,12 @@ export interface Row {
   phone?: string
   photoName?: string
   birthday?: string
+  job?: string
+  rank?: string
+  money?: string
+  entryDate?: string
+  retirementDate?: string
+  address?: string
   sex?: 0 | 1
   status?: 0 | 1
   type?: 0 | 1

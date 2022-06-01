@@ -41,17 +41,25 @@ function onSuccess({ data }: any = {}) {
 </script>
 
 <template>
-  <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}人员信息`">
+  <el-dialog v-model="show" custom-class="!w-3xl" :title="`${row.id ? '修改' : '添加'}人员信息`">
     <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="() => formRef?.validate().then(() => uploadRef?.submit())">
       <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="name" label="姓名">
         <el-input v-model="row.name" />
       </el-form-item>
+      <div flex gap-3>
+        <el-form-item label="部门" :rules="{ required: true, message: '不能为空' }" prop="department.id">
+          <el-select v-model="row.department" value-key="id">
+            <el-option v-for="i in departmentList" :key="i.id" :label="i.departmentName" :value="i" />
+          </el-select>
+        </el-form-item>
+        <el-form-item prop="job" label="职位">
+          <el-input v-model="row.job" />
+        </el-form-item>
+        <el-form-item prop="rank" label="职级">
+          <el-input v-model="row.rank" />
+        </el-form-item>
+      </div>
 
-      <el-form-item label="部门" :rules="{ required: true, message: '不能为空' }" prop="department.id">
-        <el-select v-model="row.department" value-key="id">
-          <el-option v-for="i in departmentList" :key="i.id" :label="i.departmentName" :value="i" />
-        </el-select>
-      </el-form-item>
       <el-form-item label="性别" prop="nickname">
         <el-radio-group v-model="row.sex">
           <el-radio :label="1">男</el-radio>
@@ -66,6 +74,23 @@ function onSuccess({ data }: any = {}) {
           v-model="row.birthday"
           value-format="YYYY-MM-DD"
         />
+      </el-form-item>
+      <div flex gap-3>
+        <el-form-item label="入职时间" prop="birthday">
+          <el-date-picker
+            v-model="row.entryDate"
+            value-format="YYYY-MM-DD"
+          />
+        </el-form-item>
+        <el-form-item label="退休时间" prop="birthday">
+          <el-date-picker
+            v-model="row.retirementDate"
+            value-format="YYYY-MM-DD"
+          />
+        </el-form-item>
+      </div>
+      <el-form-item prop="address" label="住址">
+        <el-input v-model="row.address" type="textarea" />
       </el-form-item>
       <el-form-item prop="photoName" label="照片">
         <VUpload ref="uploadRef" :photo-name="row.photoName" :on-success="onSuccess" />

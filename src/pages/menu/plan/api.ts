@@ -7,6 +7,7 @@ export interface Plan {
   foodInfo: FoodRow[]
   mealType: 1 | 2 | 3
   status: 0 | 1
+  'minDate,maxDate': string
 }
 
 export function getPlanList(params: object) {

@@ -63,17 +63,17 @@ useResizeObserver(extend.value, ([entry]) => {
         :label="column.headerName"
       >
         <component
-          :is="column.formType === 'switch' ? FilterToggle
-            : column.formType === 'checkbox' ? FilterCheckbox
-              : column.formType === 'date' ? FilterDate
-                : column.options ? column.formType === 'radio' ? FilterRadio : FilterSelect
+          :is="column.form?.type === 'switch' ? FilterToggle
+            : column.form?.type === 'checkbox' ? FilterCheckbox
+              : column.form?.type === 'date' ? FilterDate
+                : column.options ? column.form?.type === 'radio' ? FilterRadio : FilterSelect
                   : FilterInput"
           :index="i"
           :label="column.headerName"
-          v-bind="column.formProps"
+          v-bind="column.form?.props"
           dense
           outlined
-          :style="{ width: column.formWidth || formWidth }"
+          :style="{ width: column.form?.width || formWidth }"
           :column="column"
         />
       </el-form-item>

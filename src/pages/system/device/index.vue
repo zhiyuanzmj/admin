@@ -17,7 +17,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Device>(
     { headerName: '端口', field: 'port', value: '' },
     { headerName: '登陆名', field: 'loginName', value: '' },
     { headerName: '密码', field: 'loginPaw' },
-    { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
+    { headerName: '状态', field: 'status', value: '1', form: { type: 'switch' }, cellRenderer: { setup: props => () =>
         <el-switch
           model-value={props.params.value}
           onClick={async () => {

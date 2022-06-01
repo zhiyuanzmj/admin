@@ -44,9 +44,8 @@ const deselectAll = inject('deselectAll', () => {})
 
 <template>
   <div flex items-center>
-    <div v-if="$slots.default" flex items-center>
+    <div v-if="$slots.default && list.length" flex items-center mr-auto>
       <el-checkbox
-        v-if="list.length"
         :model-value="isSelectAll"
         :indeterminate="selectedList.length > 0 && selectedList.length < list.length"
         @change="() => isSelectAll ? deselectAll() : selectAll() "
@@ -62,7 +61,7 @@ const deselectAll = inject('deselectAll', () => {})
       v-model:current-page="pageIndex"
       v-model:page-size="pageSize"
       ml-auto
-      :class="{ 'flex-1': !$slots.default }"
+      :class="{ 'flex-1': !($slots.default && list.length) }"
       :background="background"
       :layout="layout"
       :page-sizes="pageSizes"

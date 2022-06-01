@@ -15,7 +15,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>
     { headerName: '部门', field: 'departmentName', value: '' },
     { headerName: '电话号码', field: 'phone', value: '' },
     { headerName: '描述', field: 'description', value: '' },
-    { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
+    { headerName: '状态', field: 'status', value: '1', form: { type: 'switch' }, cellRenderer: { setup: props => () =>
         <ElSwitch
           model-value={props.params.value}
           onClick={async () => {

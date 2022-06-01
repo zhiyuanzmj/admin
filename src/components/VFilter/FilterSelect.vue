@@ -2,7 +2,7 @@
 import { isFunction } from 'lodash-es'
 import type { PropType } from 'vue'
 import type { Column } from '~/composables'
-const props = defineProps({
+const { column } = defineProps({
   column: {
     type: Object as PropType<Column>,
     default: () => ({}),
@@ -13,20 +13,20 @@ let page = $ref(1)
 let lastPage = $ref(0)
 let loading = $ref(false)
 let inputValue = $ref('')
-let options = $ref(isFunction(props.column.options) ? [] : props.column.options)
+let options = $ref(isFunction(column.options) ? [] : column.options)
 const list = $computed(() => options.map(i => ({ ...i, value: `${i.value}` })))
 
 async function getList(value: string) {
-  if (!isFunction(props.column.options))
+  if (!isFunction(column.options))
     return []
   loading = true
-  const { data, total } = await props.column.options({ pageIndex: page, pageSize: 50, status: 1, value }).finally(() => loading = false)
+  const { data, total } = await column.options({ pageIndex: page, pageSize: 50, status: 1, value }).finally(() => loading = false)
   lastPage = Math.ceil(total / 50)
   return data.map((i: any) => ({ label: i.label, value: `${i.value}` }))
 }
 
 const onFilter = async (value = '') => {
-  if (!isFunction(props.column.options))
+  if (!isFunction(column.options))
     return
   if (loading)
     return
@@ -44,14 +44,14 @@ async function onScroll() {
 }
 
 setTimeout(() =>
-  props.column.value && onFilter(),
+  column.value && onFilter(),
 )
 
 const getListInject = inject('getList', () => {})
 
 const model = $computed<any>({
-  get: () => props.column.formProps?.multiple ? (props.column.value ? props.column.value?.split(',') : []) : props.column.value,
-  set: val => props.column.value = props.column.formProps?.multiple ? (val?.join(',') || '') : val,
+  get: () => column.form?.props.multiple ? (column.value ? column.value?.split(',') : []) : column.value,
+  set: val => column.value = column.form?.props?.multiple ? (val?.join(',') || '') : val,
 })
 
 const bottomRef = ref()
@@ -67,7 +67,7 @@ useIntersectionObserver(bottomRef, ([{ isIntersecting }]) => {
     :loading="loading"
     clearable
     filterable
-    v-bind="column.formProps"
+    v-bind="column.form?.props"
     :remote-method="onFilter"
     @visible-change="(val:any) => val && onFilter()"
     @clear="getListInject()"

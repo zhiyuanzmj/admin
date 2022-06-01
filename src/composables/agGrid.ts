@@ -15,9 +15,11 @@ export type Column<T = object> = Overwrite<ColDef, {
   hide?: boolean
   order?: string
   options?: ((rest: Record<string, any>) => Promise<{ data: Option[]; total: number }>) | Option[]
-  formWidth?: string
-  formType?: 'switch' | 'radio' | 'checkbox' | 'date' | 'input' | 'select' | 'textarea'
-  formProps?: any
+  form?: {
+    type?: 'switch' | 'radio' | 'checkbox' | 'date' | 'input' | 'select' | 'textarea'
+    width?: string
+    props?: any
+  }
   valueGetter?: ((params: Overwrite<ValueGetterParams, { data: T }>) => any) | string
   cellRenderer?: { setup: ({ params }: { params: Params<T> }) => any }
 }>
@@ -47,7 +49,14 @@ export const useAgGrid = function <T=any>(
   const total = ref(0)
   provide('total', total)
 
-  const params = computed(() => columnList.reduce((a: any, b) => (a[b.field] = b.value || undefined, a), {}))
+  const params = computed(() => columnList.reduce((a: any, b) => {
+    if ((<string>b.field).includes(','))
+      (<string>b.field).split(',').forEach((v, i) => a[v] = b.value?.[i])
+    else
+      a[b.field] = b.value || undefined
+    return a
+  }, {}))
+
   async function getList(data?: any) {
     gridApi.value?.showLoadingOverlay?.()
     router.replace({ query: { ...route.query, ...params.value } })

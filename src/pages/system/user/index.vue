@@ -14,7 +14,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Row>(
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '账号', field: 'username', value: '' },
     { headerName: '姓名', field: 'nickname', value: '' },
-    { headerName: '状态', field: 'state', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
+    { headerName: '状态', field: 'state', value: '1', form: { type: 'switch' }, cellRenderer: { setup: props => () =>
         <ElSwitch
           model-value={props.params.value}
           onClick={async () => {

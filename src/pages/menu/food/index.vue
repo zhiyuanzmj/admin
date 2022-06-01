@@ -24,7 +24,7 @@ const { agGridBind, agGridOn, selectedList, list, getList } = useAgGrid<FoodRow>
       })),
     },
     { headerName: '能量', field: 'calorie', value: '' },
-    { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
+    { headerName: '状态', field: 'status', value: '1', form: { type: 'switch' }, cellRenderer: { setup: props => () =>
         <ElSwitch
           model-value={props.params.value}
           onClick={async () => {

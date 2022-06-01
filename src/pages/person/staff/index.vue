@@ -27,7 +27,13 @@ const { agGridBind, agGridOn, selectedList, getList, list } = useAgGrid<Row>(
     } } },
     { headerName: '性别', field: 'sex', valueGetter: ({ data }) => data.sex ? '男' : '女' },
     { headerName: '手机号', field: 'phone', value: '' },
-    { headerName: '状态', field: 'status', value: '1', formType: 'switch', cellRenderer: { setup: props => () =>
+    { headerName: '职位', field: 'job' },
+    { headerName: '职级', field: 'rank' },
+    { headerName: '余额', field: 'money' },
+    { headerName: '入职时间', field: 'entryDate' },
+    { headerName: '退休时间', field: 'retirementDate' },
+    { headerName: '住址', field: 'address' },
+    { headerName: '状态', field: 'status', value: '1', form: { type: 'switch' }, cellRenderer: { setup: props => () =>
         <ElSwitch
           model-value={props.params.value}
           onClick={async () => {
