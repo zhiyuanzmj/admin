@@ -39,7 +39,7 @@ const _fetch = $fetch.create({
       return
     }
 
-    options?.params?.noMessage || ElMessage({ message: data.msg || '服务器错误', type: 'error' })
+    options?.params?.noMessage || ElMessage({ message: data.msg || '服务器错误', grouping: true, type: 'error' })
 
     if (response.status === 401) {
       const userStore = useUserStore()
