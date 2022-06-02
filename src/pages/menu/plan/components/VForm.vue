@@ -37,7 +37,7 @@ async function submit() {
 </script>
 
 <template>
-  <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}菜单`">
+  <el-dialog v-model="show" :close-on-click-modal="false" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}菜单`">
     <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="submit">
       <el-form-item label="日期" prop="date">
         <el-date-picker v-model="row.date" :disabled="!!row.id" value-format="YYYY-MM-DD" type="date" placeholder="选择时间" />

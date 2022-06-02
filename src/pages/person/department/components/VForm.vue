@@ -29,12 +29,12 @@ async function submit() {
 </script>
 
 <template>
-  <el-dialog v-model="show" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}部门`">
+  <el-dialog v-model="show" :close-on-click-modal="false" custom-class="!w-2xl" :title="`${row.id ? '修改' : '添加'}部门`">
     <el-form ref="formRef" label-width="auto" :model="row" @submit.prevent="submit">
       <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="departmentName" label="名称">
         <el-input v-model="row.departmentName" />
       </el-form-item>
-      <el-form-item label="电话号码" prop="nickname">
+      <el-form-item label="电话号码" :rules="[{ max: 11, message: '请输入正确的手机号', trigger: 'blur' }]" prop="phone">
         <el-input v-model="row.phone" />
       </el-form-item>
       <el-form-item label="描述" prop="description">
