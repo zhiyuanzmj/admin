@@ -60,7 +60,7 @@ function onSuccess({ data }: any = {}) {
       </el-form-item>
 
       <el-form-item prop="photoName" label="图片">
-        <VUpload ref="uploadRef" :photo-name="row.photoName" :on-success="onSuccess" />
+        <VUpload ref="uploadRef" v-model="row.photoName" :on-success="onSuccess" />
       </el-form-item>
 
       <el-form-item>

@@ -4,16 +4,25 @@ import { ElLoading } from 'element-plus'
 import { getHeaders } from '~/composables/request'
 
 interface Props extends Partial<UploadProps> {
-  photoName?: string
+  modelValue?: string
   onSuccess: (_?: any) => void
+  paramsType?: 0 | 1
 }
-const { photoName, onSuccess } = defineProps<Props>()
+const { onSuccess, paramsType = 0, modelValue } = defineProps<Props>()
+const emit = defineEmits(['update:model-value'])
 
-let img = $ref(photoName ? `/api/file${photoName}` : '')
 let file = $ref<any>()
+let model = $computed<string>({
+  set(val) {
+    emit('update:model-value', val)
+  },
+  get() {
+    return file ? modelValue! : (modelValue! && `/api/file${modelValue}`)
+  },
+})
 function onChange({ raw }: any) {
   file = raw
-  img = URL.createObjectURL(raw)
+  model = URL.createObjectURL(raw)
 }
 
 let loading: any
@@ -37,7 +46,7 @@ defineExpose({
   <el-upload
     ref="uploadRef"
     class="avatar-uploader"
-    action="/api/image/easyUpload"
+    :action="`/api/image/easyUpload?type=${paramsType}`"
     :headers="headers"
     icon="el-icon-upload"
     :show-file-list="false"
@@ -50,7 +59,7 @@ defineExpose({
     :before-upload="beforeUpload"
     :on-error="onError"
   >
-    <el-image v-if="img" :src="img" class="avatar" width="300px" height="30px" />
+    <el-image v-if="model" :src="model" class="avatar" width="300px" height="30px" />
     <el-icon v-else class="avatar-uploader-icon"><i class="ep:plus" text-3xl /></el-icon>
   </el-upload>
 </template>

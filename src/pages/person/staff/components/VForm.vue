@@ -5,6 +5,7 @@ import { cloneDeep } from 'lodash-es'
 import { type DepartmentRow, getDepartmentList } from '../../department/api'
 import type { Row } from '../api'
 import { post, put } from '../api'
+import { request } from '~/composables/request'
 
 const props = defineProps<{
   show: boolean
@@ -23,20 +24,25 @@ fetchDepartmentList()
 
 const uploadRef = shallowRef<UploadInstance>()
 async function submit() {
+  const { data } = row.id ? await put(row) : await post(row)
+  ElMessage.success(`${row.id ? '修改' : '添加'}人员成功`)
+  show = false
+  getList()
+  row.id = data as string
+}
+async function onSuccess({ data }: any = {}) {
   const loading = ElLoading.service({ fullscreen: true })
   try {
-    row.id ? await put(row) : await post(row)
-    ElMessage.success('操作成功')
-    show = false
-    getList()
+    data && (row.photoName = data)
+    await submit()
+    data && await addFacesPerson()
   } finally {
     loading.close()
   }
 }
-function onSuccess({ data }: any = {}) {
-  if (data)
-    row.photoName = data
-  submit()
+
+async function addFacesPerson() {
+  request(`/device/device/${row.id}`, { method: 'post' })
 }
 </script>
 
@@ -66,7 +72,7 @@ function onSuccess({ data }: any = {}) {
           <el-radio :label="0">女</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="手机号" w="3/4" prop="phone" :rules="{ pattern: /^\d{11}$/, message: '请输入正确的手机号', trigger: 'blur' }">
+      <el-form-item label="手机号" w="3/4" prop="phone" :rules="[{ pattern: /^\d{11}$/, message: '请输入正确的手机号', trigger: 'blur' }, { required: true, message: '不能为空' }]">
         <el-input v-model="row.phone" />
       </el-form-item>
       <el-form-item label="生日" prop="birthday">
@@ -92,11 +98,11 @@ function onSuccess({ data }: any = {}) {
       <el-form-item prop="address" label="住址">
         <el-input v-model="row.address" type="textarea" />
       </el-form-item>
-      <el-form-item prop="photoName" label="照片">
-        <VUpload ref="uploadRef" :photo-name="row.photoName" :on-success="onSuccess" />
+      <el-form-item prop="photoName" :rules="[{ required: true, message: '不能为空' }]" label="照片">
+        <VUpload ref="uploadRef" v-model="row.photoName" :params-type="1" :on-success="onSuccess" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" native-type="submit">确认提交</el-button>
+        <el-button type="primary" native-type="submit">{{ row.id ? '修改' : '添加' }}并下发人脸</el-button>
         <el-button @click="show = false">取消</el-button>
       </el-form-item>
     </el-form>
