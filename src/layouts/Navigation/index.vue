@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Palette from './Palette.vue'
 import HeaderSearch from './HeaderSearch.vue'
 import { useUserStore } from '~/stores/user'
 import { toggleDark } from '~/composables'
@@ -39,7 +38,6 @@ const row = ref({ ...user.userInfo })
     </el-breadcrumb>
 
     <button fa6-solid:magnifying-glass btn text-sm />
-    <Palette />
     <!-- <HeaderSearch /> -->
     <button btn text-sm fa6-solid:sun dark:fa6-solid-moon @click="toggleDark()" />
     <button btn text-sm :class="expand ? 'fa6-solid:compress' : 'fa6-solid:expand'" @click="toggleExpand" />
