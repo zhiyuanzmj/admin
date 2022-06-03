@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Palette from './Palette.vue'
+import HeaderSearch from './HeaderSearch.vue'
 import { useUserStore } from '~/stores/user'
 import { toggleDark } from '~/composables'
 import UserForm from '~/pages/system/user/components/VForm.vue'
@@ -38,7 +39,15 @@ const row = ref({ ...user.userInfo })
     </el-breadcrumb>
 
     <button fa6-solid:magnifying-glass btn text-sm />
+    <<<<<<< Updated upstream
+    <<<<<<< Updated upstream
     <Palette />
+    =======
+    <!-- <HeaderSearch /> -->
+    >>>>>>> Stashed changes
+    =======
+    <!-- <HeaderSearch /> -->
+    >>>>>>> Stashed changes
     <button btn text-sm fa6-solid:sun dark:fa6-solid-moon @click="toggleDark()" />
     <button btn text-sm :class="expand ? 'fa6-solid:compress' : 'fa6-solid:expand'" @click="toggleExpand" />
     <el-dropdown>
