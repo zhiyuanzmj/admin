@@ -49,8 +49,8 @@ const goTo = (index: number): void => {
       placeholder="搜索"
       autocomplete="off"
       spellcheck="false"
-      focus:w-40 focus:b-primary lt-md="cursor-pointer w-0 -mr-3"
-      b="0 b-1 gray-300 dark:gray-500" w-32 leading-8 outline-none bg-transparent transition="all ease duration-300"
+      w-32 focus:w-40 lt-md="cursor-pointer w-0 -mr-3"
+      b="0 b-1 gray-300 dark:gray-500 !focus:primary" leading-8 outline-none bg-transparent transition="all ease duration-300"
       @input="focusIndex = 0"
       @focus="isActive = true"
       @blur="isActive = false"
@@ -60,7 +60,6 @@ const goTo = (index: number): void => {
     >
     <ul
       v-if="showSuggestions"
-      class="suggestions"
       z-3 absolute top-10 left-0 min-w-65 p-2 list-none bg="white dark:zinc-800"
       b="~ gray-200 dark:gray-500" rounded
       @mouseleave="focusIndex = -1"
