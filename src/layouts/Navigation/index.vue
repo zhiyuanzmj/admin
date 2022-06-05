@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import HeaderSearch from './HeaderSearch.vue'
+import Palette from './Palette.vue'
+import HeaderSearch from './HeaderSearch/index.vue'
 import { useUserStore } from '~/stores/user'
 import { toggleDark } from '~/composables'
 import UserForm from '~/pages/system/user/components/VForm.vue'
@@ -8,7 +9,9 @@ const props = defineProps<{
   isCollapse: boolean
 }>()
 const isCollapse = useVModel(props, 'isCollapse')
-const user = useUserStore()
+watch(useBreakpoints({ tablet: 768 }).smaller('tablet'), (val) => {
+  isCollapse.value = val
+})
 
 let expand = $ref(false)
 function toggleExpand() {
@@ -19,6 +22,7 @@ function toggleExpand() {
 }
 
 const show = ref(false)
+const user = useUserStore()
 const row = ref({ ...user.userInfo })
 </script>
 
@@ -37,8 +41,9 @@ const row = ref({ ...user.userInfo })
       </transition-group>
     </el-breadcrumb>
 
-    <button fa6-solid:magnifying-glass btn text-sm />
-    <!-- <HeaderSearch /> -->
+    <HeaderSearch />
+    <!-- <button fa6-solid:magnifying-glass btn text-sm /> -->
+    <Palette />
     <button btn text-sm fa6-solid:sun dark:fa6-solid-moon @click="toggleDark()" />
     <button btn text-sm :class="expand ? 'fa6-solid:compress' : 'fa6-solid:expand'" @click="toggleExpand" />
     <el-dropdown>

@@ -50,6 +50,7 @@ export default defineConfig({
     transformerVariantGroup(),
   ],
   safelist: [
+    'text-primary',
     ...'prose prose-sm m-auto text-left'.split(' '),
     ...['blue-500', 'teal-500', 'indigo-500', 'rose-500'].map(i => `group-hover:bg-${i} text-${i}`).join(' ').split(' '),
   ],

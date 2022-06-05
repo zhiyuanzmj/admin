@@ -31,7 +31,7 @@ const tagsView = useTagsviewStore()
 
 <template>
   <div p-10>
-    <div grid="~ cols-4" gap-10>
+    <div grid="~ cols-4 lt-md:cols-2" gap-10>
       <div
         v-for="i in list" :key="i.icon"
         class="group" b="0 t gray-50 dark:zinc-800" cursor-pointer shadow="lg dark:zinc-800" rounded-lg h-30 p-5 flex items-center

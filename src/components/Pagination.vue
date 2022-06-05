@@ -53,7 +53,7 @@ const deselectAll = inject('deselectAll', () => {})
         <span>{{ isSelectAll ? '取消' : '全选' }}</span>
       </el-checkbox>
       <slot />
-      <span v-if="selectedList.length" text-sm whitespace-nowrap>
+      <span v-if="selectedList.length" text="sm gray-500" whitespace-nowrap>
         {{ `已选择 ${selectedList.length} 条` }}
       </span>
     </div>
