@@ -70,6 +70,8 @@ export default defineConfig({
         '@vueuse/head',
         '@vueuse/core',
       ],
+      resolvers: [ElementPlusResolver()],
+      vueTemplate: true,
       dts: 'src/auto-imports.d.ts',
     }),
 

@@ -55,7 +55,7 @@ useResizeObserver(extend.value, ([entry]) => {
 
 <template>
   <el-form class="flex flex-nowrap" label-width="auto" label-position="left" @submit="getList" @reset="reset">
-    <div ref="extend" class="v-extend gap-5 pt-1 mb-1 -mt-1" :class="{ active: show }">
+    <div :key="height" ref="extend" class="v-extend gap-5 pt-1 mb-1 -mt-1" :class="{ active: show }">
       <el-form-item
         v-for="(column, i) in columnListRef"
         :key="column.field"

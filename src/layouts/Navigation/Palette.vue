@@ -6,13 +6,13 @@ function hex2rgb(hex: string) {
   return `${r}, ${g}, ${b}`
 }
 
-const colorList = ref([
+const colorList = [
   '#409EFF',
   '#6366f1',
   '#67C23A',
   '#E6A23C',
   '#909399',
-])
+]
 
 let colorPrimary = $(useCssVar('--el-color-primary', document.documentElement))
 let colorPrimaryRgb = $(useCssVar('--el-color-primary-rgb', document.documentElement))
