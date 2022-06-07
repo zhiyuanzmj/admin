@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { toggleDark } from '~/composables'
+
 function hex2rgb(hex: string) {
   const r = parseInt(hex.slice(1, 3), 16)
   const g = parseInt(hex.slice(3, 5), 16)
@@ -34,7 +36,7 @@ watch(() => color, () => {
       />
     </div>
     <template #reference>
-      <button btn text-sm fa6-solid:palette />
+      <button btn text-sm fa6-solid:sun dark:fa6-solid-moon v-bind="$attrs" @click="toggleDark()" />
     </template>
   </el-popover>
 </template>

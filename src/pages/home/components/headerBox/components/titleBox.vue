@@ -4,7 +4,7 @@
 <template>
   <div class="title-box">
     <img src="/logo.png" alt="" class="title_logo">
-    <span class="title">三水区人民政府办公室饭堂人脸识别系统</span>
+    <span class="title">东为餐厅饭堂人脸识别系统</span>
   </div>
 </template>
 
@@ -17,6 +17,7 @@
     // background-color: orange;
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 772px;
     height: 8.2407vh;
     padding-left: 40px;
