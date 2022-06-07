@@ -22,6 +22,7 @@ specifiers:
   eslint: ^8.17.0
   eslint-plugin-cypress: ^2.12.1
   https-localhost: ^4.7.1
+  lottie-web: ^5.9.4
   markdown-it-link-attributes: ^4.0.0
   markdown-it-prism: ^2.2.4
   nprogress: ^0.2.0
@@ -65,6 +66,7 @@ dependencies:
   ag-grid-vue3: 27.3.0
   animate.css: 4.1.1
   element-plus: 2.2.4_vue@3.2.37
+  lottie-web: 5.9.4
   nprogress: 0.2.0
   ohmyfetch: 0.4.18
   pinia: 2.0.14_vcmyupim4cga7k7f5hngmth5py
@@ -5713,6 +5715,10 @@ packages:
     dependencies:
       js-tokens: 4.0.0
     dev: true
+
+  /lottie-web/5.9.4:
+    resolution: {integrity: sha512-bSs1ZTPifnBVejO1MnQHdfrKfcn02YTCmgOh2wcAEICqRA0V7GzDh8FnwXY6+EzT+i8XOunaIloo/5xC5YNbsA==}
+    dev: false
 
   /loupe/2.3.4:
     resolution: {integrity: sha512-OvKfgCC2Ndby6aSTREl5aCCPTNIzlDfQZvZxNUrBrihDhL3xcrYegTblhmEiCrg2kKQz4XsFIaemE5BF4ybSaQ==}

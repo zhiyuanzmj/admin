@@ -31,7 +31,6 @@ declare module '@vue/runtime-core' {
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
-    ElUpload: typeof import('element-plus/es')['ElUpload']
     FilterCheckbox: typeof import('./components/VFilter/FilterCheckbox.vue')['default']
     FilterDate: typeof import('./components/VFilter/FilterDate.vue')['default']
     FilterInput: typeof import('./components/VFilter/FilterInput.vue')['default']

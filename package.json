@@ -20,6 +20,7 @@
     "ag-grid-vue3": "^27.3.0",
     "animate.css": "^4.1.1",
     "element-plus": "^2.2.4",
+    "lottie-web": "^5.9.4",
     "nprogress": "^0.2.0",
     "ohmyfetch": "^0.4.18",
     "pinia": "^2.0.14",
