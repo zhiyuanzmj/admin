@@ -210,7 +210,9 @@ export default {
 <style lang="scss" scoped>
 .device-frame {
   position: relative;
-  width: 790px;
+
+  // width: 790px;
+  flex: 1;
   height: 96.4%;
 
   // background-color: blue;

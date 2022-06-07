@@ -72,10 +72,14 @@ export default {
     li {
       position: relative;
       box-sizing: border-box;
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
 
       // transform: scale(3);
       // height: 207px;
-      width: 164px;
+      // width: 164px;
       height: 19.16666666666667vh;
       margin-left: 30px;
       background-image: url("../../../../../static/images/portrait_frame2.png");
@@ -88,16 +92,8 @@ export default {
       }
 
       .img {
-        position: absolute;
-
-        // top: 0;
-        // left: 0;
-        top: 2.105768vh;
-
-        // top: 23.2px;
-        left: 23px;
         box-sizing: border-box;
-        width: 119px;
+        width: 70%;
         height: 15.58533333333333vh;
         border: 1px solid #0dcaff;
 

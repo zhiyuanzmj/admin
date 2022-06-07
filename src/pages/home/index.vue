@@ -12,10 +12,7 @@ import MainBox from './components/mainBox/index.vue'
 
 <style lang="scss" scoped>
   .container1 {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    width: 100%;
     height: 100vh;
     overflow: hidden;
     background-image: url("./components/static/images/background.png");
@@ -26,7 +23,9 @@ import MainBox from './components/mainBox/index.vue'
 </style>
 
 <route lang="yaml">
+name: home
 meta:
+  permission: false
   title: 人脸识别
   icon: iconoir:face-id
   layout: home

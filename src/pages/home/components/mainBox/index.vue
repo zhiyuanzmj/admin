@@ -486,13 +486,16 @@ export default defineComponent({
 
   // align-items: center;
   justify-content: center;
-  width: 1724px;
+
+  // width: 1724px;
 
   // height: 900px;
   height: 83.33vh;
 
   // background-color: gray;
   padding-top: 2.31vh;
+  margin-right: 80px;
+  margin-left: 70px;
 
   .later {
     position: relative;
