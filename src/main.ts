@@ -3,10 +3,9 @@ import { setupLayouts } from 'virtual:generated-layouts'
 import App from './App.vue'
 import generatedRoutes from '~pages'
 
-import './styles/main.css'
-import './styles/agGrid.scss'
-import '@unocss/reset/tailwind.css'
+import '@unocss/reset/eric-meyer.css'
 import 'uno.css'
+import './styles/main.scss'
 
 const routes = setupLayouts(generatedRoutes.filter(i => i.meta?.permission === false))
 
