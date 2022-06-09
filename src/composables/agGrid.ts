@@ -64,7 +64,7 @@ export const useAgGrid = function <T=any>(
     const result = await fetchList({ pageIndex, pageSize, order, sort, ...params.value, ...data }).finally(() => gridApi.value?.hideOverlay?.())
     list.value = (result?.data ?? []) as any
     total.value = result?.total ?? 0
-    selectedList.value = []
+    selectedList.value = gridApi.value!.getSelectedRows()
 
     await nextTick()
     autoSizeAll()
@@ -104,7 +104,7 @@ export const useAgGrid = function <T=any>(
       if (index === columnStore.value.length - 1)
         option.headerComponent = TableSet
 
-      return Object.assign(option, { ...i, hide: !!i.hide })
+      return Object.assign(option, i)
     }) as ColDef[]
   }
   provide('getColumnDefs', getColumnDefs)
@@ -190,7 +190,7 @@ export const useAgGrid = function <T=any>(
         item.pinned = pinned
     },
     /** 拖动列事件 */
-    columnMoved: (): void => {
+    columnMoved() {
       if (!columnApi.value)
         return
       columnStore.value = columnApi.value.getAllGridColumns().map((i) => {
@@ -201,10 +201,8 @@ export const useAgGrid = function <T=any>(
     /** 数据改变时 自动计算列宽度 */
     rowDataChanged: autoSizeAll,
     /** select 事件 */
-    selectionChanged: () => {
-      if (!gridApi.value)
-        return
-      selectedList.value = gridApi.value.getSelectedRows()
+    selectionChanged() {
+      selectedList.value = gridApi.value!.getSelectedRows()
     },
   }
 

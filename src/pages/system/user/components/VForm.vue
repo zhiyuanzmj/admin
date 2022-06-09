@@ -62,14 +62,6 @@ async function submit() {
       >
         <el-input v-model="row.username" />
       </el-form-item>
-      <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="roleIds" label="角色">
-        <el-select v-model="row.roleIds" multiple>
-          <el-option v-for="i in roleList" :key="i.id" :label="i.roleNameZh" :value="i.id" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="用户名" prop="nickname">
-        <el-input v-model="row.nickname" />
-      </el-form-item>
       <div grid="~ cols-2" gap-5>
         <el-form-item label="密码" :rules="[{ message: '不能为空', required: !row.id }, { min: 8, message: '密码长度不能低于8位', trigger: 'blur' }]" prop="password">
           <el-input v-model="row.password" type="password" show-password autocomplete="new-password" />
@@ -78,6 +70,14 @@ async function submit() {
           <el-input v-model="row.confirmPassword" type="password" show-password autocomplete="new-password" />
         </el-form-item>
       </div>
+      <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="roleIds" label="角色">
+        <el-select v-model="row.roleIds" multiple>
+          <el-option v-for="i in roleList" :key="i.id" :label="i.roleNameZh" :value="i.id" />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="姓名" prop="nickname">
+        <el-input v-model="row.nickname" />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" native-type="submit">确认提交</el-button>
         <el-button @click="show = false">取消</el-button>

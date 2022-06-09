@@ -34,8 +34,8 @@ async function submit() {
       <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="departmentName" label="名称">
         <el-input v-model="row.departmentName" />
       </el-form-item>
-      <el-form-item label="电话号码" :rules="[{ max: 11, message: '请输入正确的手机号', trigger: 'blur' }]" prop="phone">
-        <el-input v-model="row.phone" />
+      <el-form-item label="电话号码" :rules="[{ max: 12, message: '请输入正确的手机号', trigger: 'blur' }]" prop="phone">
+        <el-input v-model="row.phone" type="number" />
       </el-form-item>
       <el-form-item label="描述" prop="description">
         <el-input v-model="row.description" />

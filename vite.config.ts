@@ -66,6 +66,10 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
       vueTemplate: true,
       dts: 'src/auto-imports.d.ts',
+      dirs: [
+        'src/composables',
+        'src/stores',
+      ],
     }),
 
     // https://github.com/antfu/unplugin-vue-components
