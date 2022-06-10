@@ -67,6 +67,7 @@ useIntersectionObserver(bottomRef, ([{ isIntersecting }]) => {
     :loading="loading"
     clearable
     filterable
+    remote
     v-bind="column.form?.props"
     :remote-method="onFilter"
     @visible-change="(val:any) => val && onFilter()"

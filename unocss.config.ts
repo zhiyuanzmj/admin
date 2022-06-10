@@ -18,8 +18,8 @@ export default defineConfig({
   },
   shortcuts: [
     ['btn', 'inline-block cursor-pointer text-base select-none transition duration-200 ease-in-out !hover:text-primary text-gray-500  dark:text-gray-200'],
-    ['layout', 'flex flex-col flex-nowrap bg-zinc-100 dark:bg-zinc-800'],
-    ['main', 'm-3 p-3 pb-2 bg-white dark:bg-zinc-900 shadow rounded flex flex-1 flex-col gap-2'],
+    ['layout', 'flex flex-col flex-nowrap bg-zinc-100 dark:bg-zinc-800 overflow-hidden'],
+    ['main', 'm-3 p-3 pb-2 bg-white dark:bg-zinc-900 shadow rounded flex flex-1 flex-col gap-2 overflow-auto'],
   ],
   presets: [
     presetUno(),

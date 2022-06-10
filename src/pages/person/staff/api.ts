@@ -45,3 +45,10 @@ export function drop(id: any) {
     params: { noMessage: true, id },
   })
 }
+
+export function changeBalance(body: object) {
+  return request('/person/changeBalance', {
+    method: 'put',
+    body,
+  })
+}

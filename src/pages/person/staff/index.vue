@@ -76,7 +76,7 @@ function addHandler() {
 <template>
   <div layout>
     <VHeader>
-      <el-button @click="$router.push({ name: 'person-staff-balance' })">余额充值</el-button>
+      <el-button @click="$router.push({ name: 'balance', params: { id: row.id } })">余额充值</el-button>
       <el-button type="primary" @click="addHandler">
         <div fluent:add-12-filled mr-1 />新增
       </el-button>
@@ -84,7 +84,7 @@ function addHandler() {
 
     <div main>
       <VFilter />
-      <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
+      <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" @row-clicked="({ data }) => row = data" />
       <Pagination>
         <el-button type="primary" :disabled="!selectedList.length" text @click="onDrop(selectedList)">
           删除

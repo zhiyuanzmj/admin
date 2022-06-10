@@ -128,7 +128,7 @@ export default defineComponent({
         // 实例化socket
         // 此处使用wss是后端配置过，保证在https下不被拦截
         const url = baseURL
-        const websockeyPath = `${location.protocol === 'https' ? 'wss' : 'ws'}://${location.host}${url}/webSocketServer/${routerParamNum}`
+        const websockeyPath = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}${url}/webSocketServer/${routerParamNum}`
         // console.log(websockeyPath)
         this.socket = new WebSocket(websockeyPath)
         // 监听socket连接
