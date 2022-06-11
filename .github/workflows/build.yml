@@ -38,4 +38,4 @@ jobs:
           SERVER_PORT: "22"
           SERVER_IP: "zmjs.ml"
           USERNAME: "root"
-          SERVER_DESTINATION: "/tmp/PersonManager"
+          SERVER_DESTINATION: "/tmp/admin"
