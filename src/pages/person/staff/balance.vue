@@ -50,7 +50,7 @@ if (id)
 <template>
   <div layout>
     <VHeader>
-      <el-alert show-icon :closable="false" class="!w-auto !ml-3 " :title="`人脸设备连接${status === 'OPEN' ? '成功' : '失败'}`" :type="status === 'OPEN' ? 'success' : 'error'" />
+      <el-alert effect="dark" show-icon :closable="false" class="!w-auto" :title="`人脸设备连接${status === 'OPEN' ? '成功' : '失败'}`" :type="status === 'OPEN' ? 'success' : 'error'" />
     </VHeader>
     <div main p-10>
       <el-form w="1/2" label-width="80px" @submit.prevent="fetchStaff">
