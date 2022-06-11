@@ -11,17 +11,17 @@ import originImgPath from '~/pages/home/components/static/images/img_3.png'
 import messageCommon from '~/pages/home/components/MessageCommon.vue'
 // import { timeroutClearList } from '@/controller/request'
 const personInfoEl = {
-  AccountNumer: '0',
-  // CardNum: '',
-  // CardType: '',
-  CardNum: '000',
-  CardType: '临时卡',
-  ExpireDate: '2046-10-10',
-  Name: '-',
-  QuanCheng: '-',
-  Sex: 1,
-  StartDate: '-',
-  UserBalance: '-',
+  accountNumer: '0',
+  // cardNum: '',
+  // cardType: '',
+  cardNum: '000',
+  cardType: '临时卡',
+  expireDate: '2046-10-10',
+  name: '-',
+  quanCheng: '-',
+  sex: 1,
+  startDate: '-',
+  userBalance: '-',
 }
 const timer = []
 export default {
@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      imgPath: '/StaffPhotos',
+      imgPath: '/api/file',
       originImgPath,
       timerOutList: [],
       recognition_fail,
@@ -64,8 +64,8 @@ export default {
         // console.log('one-personInfo', e)
         // 清除余额 恢复背景颜色图
         this.$emit('emptyPersonInfo', index)
-        // this.$set(this.personInfo, 'UserBalance', '-')
-        // e.UserBalance = '-'
+        // this.$set(this.personInfo, 'userBalance', '-')
+        // e.userBalance = '-'
         const data = {
           window: winIndex,
         }
@@ -132,7 +132,7 @@ export default {
               class="succ_img_portrait"
               :src="
                 Object.keys(faceList[windowIndex - 1][0]).length > 0
-                  ? imgPath + personInfo.PhotoName
+                  ? imgPath + personInfo.photoName
                   : originImgPath
               "
               alt="加载图片失败.."
@@ -148,40 +148,40 @@ export default {
             <!-- 个人信息 -->
             <div class="person-info">
               <div class="self">
-                <span class="name">{{ personInfo.Name }}</span>
+                <span class="name">{{ personInfo.name }}</span>
                 <!-- <span class="sex">
                   {{
-                  personInfo.Sex === 1 ? '男' : '女'
+                  personInfo.sex === 1 ? '男' : '女'
                   }}
                 </span> -->
               </div>
-              <span class="department">{{ personInfo.QuanCheng }}</span>
+              <span class="department">{{ personInfo.quanCheng }}</span>
             </div>
 
             <!-- 消费金额 -->
             <div class="consume-money">
-              <span>本次刷卡消费</span>
-              <span class="consume-num money-num">{{ personInfo.AccountNumer }}</span>
+              <span>本次消费</span>
+              <span class="consume-num money-num">{{ personInfo.accountNumer }}</span>
               <span>元</span>
             </div>
 
             <!-- 相关信息 -->
             <div class="detail-info">
               <div class="info-header">
-                <span class="card-num">{{ personInfo.CardNum }}</span>
-                <span class="card-type">{{ personInfo.CardType }}</span>
+                <span class="card-num">{{ personInfo.cardNum }}</span>
+                <span class="card-type">{{ personInfo.cardType }}</span>
               </div>
               <div class="info-main">
-                <span>卡内余额总计</span>
+                <span>余额总计</span>
                 <span
-                  class=" money-num card-total" :class="[{ 'balance-no-amply': personInfo.UserBalance !== '-' && Number(personInfo.UserBalance) < 10 }]"
-                >{{ personInfo.UserBalance }}</span>
+                  class=" money-num card-total" :class="[{ 'balance-no-amply': personInfo.userBalance !== '-' && Number(personInfo.userBalance) < 10 }]"
+                >{{ personInfo.userBalance }}</span>
                 <span>元</span>
               </div>
-              <div class="info-footer">
+              <!-- <div class="info-footer">
                 <span>有效期至</span>
-                <span class="valid-date">{{ personInfo.ExpireDate }}</span>
-              </div>
+                <span class="valid-date">{{ personInfo.expireDate }}</span>
+              </div> -->
             </div>
           </div>
         </div>

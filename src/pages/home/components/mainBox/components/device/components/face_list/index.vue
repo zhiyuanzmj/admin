@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       originImgPath,
-      imgPath: '/StaffPhotos',
+      imgPath: '/api/file',
       zmj: 1,
     }
   },
@@ -45,7 +45,7 @@ export default {
           class="img"
           :src="
             Object.keys(item).length > 0
-              ? imgPath + item.PhotoName
+              ? imgPath + item.photoName
               : originImgPath
           "
           :style="{ opacity: Object.keys(item).length === 0 ? 0.3 : 1 + zmj }"

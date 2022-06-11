@@ -19,7 +19,7 @@ export default {
       balanceAmpleBgImg,
       messageCommon,
       faceDetectList: [],
-      bgImgUrl: this.personInfo.UserBalance !== '-' && Number(this.personInfo.UserBalance) < 10 ? balanceNoAmpleBgImg : balanceAmpleBgImg,
+      bgImgUrl: this.personInfo.userBalance !== '-' && Number(this.personInfo.userBalance) < 10 ? balanceNoAmpleBgImg : balanceAmpleBgImg,
       balanceMessage: {
         status: false,
         message: '余额不足，请充值!',
@@ -37,11 +37,11 @@ export default {
     personInfo: {
       handler(e) {
         // console.log('e', e)
-        if (e.UserBalance === '-') {
+        if (e.userBalance === '-') {
           this.bgImgUrl = balanceAmpleBgImg
           return
         }
-        const isBalanceNoAmple = Number(e.UserBalance) < 10
+        const isBalanceNoAmple = Number(e.userBalance) < 10
         // console.log('isBalanceNoAmple', isBalanceNoAmple)
         this.bgImgUrl = isBalanceNoAmple ? balanceNoAmpleBgImg : balanceAmpleBgImg
         // this.balanceMessage.status = isBalanceNoAmple

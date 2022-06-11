@@ -266,7 +266,7 @@ export default defineComponent({
     // 清除余额缓存数据
     emptyPersonInfo(index) {
       // console.log('index', index)
-      this.personInfoList[index].UserBalance = '-'
+      this.personInfoList[index].userBalance = '-'
     },
     // 清除员工吃饭数据
     clearHandler() {
@@ -329,21 +329,21 @@ export default defineComponent({
         data: {
           passFace: [
             {
-              PhotoName: 'f14.jpg',
+              photoName: 'f14.jpg',
               StaffID: 9795,
               name: '骆庆祥',
             },
           ],
           personInfo: {
-            AccountNumer: 2,
-            CardType: '1类卡',
-            ExpireDate: '2024-03-18',
-            Name: '骆庆祥',
-            PhotoName: 'f14.jpg',
-            QuanCheng: '三水区区委政法委',
-            Sex: 0,
-            StartDate: '2021-03-18',
-            UserBalance: 129,
+            accountNumer: 2,
+            cardType: '1类卡',
+            expireDate: '2024-03-18',
+            name: '骆庆祥',
+            photoName: 'f14.jpg',
+            quanCheng: '三水区区委政法委',
+            sex: 0,
+            startDate: '2021-03-18',
+            userBalance: 129,
             window: 2,
           },
         },
@@ -369,26 +369,26 @@ export default defineComponent({
         data: {
           passFace: [
             {
-              PhotoName: 'f14.jpg',
+              photoName: 'f14.jpg',
               StaffID: 9795,
               name: '骆庆祥',
             },
             {
-              PhotoName: 'z39.jpg',
+              photoName: 'z39.jpg',
               StaffID: 8594,
               name: '张辉昌',
             },
           ],
           personInfo: {
-            AccountNumer: 2,
-            CardType: '1类卡',
-            ExpireDate: '2024-03-18',
-            Name: '张辉昌',
-            PhotoName: 'f14.jpg',
-            QuanCheng: '三水区区委政法委',
-            Sex: 0,
-            StartDate: '2021-03-18',
-            UserBalance: 9,
+            accountNumer: 2,
+            cardType: '1类卡',
+            expireDate: '2024-03-18',
+            name: '张辉昌',
+            photoName: 'f14.jpg',
+            quanCheng: '三水区区委政法委',
+            sex: 0,
+            startDate: '2021-03-18',
+            userBalance: 9,
             window: 2,
           },
         },
