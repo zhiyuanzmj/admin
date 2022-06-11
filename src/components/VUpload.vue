@@ -36,6 +36,7 @@ function onError() {
 const headers = getHeaders()
 const uploadRef = $shallowRef<UploadInstance>()
 defineExpose({
+  file: $$(file),
   submit: () => file ? uploadRef?.submit?.() : onSuccess(),
   abort: uploadRef?.abort,
   handleStart: uploadRef?.handleStart,

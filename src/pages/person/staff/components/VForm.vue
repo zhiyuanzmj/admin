@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormInstance, UploadInstance } from 'element-plus'
+import type { FormInstance } from 'element-plus'
 import { ElLoading, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
 import { type DepartmentRow, getDepartmentList } from '../../department/api'
@@ -22,13 +22,13 @@ async function fetchDepartmentList() {
 }
 fetchDepartmentList()
 
-const uploadRef = shallowRef<UploadInstance>()
+const uploadRef = shallowRef<any>()
 async function submit() {
   const { data } = row.id ? await put(row) : await post(row)
   ElMessage.success(`${row.id ? '修改' : '添加'}人员成功`)
   show = false
   getList()
-  row.id = data as string
+  row.id || (row.id = data as string)
 }
 async function onSuccess({ data }: any = {}) {
   const loading = ElLoading.service({ fullscreen: true })
@@ -42,7 +42,8 @@ async function onSuccess({ data }: any = {}) {
 }
 
 async function addFacesPerson() {
-  request(`/device/device/${row.id}`, { method: 'post' })
+  await request(`/device/device/${row.id}`, { method: 'post' })
+  ElMessage.success('下发人脸成功')
 }
 </script>
 
@@ -102,8 +103,9 @@ async function addFacesPerson() {
         <VUpload ref="uploadRef" v-model="row.photoName" :params-type="1" :on-success="onSuccess" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" native-type="submit">{{ row.id ? '修改' : '添加' }}并下发人脸</el-button>
-        <el-button @click="show = false">取消</el-button>
+        <el-button type="primary" native-type="submit">{{ row.id ? '修改' : '添加' }}{{ uploadRef?.file ? '并下发人脸' : '' }}</el-button>
+        <el-button v-if="row.id" @click="addFacesPerson">下发人脸</el-button>
+        <el-button v-else @click="show = false">取消</el-button>
       </el-form-item>
     </el-form>
   </el-dialog>

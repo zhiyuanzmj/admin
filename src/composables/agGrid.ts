@@ -135,7 +135,7 @@ export const useAgGrid = function <T=any>(
   }
   provide('autoSizeAll', autoSizeAll)
 
-  const row = ref<T>()
+  const row = ref({} as T)
 
   const agGridBind = reactive<GridOptions & { class: any }>({
     // rowBuffer: 1,
