@@ -8,7 +8,7 @@ import { changeBalance, getStaffList } from './api'
 const { id } = defineProps<{ id: string }>()
 
 let row = $ref<Row>({})
-const { data, close } = useWebSocket<any>(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}${baseURL}/webSocketServer/pay/1`)
+const { data, close, status } = useWebSocket<any>(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}${baseURL}/webSocketServer/pay/1`)
 watch(data, () => {
   if (data.value.code === 200)
     row = data.value.data
@@ -48,7 +48,9 @@ if (id)
 
 <template>
   <div layout>
-    <VHeader />
+    <VHeader>
+      <el-alert show-icon :closable="false" class="!w-auto !ml-3 !mr-auto" :title="`人脸设备连接${status === 'OPEN' ? '成功' : '失败'}`" :type="status === 'OPEN' ? 'success' : 'error'" />
+    </VHeader>
     <div main p-10>
       <el-form w="1/2" label-width="80px" @submit.prevent="fetchStaff">
         <el-form-item label="照片">
@@ -104,6 +106,7 @@ if (id)
 </template>
 
 <route lang="yaml">
+path: balance/:id?
 name: balance
 meta:
   title: 余额充值

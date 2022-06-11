@@ -135,6 +135,8 @@ export const useAgGrid = function <T=any>(
   }
   provide('autoSizeAll', autoSizeAll)
 
+  const row = ref<T>()
+
   const agGridBind = reactive<GridOptions & { class: any }>({
     // rowBuffer: 1,
     rowData: list as any,
@@ -204,9 +206,11 @@ export const useAgGrid = function <T=any>(
     selectionChanged() {
       selectedList.value = gridApi.value!.getSelectedRows()
     },
+    rowClicked: ({ data }: any) => row.value = data,
   }
 
   return {
+    row,
     columnList,
     selectedList,
     gridApi,

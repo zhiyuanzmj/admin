@@ -8,10 +8,9 @@ import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
-let row = $ref<Row>()
 
 const previewSrcList = $computed(() => (list: Row[] = []) => list.map(i => `/api/file${i.photoName}`))
-const { agGridBind, agGridOn, selectedList, getList, list } = useAgGrid<Row>(
+let { agGridBind, agGridOn, selectedList, getList, list, row } = $(useAgGrid<Row>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '姓名', field: 'name', value: '' },
@@ -23,7 +22,7 @@ const { agGridBind, agGridOn, selectedList, getList, list } = useAgGrid<Row>(
     },
     { headerName: '照片', field: 'photoName', cellRenderer: { setup(props) {
       const src = `/api/file${props.params.value}`
-      return () => <ElImage v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list.value)} src={src} class="h-10 mt-4 cursor-pointer"/>
+      return () => <ElImage v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list)} src={src} class="h-10 mt-4 cursor-pointer"/>
     } } },
     { headerName: '性别', field: 'sex', valueGetter: ({ data }) => data.sex ? '男' : '女' },
     { headerName: '手机号', field: 'phone', value: '' },
@@ -56,7 +55,7 @@ const { agGridBind, agGridOn, selectedList, getList, list } = useAgGrid<Row>(
     } } },
   ],
   getStaffList,
-)
+))
 
 async function onDrop(list = [row]) {
   await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
@@ -76,7 +75,7 @@ function addHandler() {
 <template>
   <div layout>
     <VHeader>
-      <el-button @click="$router.push({ name: 'balance', params: { id: row.id } })">余额充值</el-button>
+      <el-button ml-auto @click="$router.push({ name: 'balance', params: { id: row?.id } })">余额充值</el-button>
       <el-button type="primary" @click="addHandler">
         <div fluent:add-12-filled mr-1 />新增
       </el-button>
@@ -84,7 +83,7 @@ function addHandler() {
 
     <div main>
       <VFilter />
-      <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" @row-clicked="({ data }) => row = data" />
+      <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
       <Pagination>
         <el-button type="primary" :disabled="!selectedList.length" text @click="onDrop(selectedList)">
           删除
