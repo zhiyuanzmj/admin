@@ -9,9 +9,10 @@ const { id } = defineProps<{ id: string }>()
 
 let row = $ref<Row>({})
 const { data, close, status } = useWebSocket<any>(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}${baseURL}/webSocketServer/pay/1`)
-watch(data, () => {
-  if (data.value.code === 200)
-    row = data.value.data
+watch(data, (val) => {
+  val = JSON.parse(val)
+  if (val.code === 200)
+    row = val.data
 })
 onUnmounted(() => {
   close()
