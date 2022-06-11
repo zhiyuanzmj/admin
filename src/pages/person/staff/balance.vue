@@ -37,20 +37,20 @@ async function submit() {
   ElMessage.success({ message: '修改成功' })
 }
 
-async function fetchStaff() {
+async function fetchStaff(id?: string) {
   money = undefined
-  const { data } = await getStaffList({ pageIndex: 1, pageSize: 50, name: row.name, phone: row.phone })
+  const { data } = await getStaffList({ pageIndex: 1, pageSize: 50, id, name: row.name, phone: row.phone })
   row = data[0]
 }
 
 if (id)
-  fetchStaff()
+  fetchStaff(id)
 </script>
 
 <template>
   <div layout>
     <VHeader>
-      <el-alert show-icon :closable="false" class="!w-auto !ml-3 !mr-auto" :title="`人脸设备连接${status === 'OPEN' ? '成功' : '失败'}`" :type="status === 'OPEN' ? 'success' : 'error'" />
+      <el-alert show-icon :closable="false" class="!w-auto !ml-3 " :title="`人脸设备连接${status === 'OPEN' ? '成功' : '失败'}`" :type="status === 'OPEN' ? 'success' : 'error'" />
     </VHeader>
     <div main p-10>
       <el-form w="1/2" label-width="80px" @submit.prevent="fetchStaff">

@@ -16,7 +16,7 @@ export default defineComponent({
     Device: device,
   },
   props: {
-    devNum: { type: Number, default: 2 },
+    devNum: { type: Number, default: 1 },
   },
   data() {
     return {
@@ -247,7 +247,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="wrap">
+  <div class="wrap" :style="deviceNum === 1 ? 'margin:auto;width:50%' : ''">
     <Device
       v-for="(_, devIndex) of deviceNum"
       :key="devIndex"

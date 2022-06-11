@@ -1,12 +1,15 @@
 <script setup lang="ts" name="home">
 import HeaderBox from './components/headerBox/index.vue'
 import MainBox from './components/mainBox/index.vue'
+defineProps({
+  devNum: { type: Number, default: 4 },
+})
 </script>
 
 <template>
   <div class="container1">
     <HeaderBox />
-    <MainBox />
+    <MainBox :dev-num="devNum" />
   </div>
 </template>
 
@@ -23,6 +26,7 @@ import MainBox from './components/mainBox/index.vue'
 </style>
 
 <route lang="yaml">
+path: /home/:devNum?
 name: home
 meta:
   permission: false

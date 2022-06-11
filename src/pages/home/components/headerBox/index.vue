@@ -13,7 +13,6 @@ import DateBox from './components/dateBox.vue'
 <style lang="scss" scoped>
 .wrap {
   position: relative;
-  width: calc(100% - 140px);
 
   // background: skyblue;
   // padding: 0 70px;

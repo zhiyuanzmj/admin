@@ -46,7 +46,7 @@ export default {
   position: absolute;
 
   //  background-color: gray;
-  right: 0;
+  right: 80px;
   bottom: 0.9259259259259259vh;
   font-size: 12px !important;
   color: #fff;
