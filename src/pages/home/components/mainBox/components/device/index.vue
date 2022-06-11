@@ -53,28 +53,19 @@ export default {
   watch: {
     // 一分钟后自动退回扫描界面
     personInfo(e) {
-      // let winIndex = e.window
       const winIndex = this.windowIndex
       const index = winIndex - 1
-      // console.log('开始计时winIndex', winIndex)
-      this.$set(this.timerOutList, index, false)
-      // this.$set(this.faceList, index, faceList[this.windowIndex - 1])
+      this.timerOutList[index] = false
       clearTimeout(timer[index])
       timer[index] = setTimeout(() => {
-        // console.log('one-personInfo', e)
         // 清除余额 恢复背景颜色图
         this.$emit('emptyPersonInfo', index)
-        // this.$set(this.personInfo, 'userBalance', '-')
         // e.userBalance = '-'
         const data = {
           window: winIndex,
         }
-        // timeroutClearList(data).then((res)=>{
-        // console.log(res)
-        this.$set(this.timerOutList, index, true)
-        this.$set(this.faceList, index, new Array(4).fill({}))
-        // })
-        // console.log('退回扫描界面', winIndex)
+        this.timerOutList[index] = true
+        this.faceList[index] = new Array(4).fill({})
       }, 60000)
     },
   },
@@ -149,11 +140,6 @@ export default {
             <div class="person-info">
               <div class="self">
                 <span class="name">{{ personInfo.name }}</span>
-                <!-- <span class="sex">
-                  {{
-                  personInfo.sex === 1 ? '男' : '女'
-                  }}
-                </span> -->
               </div>
               <span class="department">{{ personInfo.quanCheng }}</span>
             </div>
@@ -167,10 +153,6 @@ export default {
 
             <!-- 相关信息 -->
             <div class="detail-info">
-              <div class="info-header">
-                <span class="card-num">{{ personInfo.cardNum }}</span>
-                <span class="card-type">{{ personInfo.cardType }}</span>
-              </div>
               <div class="info-main">
                 <span>余额总计</span>
                 <span
@@ -178,10 +160,6 @@ export default {
                 >{{ personInfo.userBalance }}</span>
                 <span>元</span>
               </div>
-              <!-- <div class="info-footer">
-                <span>有效期至</span>
-                <span class="valid-date">{{ personInfo.expireDate }}</span>
-              </div> -->
             </div>
           </div>
         </div>
@@ -269,7 +247,6 @@ export default {
 
         .succ-img {
           width: 22px;
-          height: 22px;
           padding-right: 7px;
           line-height: 22px;
         }

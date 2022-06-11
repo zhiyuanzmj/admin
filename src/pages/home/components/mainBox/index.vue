@@ -10,11 +10,6 @@ function getPersonInfo(deviceNum) {
   })
 }
 
-// 清除数据库(测试时所需)
-function clear() {
-  return request('/result/recoverData')
-}
-
 export default defineComponent({
   name: 'MainBox',
   components: {
@@ -25,7 +20,7 @@ export default defineComponent({
   },
   data() {
     return {
-      testMode: false,
+      testMode: true,
       faceList: new Array(Number(this.devNum)).fill().map(() => {
         return new Array(4).fill({})
       }),
@@ -74,9 +69,9 @@ export default defineComponent({
         // console.log(res)
         if (res.code === 200) {
           const isEvenNum = res.data.personInfo.window % 2 === 0 ? 1 : 0
-          this.$set(this.personInfoList, isEvenNum, res.data.personInfo)
+          this.personInfoList[isEvenNum] = res.data.personInfo
           // console.log('this.personInfoList', this.personInfoList)
-          this.$set(this.faceList, isEvenNum, res.data.passFace)
+          this.faceList[isEvenNum] = res.data.passFace
           // return
           // if (this.faceList[0].length === 2 || this.faceList[1].length === 2) return
           this.loopRequest(deviceNum)
@@ -95,12 +90,12 @@ export default defineComponent({
             message,
             status: true,
           }
-          this.$set(this.showErrorMessage, window - 1, data)
+          this.showErrorMessage[window - 1] = data
           setTimeout(() => {
-            this.$set(this.showErrorMessage, window - 1, {
+            this.showErrorMessage[window - 1] = {
               message: '',
               status: false,
-            })
+            }
           }, 3500)
 
           this.loopRequest(deviceNum)
@@ -131,36 +126,19 @@ export default defineComponent({
         const websockeyPath = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}${url}/webSocketServer/${routerParamNum}`
         // console.log(websockeyPath)
         this.socket = new WebSocket(websockeyPath)
-        // 监听socket连接
-        this.socket.onopen = this.open
         // 监听socket错误信息
         this.socket.onerror = this.error
         // 监听socket消息
         this.socket.onmessage = this.getMessage
       }
     },
-    // socket连接成功
-    open() {
-      // console.log("socket连接成功");
-      // this.moveClose()
-    },
     // socket连接错误
     error() {
-      // console.log("socket连接错误");
-
       this.infoHandler({ code: 500, scokeyErr: true })
-      // openMessageBox({
-      //   psContent: '网络请求出错 请手动刷新页面',
-      //   type: 'error',
-      //   title: '连接出错'
-      // })
     },
     // 获取到后台数据
     getMessage(res) {
-      // console.log('获取到原始数据', res);
-      const webSocketData = res.data
-      this.infoHandler(webSocketData)
-      // console.log('获取到数据data', data);
+      this.infoHandler(res.data)
     },
     // 数据处理
     infoHandler(webSocketData, isOffLine) {
@@ -177,9 +155,9 @@ export default defineComponent({
         const { data } = webSocketData
         const isEvenNum = data.personInfo.window && data.personInfo.window % 2 === 0 ? 1 : 0
         // let isEvenNum = data.personInfo.window % 2 === 0 && data.personInfo.window < 4 ? 1 : data.personInfo.window % 2 !== 0 && data.personInfo.window >= 4 ? 1 : 0
-        this.$set(this.personInfoList, isEvenNum, data.personInfo)
+        this.personInfoList[isEvenNum] = data.personInfo
         // console.log('this.personInfoList', this.personInfoList)
-        this.$set(this.faceList, isEvenNum, data.passFace)
+        this.faceList[isEvenNum] = data.passFace
         // return
         // if (this.faceList[0].length === 2 || this.faceList[1].length === 2) return
       } else if (webSocketData.code === 500) {
@@ -204,31 +182,26 @@ export default defineComponent({
         // let itemTimer = this.timer[isEvenNum]
 
         // 先清除定时器和提示信息数据
-        this.$set(this.showErrorMessage[isEvenNum], 'status', false)
+        this.showErrorMessage[isEvenNum].status = false
         clearTimeout(this.timer[isEvenNum])
         const mesInfo = {
           message,
           status: true,
         }
-        // this.$set(this.showErrorMessage, isEvenNum, mesInfo)
 
-        this.$set(this.showErrorMessage, isEvenNum, mesInfo)
+        this.showErrorMessage[isEvenNum] = mesInfo
 
         this.timer[isEvenNum] = setTimeout((_) => {
-          this.$set(this.showErrorMessage[isEvenNum], 'status', false)
+          this.showErrorMessage[isEvenNum].status = false
         }, 3000)
       }
     },
     // 发送信息给后台
     moveClose() {
       const readyState = this.socket.readyState
-      if (readyState > 1) {
-        // console.log('> 3', readyState)
+      if (readyState > 1)
         return
-      }
-      // websocket请求无法设置请求头，在此采用建立连接之后主动推送token和userId给后端
-      // let token = this.$cookies.get("auth");
-      // let userId = this.$cookies.get("user_id");
+
       this.socket.send(
         JSON.stringify({
           isClosed: 'close',
@@ -240,7 +213,6 @@ export default defineComponent({
           },
         }),
       )
-      // console.log('this.socket', this.socket)
     },
     // 网络离线处理
     offlineHandler() {
@@ -257,7 +229,6 @@ export default defineComponent({
     // 关闭弹窗
     closeMessage() {
       const mesEle = document.querySelector('.el-message-box__wrapper')
-      // console.log('mesEle', mesEle)
       if (!mesEle)
         return
       mesEle.querySelector('.el-message-box__headerbtn').click()
@@ -265,146 +236,11 @@ export default defineComponent({
     },
     // 清除余额缓存数据
     emptyPersonInfo(index) {
-      // console.log('index', index)
       this.personInfoList[index].userBalance = '-'
-    },
-    // 清除员工吃饭数据
-    clearHandler() {
-      clear()
     },
     // 用以监听刷新或者浏览器关闭
     reLoadPage() {
       this.moveClose()
-    },
-    // 测试弹框
-    testAlert() {
-      // 伪数据测试
-      const res = {
-        code: 100,
-        data: {
-          window: 1,
-        },
-        message: '你已经消费过了!',
-      }
-
-      // 已经消费过了
-      const window = res.data.window
-      const message = res.message
-      const data = {
-        message,
-        status: true,
-      }
-      const isEvenNum = window % 2 === 0 ? 1 : 0
-      // let itemTimer = this.timer[isEvenNum]
-
-      // 先清除定时器和提示信息数据
-      this.$set(this.showErrorMessage[isEvenNum], 'status', false)
-      clearTimeout(this.timer[isEvenNum])
-      // let mesInfo = {
-      //   message,
-      //   status: true
-      // }
-      // this.$set(this.showErrorMessage, isEvenNum, mesInfo)
-
-      this.$set(this.showErrorMessage, isEvenNum, data)
-
-      this.timer[isEvenNum] = setTimeout((_) => {
-        this.$set(this.showErrorMessage[isEvenNum], 'status', false)
-      }, 3000)
-      // this.$message({
-      //   message: '你已经消费了，就不要浪费钱了！！！',
-      //   type: 'error',
-      //   duration: '999999',
-      //   showClose: false
-      // })
-      // document.querySelector('.el-message').style.left = '0'
-      // document.querySelector('.el-message').style.left = '6%'
-      // console.log(document.querySelector('.el-message').style)
-    },
-    // 测试人脸识别
-    testSucc() {
-      // 伪数据测试
-      const resData = {
-        code: 200,
-        data: {
-          passFace: [
-            {
-              photoName: 'f14.jpg',
-              StaffID: 9795,
-              name: '骆庆祥',
-            },
-          ],
-          personInfo: {
-            accountNumer: 2,
-            cardType: '1类卡',
-            expireDate: '2024-03-18',
-            name: '骆庆祥',
-            photoName: 'f14.jpg',
-            quanCheng: '三水区区委政法委',
-            sex: 0,
-            startDate: '2021-03-18',
-            userBalance: 129,
-            window: 2,
-          },
-        },
-      }
-
-      this.infoHandler(resData)
-
-      // this.$message({
-      //   message: '你已经消费了，就不要浪费钱了！！！',
-      //   type: 'error',
-      //   duration: '999999',
-      //   showClose: false
-      // })
-      // document.querySelector('.el-message').style.left = '0'
-      // document.querySelector('.el-message').style.left = '6%'
-      // console.log(document.querySelector('.el-message').style)
-    },
-    // 测试人脸识别-余额不足
-    testSuccBalanceNoAmple() {
-      // 伪数据测试
-      const resData = {
-        code: 200,
-        data: {
-          passFace: [
-            {
-              photoName: 'f14.jpg',
-              StaffID: 9795,
-              name: '骆庆祥',
-            },
-            {
-              photoName: 'z39.jpg',
-              StaffID: 8594,
-              name: '张辉昌',
-            },
-          ],
-          personInfo: {
-            accountNumer: 2,
-            cardType: '1类卡',
-            expireDate: '2024-03-18',
-            name: '张辉昌',
-            photoName: 'f14.jpg',
-            quanCheng: '三水区区委政法委',
-            sex: 0,
-            startDate: '2021-03-18',
-            userBalance: 9,
-            window: 2,
-          },
-        },
-      }
-
-      this.infoHandler(resData)
-
-      // this.$message({
-      //   message: '你已经消费了，就不要浪费钱了！！！',
-      //   type: 'error',
-      //   duration: '999999',
-      //   showClose: false
-      // })
-      // document.querySelector('.el-message').style.left = '0'
-      // document.querySelector('.el-message').style.left = '6%'
-      // console.log(document.querySelector('.el-message').style)
     },
   },
 })
@@ -412,59 +248,6 @@ export default defineComponent({
 
 <template>
   <div class="wrap">
-    <!-- 开发环境 测试调用 -->
-    <!-- <div style="
-    top: 0px;
-    left: 0px;
-    position: absolute;
-    color: #fff;
-    font-size: 20px;
-    background: red;
-    cursor: pointer;"
-    @click="clearHandler"
-    >清除数据库</div> -->
-    <div v-if="testMode">
-      <div
-        style="
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: 16px;
-    color: #fff;
-    cursor: pointer;
-    background: red;"
-        @click="testAlert"
-      >
-        测试弹框
-      </div>
-      <div
-        style="
-    position: absolute;
-    top: 0;
-    left: 10%;
-    font-size: 16px;
-    color: #fff;
-    cursor: pointer;
-    background: red;"
-        @click="testSucc"
-      >
-        测试人脸识别
-      </div>
-      <div
-        style="
-    position: absolute;
-    top: 0;
-    left: 20%;
-    font-size: 16px;
-    color: #fff;
-    cursor: pointer;
-    background: red;"
-        @click="testSuccBalanceNoAmple"
-      >
-        测试人脸识别-余额不足
-      </div>
-    </div>
-
     <Device
       v-for="(_, devIndex) of deviceNum"
       :key="devIndex"

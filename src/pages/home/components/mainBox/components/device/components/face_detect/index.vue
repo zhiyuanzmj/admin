@@ -46,16 +46,16 @@ export default {
         this.bgImgUrl = isBalanceNoAmple ? balanceNoAmpleBgImg : balanceAmpleBgImg
         // this.balanceMessage.status = isBalanceNoAmple
         // 先清除定时器和提示信息数据s: false
-        this.$set(this.balanceMessage, 'status', false)
+        this.balanceMessage.status = false
         clearTimeout(this.timer)
         const data = {
           status: isBalanceNoAmple,
           message: '余额不足，请充值！',
         }
-        this.$set(this, 'balanceMessage', data)
+        this.balanceMessage = data
 
         this.timer = setTimeout(() => {
-          this.$set(this.balanceMessage, 'status', false)
+          this.balanceMessage.status = false
         }, 3000)
       },
       deep: true,
