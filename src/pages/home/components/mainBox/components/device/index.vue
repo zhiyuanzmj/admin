@@ -85,14 +85,13 @@ export default {
     // 运行播放识别动画
     playSvg() {
       const element = document.getElementById(`recognition${this.windowIndex}`)
-
       lottie.loadAnimation({
         container: element,
         renderer: 'svg',
         loop: true,
         autoplay: true,
         animationData,
-        assetsPath: 'src/pages/home/components/mainBox/components/device/animation/images/',
+        // assetsPath: '~/pages/home/components/mainBox/components/device/animation/images/',
         // rendererSettings: this.options.rendererSettings
       })
     },
