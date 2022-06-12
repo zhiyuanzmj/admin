@@ -20,7 +20,7 @@ const defaultActive = computed(() => {
 ::v-deep(.el-menu-item.is-active) {
   background: linear-gradient(to left, var(--el-color-primary) 2%, transparent 2%);
 
-  @apply bg-blue-50 dark:bg-gray-800;
+  @apply bg-zinc-100 dark:bg-zinc-800;
 }
 
 .el-menu:not(.el-menu--collapse) {
