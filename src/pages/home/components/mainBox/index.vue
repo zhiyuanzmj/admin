@@ -20,7 +20,6 @@ export default defineComponent({
   },
   data() {
     return {
-      testMode: true,
       faceList: new Array(Number(this.devNum)).fill().map(() => {
         return new Array(4).fill({})
       }),
@@ -45,9 +44,6 @@ export default defineComponent({
     this.closeMessage()
   },
   mounted() {
-    if (this.testMode)
-      return
-
     // 机号
     // let deviceNum = this.deviceNum
     // http机制

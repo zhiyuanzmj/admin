@@ -1,9 +1,8 @@
 <script setup lang="ts" name="home">
 import HeaderBox from './components/headerBox/index.vue'
 import MainBox from './components/mainBox/index.vue'
-defineProps({
-  devNum: { type: Number, default: 4 },
-})
+const props = defineProps<{ devNum: number }>()
+let devNum = $ref(props.devNum || 2)
 </script>
 
 <template>
