@@ -5,6 +5,7 @@ import type { Plan } from './api'
 import { drop, getPlanList } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
+const weekList = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
 
 let show = $ref(false)
 let row = $ref<Plan>()
@@ -12,7 +13,7 @@ const mealTypeList = [{ label: '早餐', value: 1 }, { label: '午餐', value: 2
 const { agGridBind, agGridOn, selectedList, getList, columnList } = useAgGrid<Plan>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '时间', valueGetter: 'data.date', field: 'minDate,maxDate', value: '', form: { type: 'date', width: '260px', props: { type: 'daterange' } } },
+    { headerName: '时间', valueGetter: ({ data }) => `${data.date} (${weekList[dayjs(data.date).day()]})`, field: 'minDate,maxDate', value: '', form: { type: 'date', width: '260px', props: { type: 'daterange' } } },
     { headerName: '菜品', field: 'foodInfo', valueGetter: ({ data }) => data.foodInfo.map(i => i.name) },
     { headerName: '类型', field: 'mealType', form: { type: 'radio' }, valueGetter: ({ data }) => mealTypeList.find(i => i.value === data.mealType)?.label, value: '2', options: mealTypeList },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', pinned: 'right', cellRenderer: { setup(props) {

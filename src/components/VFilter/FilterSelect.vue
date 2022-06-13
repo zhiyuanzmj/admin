@@ -50,7 +50,7 @@ setTimeout(() =>
 const getListInject = inject('getList', () => {})
 
 const model = $computed<any>({
-  get: () => column.form?.props.multiple ? (column.value ? column.value?.split(',') : []) : column.value,
+  get: () => column.form?.props?.multiple ? (column.value ? column.value?.split(',') : []) : column.value,
   set: val => column.value = column.form?.props?.multiple ? (val?.join(',') || '') : val,
 })
 
