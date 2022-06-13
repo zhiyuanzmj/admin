@@ -8,6 +8,7 @@ import { changeBalance, getStaffList } from './api'
 const { id } = defineProps<{ id: string }>()
 
 let row = $ref<Row>({})
+let payType = $ref('微信')
 const { data, close, status } = useWebSocket<any>(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}${baseURL}/webSocketServer/pay/1`)
 watch(data, (val) => {
   val = JSON.parse(val)
@@ -32,12 +33,12 @@ fetchStaffList()
 let money = $ref<number | undefined>()
 const moneyType = $ref<number>(1)
 async function submit() {
-  await changeBalance({ userId: row.id, money, payType: '现金', moneyType })
+  await changeBalance({ userId: row.id, money, payType, moneyType })
   fetchStaff()
   ElMessage.success({ message: '修改成功' })
 }
 
-async function fetchStaff(id?: string) {
+async function fetchStaff(id = row.id) {
   money = undefined
   const { data } = await getStaffList({ pageIndex: 1, pageSize: 50, id, name: row.name, phone: row.phone })
   row = data[0]
@@ -53,7 +54,7 @@ if (id)
       <el-alert effect="dark" show-icon :closable="false" class="!w-auto" :title="`人脸设备连接${status === 'OPEN' ? '成功' : '失败'}`" :type="status === 'OPEN' ? 'success' : 'error'" />
     </VHeader>
     <div main p-10>
-      <el-form w="1/2" label-width="80px" @submit.prevent="fetchStaff">
+      <el-form w="1/2" label-width="80px" @submit.prevent="fetchStaff()">
         <el-form-item label="照片">
           <div w-48 h-48 b="~ dashed gray-200">
             <el-image class="h-full w-full" :src="`/api/file${row.photoName}`">
@@ -71,7 +72,7 @@ if (id)
           </el-select>
         </el-form-item>
         <el-form-item label="姓名">
-          <el-select v-model="row.name" w-full filterable remote :remote-method="fetchStaffList" value-key="id" @change="fetchStaff">
+          <el-select v-model="row.name" w-full filterable remote :remote-method="fetchStaffList" value-key="id" @change="fetchStaff()">
             <el-option v-for="i in staffList" :key="i.id" :label="i.name" :value="i.name" />
           </el-select>
         </el-form-item>
@@ -87,7 +88,10 @@ if (id)
         <el-form-item />
       </el-form>
       <el-form w="1/2" label-width="80px" @submit.prevent="submit">
-        <el-form-item label="类型" label-position="left">
+        <el-form-item label="充值类型" label-position="left">
+          <el-select v-model="row.payType" w-25 mr-3>
+            <el-option v-for="i in ['微信', '支付宝', '现金']" :key="i" :label="i" :value="i" />
+          </el-select>
           <el-radio-group v-model="moneyType">
             <el-radio :label="1">充值</el-radio>
             <el-radio :label="2">退款</el-radio>

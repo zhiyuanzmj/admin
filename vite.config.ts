@@ -167,8 +167,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://120.76.79.136:8669',
-        // target: 'http://zmjs.ml:8669',
+        changeOrigin: true,
+        // target: 'http://120.76.79.136:8669',
+        target: 'http://zmjs.ml:8669',
         // target: 'http://192.168.10.48:8669',
         ws: true,
       },

@@ -17,6 +17,7 @@ export interface Row {
   sex?: 0 | 1
   status?: 0 | 1
   type?: 0 | 1
+  payType?: string
 }
 
 export function getStaffList(params: object) {
