@@ -34,7 +34,7 @@ const tagsView = useTagsviewStore()
     <div grid="~ cols-4 lt-md:cols-2" gap-10>
       <div
         v-for="i in list" :key="i.icon"
-        class="group" b="0 t gray-50 dark:zinc-800" cursor-pointer shadow="lg dark:zinc-800" rounded-lg h-30 p-5 flex items-center
+        class="group" b="0 t gray-50 dark:zinc-800" cursor-pointer shadow="~ dark:zinc-800" rounded-lg h-30 p-5 flex items-center
         @click="tagsView.push(i.to)"
       >
         <div flex items-center mr-auto rounded p-3 py-2 transition-colors duration-500 :class="`group-hover:bg-${i.color}`">

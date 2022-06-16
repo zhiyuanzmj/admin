@@ -48,7 +48,7 @@ export default defineConfig({
     // https://github.com/hannoeru/vite-plugin-pages
     Pages({
       extensions: ['vue', 'md'],
-      exclude: ['**/components'],
+      exclude: ['**/components/**'],
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
@@ -168,8 +168,8 @@ export default defineConfig({
     proxy: {
       '/api': {
         changeOrigin: true,
-        // target: 'http://120.76.79.136:8669',
-        target: 'http://zmjs.ml:8669',
+        target: 'http://120.76.79.136:8669',
+        // target: 'http://zmjs.ml:8669',
         // target: 'http://192.168.10.48:8669',
         ws: true,
       },

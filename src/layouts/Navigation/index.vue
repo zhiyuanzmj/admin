@@ -61,7 +61,7 @@ const row = ref({ ...user.userInfo })
         </el-dropdown-item>
       </template>
     </el-dropdown>
-    <UserForm v-model:show="show" :row="row" />
+    <UserForm v-if="show" v-model:show="show" :row="row" />
   </nav>
 </template>
 
