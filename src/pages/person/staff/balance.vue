@@ -85,7 +85,7 @@ if (id)
           <div flex gap-5>
             <el-input v-model="row.phone">
               <template #append>
-                <el-button bg-primary native-type="submit"><i fa6-solid:magnifying-glass text-xs mr-1 />查询</el-button>
+                <el-button native-type="submit"><i fa6-solid:magnifying-glass text-xs mr-1 />查询</el-button>
               </template>
             </el-input>
           </div>
@@ -107,7 +107,7 @@ if (id)
           <div text-gray-500>{{ `账户余额：${row.money || 0}元` }}</div>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" :disabled="!row.id" native-type="submit" bg-primary>确认提交</el-button>
+          <el-button type="primary" :disabled="!row.id" native-type="submit">确认提交</el-button>
           <el-button @click="row = {}; money = undefined;moneyType = 1">重置</el-button>
         </el-form-item>
       </el-form>

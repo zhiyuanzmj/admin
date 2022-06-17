@@ -1,5 +1,6 @@
 import type { FoodRow } from '../food/api'
 import { request } from '~/composables/request'
+export const mealTypeList = [{ label: '早餐', value: 1 }, { label: '午餐', value: 2 }, { label: '晚餐', value: 3 }]
 
 export interface Plan {
   id: string

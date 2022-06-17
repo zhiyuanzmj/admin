@@ -1,6 +1,7 @@
 <script setup lang="tsx" name="meal">
 import { AgGridVue } from 'ag-grid-vue3'
 import { getFoodList } from '../food/api'
+import { mealTypeList } from '../plan/api'
 import { type Meal, getMealList } from './api'
 import { useAgGrid } from '~/composables'
 import { getUserList } from '~/pages/system/user/api'
@@ -13,12 +14,14 @@ const { agGridBind, agGridOn } = useAgGrid<Meal>(
         data: data.map(i => ({ label: i.username, value: i.id })),
         total,
       })) },
-    { headerName: '菜品', field: 'foodName', value: '', options: ({ value: name, ...params }) =>
+    { headerName: '菜品', field: 'foodList', valueGetter: ({ data }) => data.foodList?.map(i => i.foodName).join('，'), value: '', options: ({ value: name, ...params }) =>
       getFoodList({ ...params, name }).then(({ data, total }) => ({
         data: data.map(i => ({ label: i.name, value: i.id })),
         total,
       })),
     },
+    { headerName: '类型', field: 'mealType', form: { type: 'radio' }, valueGetter: ({ data }) => mealTypeList.find(i => i.value === data.mealType)?.label, value: '2', options: mealTypeList },
+    { headerName: '时间', field: 'foodDate', suppressSizeToFit: true },
   ],
   getMealList,
 )

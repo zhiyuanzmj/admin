@@ -2,14 +2,13 @@
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox, dayjs } from 'element-plus'
 import type { Plan } from './api'
-import { drop, getPlanList } from './api'
+import { drop, getPlanList, mealTypeList } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 const weekList = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
 
 let show = $ref(false)
 let row = $ref<Plan>()
-const mealTypeList = [{ label: '早餐', value: 1 }, { label: '午餐', value: 2 }, { label: '晚餐', value: 3 }]
 const { agGridBind, agGridOn, selectedList, getList, columnList } = useAgGrid<Plan>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
