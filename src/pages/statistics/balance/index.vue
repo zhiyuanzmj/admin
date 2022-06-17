@@ -16,8 +16,9 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>
     { headerName: '原有金额', field: 'oldMoney' },
     { headerName: '变动金额', field: 'changeMoney' },
     { headerName: '实时金额', field: 'money' },
-    { headerName: '类型', field: 'type', value: '' },
+    { headerName: '变动类型', field: 'type', value: '' },
     { headerName: '变动时间', field: 'time' },
+    { headerName: '类型', field: 'type1' },
     { headerName: '窗口', field: 'window' },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', pinned: 'right', cellRenderer: { setup(props) {
       const { params } = $(toRefs(props))

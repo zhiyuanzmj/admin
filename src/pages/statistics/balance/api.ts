@@ -21,7 +21,7 @@ export async function getDepartmentList(params?: object) {
       let date = time + 6
       if (date < 10)
         date = `0${date}`
-      return { name: '蔡健怡', cardId: '89A30272', oldMoney: `${count}.00`, changeMoney: '2.00', money: `${money}.00`, type: '消费', time: `2021-0${time}-08 ${date}:13:00`, window: '经华一号机' }
+      return { id: count, name: '蔡健怡', cardId: '89A30272', oldMoney: `${count}.00`, changeMoney: '2.00', money: `${money}.00`, type: '消费', time: `2021-0${time}-08 ${date}:13:00`, type1: '早餐', window: '经华一号机' }
     }),
     total: 50,
   }
