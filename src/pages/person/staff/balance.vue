@@ -9,11 +9,16 @@ const { id } = defineProps<{ id: string }>()
 
 let row = $ref<Row>({})
 let payType = $ref('微信')
+let errorMessage = $ref('')
 const { data, close, status } = useWebSocket<any>(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}${baseURL}/webSocketServer/pay/1`)
 watch(data, (val) => {
   val = JSON.parse(val)
-  if (val.code === 200)
+  if (val.code === 200) {
     row = val.data
+    errorMessage = ''
+  } else if (val.code === 100) {
+    errorMessage = val.message
+  }
 })
 onUnmounted(() => {
   close()
@@ -51,7 +56,7 @@ if (id)
 <template>
   <div layout>
     <VHeader>
-      <el-alert effect="dark" show-icon :closable="false" class="!w-auto" :title="`人脸设备连接${status === 'OPEN' ? '成功' : '失败'}`" :type="status === 'OPEN' ? 'success' : 'error'" />
+      <el-alert effect="dark" show-icon :closable="false" class="!w-auto" :title="errorMessage || `人脸设备连接${status === 'OPEN' ? '成功' : '失败'}`" :type="status === 'OPEN' && !errorMessage ? 'success' : 'error'" />
     </VHeader>
     <div main p-10>
       <el-form w="1/2" label-width="80px" @submit.prevent="fetchStaff()">

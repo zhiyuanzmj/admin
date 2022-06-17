@@ -52,7 +52,7 @@ export default defineConfig({
   ],
   safelist: [
     'text-primary',
-    'ep:food', 'ep:user', 'ep:setting', 'iconoir:face-id',
+    'ep:food', 'ep:user', 'ep:setting', 'iconoir:face-id', 'ep:data-line',
     ...'prose prose-sm m-auto text-left'.split(' '),
     ...['blue-500', 'teal-500', 'indigo-500', 'rose-500'].map(i => `group-hover:bg-${i} text-${i}`).join(' ').split(' '),
   ],
