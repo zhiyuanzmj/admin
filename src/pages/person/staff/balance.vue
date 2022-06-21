@@ -38,7 +38,7 @@ fetchStaffList()
 let money = $ref<number | undefined>()
 const moneyType = $ref<number>(1)
 async function submit() {
-  await changeBalance({ userId: row.id, money, payType, moneyType })
+  await changeBalance({ userId: row.id, money, payType, moneyType, balance: row.money })
   fetchStaff()
   ElMessage.success({ message: '修改成功' })
 }
