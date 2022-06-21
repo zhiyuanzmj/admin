@@ -92,9 +92,9 @@ if (id)
         </el-form-item>
         <el-form-item />
       </el-form>
-      <el-form w="1/2" label-width="80px" @submit.prevent="submit">
+      <el-form w="1/2" :model="{ money }" label-width="80px" @submit.prevent="submit">
         <el-form-item label="充值类型" label-position="left">
-          <el-select v-model="row.payType" w-25 mr-3>
+          <el-select v-model="payType" w-25 mr-3>
             <el-option v-for="i in ['微信', '支付宝', '现金']" :key="i" :label="i" :value="i" />
           </el-select>
           <el-radio-group v-model="moneyType">
@@ -102,7 +102,7 @@ if (id)
             <el-radio :label="2">退款</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label-position="top" :label="`${moneyType === 1 ? '充值' : '退款'}金额`">
+        <el-form-item label-position="top" :rules="{ required: true, message: '不能为空', trigger: 'blur' }" prop="money" :label="`${moneyType === 1 ? '充值' : '退款'}金额`">
           <el-input v-model="money" :disabled="!row.id" type="number" />
           <div text-gray-500>{{ `账户余额：${row.money || 0}元` }}</div>
         </el-form-item>
