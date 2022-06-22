@@ -1,79 +1,45 @@
-<script setup lang="tsx" name="department">
+<script setup lang="tsx" name="statistics-balance">
 import { AgGridVue } from 'ag-grid-vue3'
-import { ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
-import type { DepartmentRow } from './api'
-import { drop, getDepartmentList, put } from './api'
-import VForm from './components/VForm.vue'
-import { useAgGrid } from '~/composables'
+import type { BalanceFlow } from './api'
+import { getBalanceFlowList } from './api'
+import { mealTypeList } from '~/pages/menu/plan/api'
+import { getDepartmentList } from '~/pages/person/department/api'
 
-let show = $ref(false)
-let row = $ref<DepartmentRow>()
-
-const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>(
+const { agGridBind, agGridOn } = useAgGrid<BalanceFlow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '姓名', field: 'name', value: '' },
-    { headerName: '原有金额', field: 'oldMoney' },
-    { headerName: '变动金额', field: 'changeMoney' },
-    { headerName: '实时金额', field: 'money' },
-    { headerName: '变动类型', field: 'type', value: '' },
-    { headerName: '变动时间', field: 'time' },
-    { headerName: '类型', field: 'type1' },
-    { headerName: '窗口', field: 'window' },
-    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', pinned: 'right', cellRenderer: { setup(props) {
-      const { params } = $(toRefs(props))
-      return () =>
-        <div className="flex items-center justify-between">
-          <button className="fa6-solid:pen-to-square btn" onClick={() => {
-            show = true
-            row = params.data
-          }}/>
-          <button className="fa6-solid:trash-can btn" onClick={() => onDrop([params.data])}/>
-        </div>
-    } } },
+    { headerName: '姓名', field: 'userName', value: '' },
+    { headerName: '手机', field: 'phone', value: '' },
+    { headerName: '部门', valueGetter: ({ data }) => data.departmentName, field: 'departmentId', value: '', options: ({ value: departmentName, ...params }) =>
+      getDepartmentList({ ...params, departmentName }).then(({ data, total }) => ({
+        data: data.map(i => ({ label: i.departmentName, value: i.id })),
+        total,
+      })) },
+    { headerName: '消费类型', field: 'payType', options: [{ label: '微信', value: '微信' }, { label: '支付宝', value: '支付宝' }, { label: '现金', value: '现金' }], value: '' },
+    { headerName: '账户余额', field: 'balance' },
+    { headerName: '变动类型', field: 'moneyType', valueGetter: ({ data }) => data.moneyType === 1 ? '收入' : '支出', options: [{ label: '收入', value: '1' }, { label: '支出', value: '2' }], value: '' },
+    { headerName: '变动金额(元)', field: 'money' },
+    { headerName: '变动时间', field: 'gmtCreate' },
+    { headerName: '类型', field: 'payTimeType', valueGetter: ({ data }) => mealTypeList.find(i => i.value === data.payTimeType)?.label, value: '', options: mealTypeList },
+    { headerName: '窗口', field: 'channel' },
   ],
-  getDepartmentList,
+  getBalanceFlowList,
 )
-
-async function onDrop(list: DepartmentRow[]) {
-  await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
-  const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
-    .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
-  fulfilled && ElMessage.success(`删除成功 ${fulfilled} 条`); await nextTick()
-  rejected && ElMessage.error(`删除失败 ${rejected} 条`)
-  getList()
-}
-
-function addHandler() {
-  show = true
-  row = { status: 1 } as DepartmentRow
-}
 </script>
 
 <template>
   <div layout>
-    <VHeader>
-      <el-button class="!ml-auto" type="primary" @click="addHandler">
-        <div fluent:add-12-filled mr-1 />新增
-      </el-button>
-    </VHeader>
+    <VHeader />
 
     <div main>
       <VFilter />
       <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
-      <Pagination>
-        <el-button type="primary" :disabled="!selectedList.length" text @click="onDrop(selectedList)">
-          删除
-        </el-button>
-      </Pagination>
+      <Pagination />
     </div>
-
-    <VForm v-if="show" v-model:show="show" :row="row" />
   </div>
 </template>
 
 <route lang="yaml">
-name: department
 meta:
   title: 余额流水
   order: 2
