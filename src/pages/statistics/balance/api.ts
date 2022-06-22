@@ -24,3 +24,10 @@ export async function getBalanceFlowList(params?: object) {
     params: { status: 1, ...params },
   })
 }
+
+export async function downloadExcel(params?: object) {
+  return request<BalanceFlow[]>('/balanceFlow/downloadExcel', {
+    params: { status: 1, ...params },
+    responseType: 'blob',
+  })
+}

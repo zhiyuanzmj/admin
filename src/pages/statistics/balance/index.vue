@@ -1,11 +1,11 @@
 <script setup lang="tsx" name="statistics-balance">
 import { AgGridVue } from 'ag-grid-vue3'
 import type { BalanceFlow } from './api'
-import { getBalanceFlowList } from './api'
+import { downloadExcel, getBalanceFlowList } from './api'
 import { mealTypeList } from '~/pages/menu/plan/api'
 import { getDepartmentList } from '~/pages/person/department/api'
 
-const { agGridBind, agGridOn } = useAgGrid<BalanceFlow>(
+const { agGridBind, agGridOn, params } = useAgGrid<BalanceFlow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '姓名', field: 'userName', value: '' },
@@ -25,11 +25,17 @@ const { agGridBind, agGridOn } = useAgGrid<BalanceFlow>(
   ],
   getBalanceFlowList,
 )
+
+async function exportExcel() {
+  download(await downloadExcel(params.value), '余额流水.xlsx')
+}
 </script>
 
 <template>
   <div layout>
-    <VHeader />
+    <VHeader>
+      <el-button type="primary" @click="exportExcel">导出Excel</el-button>
+    </VHeader>
 
     <div main>
       <VFilter />
