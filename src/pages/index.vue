@@ -19,8 +19,8 @@ async function getList() {
     { total: list[2].count },
     { total: list[3].count },
   ] = await Promise.all([
-    getMealList(params),
     getPlanList(params),
+    getMealList(params),
     getStaffList(params),
     getDeviceList(params),
   ]))

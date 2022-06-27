@@ -8,7 +8,9 @@ const whiteList = ['/api/sys/user/queryUserRole']
 
 export function getHeaders() {
   const userStore = useUserStore()
-  return JSON.parse(JSON.stringify({ Authorization: userStore.token ? `Bearer ${`${userStore.token}`}` : undefined, RefreshToken: userStore.userInfo.refreshToken }))
+  return JSON.parse(JSON.stringify({
+    Authorization: userStore.token ? `Bearer ${`${userStore.token}`}` : undefined,
+  }))
 }
 
 const _fetch = $fetch.create({
