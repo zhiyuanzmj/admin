@@ -4,12 +4,13 @@ import NProgress from 'nprogress'
 import { useUserStore } from '~/stores/user'
 export const baseURL = '/api'
 
-const whiteList = ['/api/sys/user/queryUserRole']
+const whiteList = ['']
 
 export function getHeaders() {
   const userStore = useUserStore()
   return JSON.parse(JSON.stringify({
     Authorization: userStore.token ? `Bearer ${`${userStore.token}`}` : undefined,
+    RefreshToken: userStore.userInfo.refreshToken,
   }))
 }
 
