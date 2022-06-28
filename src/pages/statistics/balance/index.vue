@@ -17,13 +17,13 @@ const { agGridBind, agGridOn, params } = useAgGrid<BalanceFlow>(
     { headerName: '手机', field: 'phone', value: '' },
     { headerName: '消费类型', field: 'payType', options: [{ label: '微信', value: '微信' }, { label: '支付宝', value: '支付宝' }, { label: '现金', value: '现金' }], value: '' },
     { headerName: '账户余额', field: 'balance' },
-    { headerName: '变动类型', field: 'moneyType', valueGetter: ({ data }) => data.moneyType === 1 ? '收入' : '支出', options: [{ label: '收入', value: '1' }, { label: '支出', value: '2' }], value: '' },
+    { headerName: '变动类型', field: 'moneyType', valueGetter: ({ data }) => data.moneyType === 1 ? '收入' : '支出', options: [{ label: '收入', value: '1' }, { label: '支出', value: '2' }, { label: '退款', value: '3' }], value: '' },
     { headerName: '变动金额(元)', field: 'money' },
-    { headerName: '变动时间', field: 'gmtCreate' },
     { headerName: '类型', field: 'payTimeType', valueGetter: ({ data }) => mealTypeList.find(i => i.value === data.payTimeType)?.label, value: '', options: mealTypeList },
+    { headerName: '变动时间', valueGetter: ({ data }) => data.gmtCreate, field: 'startTime,endTime', value: '', form: { type: 'date', width: '260px', props: { type: 'daterange' } } },
     { headerName: '窗口', field: 'channel' },
   ],
-  getBalanceFlowList,
+  params => getBalanceFlowList({ ...params, ...params.moneyType === '3' ? { arefund: 1, moneyType: undefined } : {} }),
 )
 
 async function exportExcel() {
