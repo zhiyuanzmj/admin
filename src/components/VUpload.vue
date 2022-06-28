@@ -21,8 +21,10 @@ let model = $computed<string>({
   },
 })
 function onChange({ raw }: any) {
-  file = raw
+  if (file === raw)
+    return
   model = URL.createObjectURL(raw)
+  file = raw
 }
 
 let loading: any
