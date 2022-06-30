@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CountUp from 'vue-countup-v3'
+import { dayjs } from 'element-plus'
 import { getMealList } from './menu/meal/api'
 import { getPlanList } from './menu/plan/api'
 import { getStaffList } from './person/staff/api'
@@ -19,8 +20,8 @@ async function getList() {
     { total: list[2].count },
     { total: list[3].count },
   ] = await Promise.all([
-    getPlanList(params),
-    getMealList(params),
+    getPlanList({ ...params, minDate: dayjs().format('YYYY-MM-DD'), maxDate: dayjs().add(1, 'd').format('YYYY-MM-DD') }),
+    getMealList({ ...params, beginTime: dayjs().format('YYYY-MM-DD'), endTime: dayjs().add(1, 'd').format('YYYY-MM-DD') }),
     getStaffList(params),
     getDeviceList(params),
   ]))

@@ -11,7 +11,7 @@ export const useTagsviewStore = defineStore('tagsview', {
   },
   actions: {
     addView(view: RouteLocationNormalized) {
-      view = { ...view }
+      view = { ...view, matched: [] }
       if (view.meta.permission === false)
         return
 

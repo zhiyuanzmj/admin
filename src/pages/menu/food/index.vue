@@ -23,7 +23,7 @@ const { agGridBind, agGridOn, selectedList, list, getList } = useAgGrid<FoodRow>
         total,
       })),
     },
-    { headerName: '能量', field: 'calorie', value: '' },
+    { headerName: '能量', field: 'calorie' },
     { headerName: '状态', field: 'status', value: '1', form: { type: 'switch' }, cellRenderer: { setup: props => () =>
         <ElSwitch
           model-value={props.params.value}

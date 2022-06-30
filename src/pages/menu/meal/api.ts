@@ -9,6 +9,7 @@ export interface Meal {
   }[]
   foodDate?: string
   status?: 0 | 1
+  'beginTime,endTime'?: string
   mealType?: typeof mealTypeList[number]['value']
 }
 

@@ -189,7 +189,7 @@ export default defineComponent({
 
         this.timer[isEvenNum] = setTimeout((_) => {
           this.showErrorMessage[isEvenNum].status = false
-        }, 3000)
+        }, 10000)
       }
     },
     // 发送信息给后台

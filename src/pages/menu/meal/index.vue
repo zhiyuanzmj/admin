@@ -1,5 +1,6 @@
 <script setup lang="tsx" name="meal">
 import { AgGridVue } from 'ag-grid-vue3'
+import { dayjs } from 'element-plus'
 import { getFoodList } from '../food/api'
 import { mealTypeList } from '../plan/api'
 import { type Meal, getMealList } from './api'
@@ -20,8 +21,8 @@ const { agGridBind, agGridOn } = useAgGrid<Meal>(
         total,
       })),
     },
-    { headerName: '类型', field: 'mealType', form: { type: 'radio' }, valueGetter: ({ data }) => mealTypeList.find(i => i.value === data.mealType)?.label, value: '2', options: mealTypeList },
-    { headerName: '时间', field: 'foodDate', suppressSizeToFit: true },
+    { headerName: '时间', field: 'beginTime,endTime', valueGetter: ({ data }) => data.foodDate, value: [dayjs().format('YYYY-MM-DD'), dayjs().add(1, 'd').format('YYYY-MM-DD')].join(','), form: { type: 'date', props: { type: 'daterange' } } },
+    { headerName: '类型', field: 'mealType', form: { type: 'radio' }, suppressSizeToFit: true, valueGetter: ({ data }) => mealTypeList.find(i => i.value === data.mealType)?.label, value: '2', options: mealTypeList },
   ],
   getMealList,
 )

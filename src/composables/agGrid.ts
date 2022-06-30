@@ -10,7 +10,7 @@ export type Overwrite<T, U> = Pick<T, Exclude<keyof T, keyof U>> & U
   type Params<T> = Overwrite<ICellRendererParams, { data: T ; colDef: ColDef }>
 export type Column<T = object> = Overwrite<ColDef, {
   value?: string
-  field: keyof T | 'select' | 'actions'
+  field: Exclude<keyof T | 'select' | 'actions', number | symbol>
   unCheck?: boolean
   hide?: boolean
   order?: string
@@ -34,8 +34,7 @@ export const useAgGrid = function <T=any>(
 ) {
   const router = useRouter()
   const route = useRoute()
-  const name = route.name as string | undefined
-  provide('getColumnList', getColumnList)
+  const name = route.name as string
   const columnList = reactive(getColumnList())
   provide('columnList', columnList)
   const gridApi = shallowRef<GridApi>()
@@ -49,19 +48,21 @@ export const useAgGrid = function <T=any>(
   const total = ref(0)
   provide('total', total)
 
+  const defaultValue = columnList.reduce((a: any, b) => (b.value && (a[b.field] = b.value), a), {})
   const params = computed(() => columnList.reduce((a: any, b) => {
-    if ((<string>b.field).includes(','))
-      (<string>b.field).split(',').forEach((v, i) => a[v] = b.value?.[i])
+    if (b.field.includes(','))
+      b.field.split(',').forEach((v, index) => a[0][v] = (<string>route.query?.[b.field])?.split(',')[index] || b.value?.split(',')[index])
     else
-      a[b.field] = b.value || undefined
+      a[0][b.field] = b.value || undefined
+    a[1][b.field] = defaultValue[b.field] === b.value ? undefined : b.value || undefined
     return a
-  }, {}))
+  }, [{}, {}]))
 
   async function getList(data?: any) {
     gridApi.value?.showLoadingOverlay?.()
-    router.replace({ query: { ...route.query, ...params.value } })
+    await router.replace({ query: { ...route.query, ...params.value[1] } })
     const { pageIndex = '1', pageSize = '50', order, sort } = route.query
-    const result = await fetchList({ pageIndex, pageSize, order, sort, ...params.value, ...data }).finally(() => gridApi.value?.hideOverlay?.())
+    const result = await fetchList({ pageIndex, pageSize, order, sort, ...params.value[0], ...data }).finally(() => gridApi.value?.hideOverlay?.())
     list.value = (result?.data ?? []) as any
     total.value = result?.total ?? 0
     selectedList.value = gridApi.value!.getSelectedRows()
@@ -76,8 +77,8 @@ export const useAgGrid = function <T=any>(
 
   const initMap = pick(['unCheck', 'field', 'hide', 'pinned'])
   const initColumnList = columnList.map(initMap)
-  const columnStore = useStorage(`${String(name)}`, initColumnList)
-  const columnStoreOrigin = useStorage(`_${String(name)}`, initColumnList)
+  const columnStore = useStorage(name, initColumnList)
+  const columnStoreOrigin = useStorage(`_${name}`, initColumnList)
   if (!columnStore.value || JSON.stringify(initColumnList) !== JSON.stringify(columnStoreOrigin.value))
     columnStoreOrigin.value = columnStore.value = initColumnList
 
@@ -94,17 +95,16 @@ export const useAgGrid = function <T=any>(
     // 设置默认排序
     const order = (<LocationQueryValue>route.query.order)?.split(',')
     const sort = (<LocationQueryValue>route.query.sort)?.split(',')
-    return columnStore.value.map((i, index) => {
-      const option = columnList.find(item => item.field === i.field)!
+    const lastField = columnStore.value.filter(i => !i.hide).at(-1)?.field
+    return columnStore.value.map((column) => {
+      const option = columnList.find(item => item.field === column.field)!
       order?.forEach((o, index) => {
         if (option?.field === o)
           option.sort = sort?.[index] as 'asc' | 'desc'
       })
-
-      if (index === columnStore.value.length - 1)
+      if (column.field === lastField)
         option.headerComponent = TableSet
-
-      return Object.assign(option, i)
+      return Object.assign(option, column)
     }) as ColDef[]
   }
   provide('getColumnDefs', getColumnDefs)
@@ -215,7 +215,7 @@ export const useAgGrid = function <T=any>(
     selectedList,
     gridApi,
     columnApi,
-    params,
+    params: computed(() => params.value[0]),
     getList,
     list,
     total,

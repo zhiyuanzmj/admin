@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { UploadInstance, UploadProps } from 'element-plus'
-import { ElLoading } from 'element-plus'
+import { ElLoading, ElMessage } from 'element-plus'
 import { getHeaders } from '~/composables/request'
 
 interface Props extends Partial<UploadProps> {
@@ -31,7 +31,9 @@ let loading: any
 function beforeUpload() {
   loading = ElLoading.service({ fullscreen: true })
 }
-function onError() {
+function onError(data: any) {
+  data = JSON.parse(data)
+  ElMessage.error(data.error || data.message || data.msg || '服务器错误')
   loading?.close()
 }
 

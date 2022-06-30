@@ -169,8 +169,8 @@ export default defineConfig({
       '/api': {
         changeOrigin: true,
         // target: 'http://120.76.79.136:8669',
-        // target: 'http://zmjs.ml:8669',
-        target: 'http://192.168.10.61:8669',
+        target: 'http://zmjs.ml:8669',
+        // target: 'http://192.168.10.61:8669',
         ws: true,
       },
     },
