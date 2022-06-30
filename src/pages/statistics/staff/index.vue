@@ -14,6 +14,7 @@ const { agGridBind, agGridOn, params } = useAgGrid<Individual>(
         total,
       })),
     },
+    { headerName: '时间', field: 'beginTime,endTime', unCheck: true, hide: true, value: '', form: { type: 'date', props: { type: 'daterange' } } },
     { headerName: '部门', field: 'departmentName' },
     { headerName: '手机', field: 'phone' },
     { headerName: '早餐次数', field: 'breakfastSunNum' },

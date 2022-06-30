@@ -12,6 +12,7 @@ const { agGridBind, agGridOn, params } = useAgGrid<BalanceFlow>(
         data: data.map(i => ({ label: i.departmentName, value: i.id })),
         total,
       })) },
+    { headerName: '时间', field: 'beginTime,endTime', unCheck: true, hide: true, value: '', form: { type: 'date', props: { type: 'daterange' } } },
     { headerName: '早餐次数', field: 'breakfastSunNum' },
     { headerName: '早餐金额(元)', field: 'breakfastSunTotal' },
     { headerName: '中餐次数', field: 'lunchSunNum' },

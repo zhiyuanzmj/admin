@@ -14,6 +14,7 @@ export interface BalanceFlow {
   departmentName?: string
   departmentId?: number
   phone?: string
+  'beginTime,endTime'?: string
 }
 
 export async function getDepartmentStatisticsList(params?: object) {

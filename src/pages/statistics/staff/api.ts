@@ -15,6 +15,7 @@ export interface Individual {
   departmentName?: string
   departmentId?: number
   phone?: string
+  'beginTime,endTime'?: string
 }
 
 export async function getIndividualStatisticsList(params?: object) {
