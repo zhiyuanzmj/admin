@@ -17,8 +17,8 @@ const getList = inject('getList', () => {})
 const formRef = $shallowRef<FormInstance>()
 
 let foodList = $ref<FoodRow[]>()
-async function fetchFoodList() {
-  ({ data: foodList } = await getFoodList({ pageIndex: 1, pageSize: 100 }))
+async function fetchFoodList(name?: string) {
+  ({ data: foodList } = await getFoodList({ pageIndex: 1, pageSize: 100, name }))
 }
 fetchFoodList()
 
@@ -50,7 +50,7 @@ async function submit() {
         </el-radio-group>
       </el-form-item>
       <el-form-item :rules="[{ message: '不能为空', required: true, trigger: 'blur' }]" prop="foodInfo" label="菜品">
-        <el-select v-model="row.foodInfo" flex-1 value-key="id" multiple>
+        <el-select v-model="row.foodInfo" filterable remote :remote-method="fetchFoodList" flex-1 value-key="id" multiple>
           <el-option v-for="i in foodList" :key="i.id" :label="i.name" :value="i" />
         </el-select>
       </el-form-item>
