@@ -12,7 +12,7 @@ export interface Device {
   // 'type': 0
 }
 
-export function getDeviceList(params: object) {
+export function getDeviceList(params?: object) {
   return request<Device[]>('/device/list', {
     params: { status: 1, ...params },
   })
