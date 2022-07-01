@@ -3,6 +3,7 @@ import messageCommon from '~/pages/home/components/MessageCommon.vue'
 import balanceAmpleBgImg from '~/pages/home/components/static/images/device_frame.png'
 import balanceNoAmpleBgImg from '~/pages/home/components/static/images/device_frame_balance_no_ample.png'
 import camera from '~/pages/home/components/static/images/camera.png'
+import { getSystemList } from '~/pages/system/index/api'
 export default {
   components: {
     MessageCommon: messageCommon,
@@ -25,6 +26,7 @@ export default {
         message: '余额不足，请充值!',
       },
       timer: null,
+      thresholdValue: 10,
     }
   },
   computed: {
@@ -41,7 +43,7 @@ export default {
           this.bgImgUrl = balanceAmpleBgImg
           return
         }
-        const isBalanceNoAmple = Number(e.userBalance) < 10
+        const isBalanceNoAmple = Number(e.userBalance) < this.thresholdValue
         // console.log('isBalanceNoAmple', isBalanceNoAmple)
         this.bgImgUrl = isBalanceNoAmple ? balanceNoAmpleBgImg : balanceAmpleBgImg
         // this.balanceMessage.status = isBalanceNoAmple
@@ -60,6 +62,10 @@ export default {
       },
       deep: true,
     },
+  },
+  async  mounted() {
+    const { data } = await getSystemList({ pageIndex: 1, pageSize: 9999 })
+    this.thresholdValue = data.find(i => i.parKey === 'thresholdValue').parValue?.split(',')?.sort((a, b) => b - a)?.[0] || 10
   },
 }
 </script>
