@@ -10,7 +10,7 @@ export interface Log {
   personName?: string
   personId?: string
   type?: typeof logTypeList[number]['value']
-  beginTime?: string
+  gmtModified?: string
   'beginTime,endTime'?: string
 }
 
