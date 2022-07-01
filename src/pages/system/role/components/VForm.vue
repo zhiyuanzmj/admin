@@ -34,7 +34,7 @@ async function submit() {
       <el-form-item :rules="[{ message: '不能为空', required: true }]" prop="roleName" label="名称">
         <el-input v-model="row.roleName" />
       </el-form-item>
-      <el-form-item label="描述" prop="roleNameZh">
+      <el-form-item label="描述" :rules="[{ message: '不能为空', required: true }]" prop="roleNameZh">
         <el-input v-model="row.roleNameZh" />
       </el-form-item>
       <el-form-item>
