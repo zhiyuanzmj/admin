@@ -7,7 +7,7 @@ export interface ReceiptAndPayment {
   refundMoney: number
   allReceipt: number
   allPayment: number
-  'startTime,endTime': string
+  'beginTime,endTime': string
 }
 
 export async function getReceiptAndPaymentStatisticsList(params?: object) {
