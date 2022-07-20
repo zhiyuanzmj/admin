@@ -4,7 +4,7 @@
 <template>
   <div class="title-box">
     <img src="/logo.png" alt="" class="title_logo">
-    <span class="title">东为餐厅饭堂人脸识别系统</span>
+    <span class="title">东为餐厅消费人脸识别系统</span>
   </div>
 </template>
 
