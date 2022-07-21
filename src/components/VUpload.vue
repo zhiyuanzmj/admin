@@ -20,9 +20,13 @@ let model = $computed<string>({
     return file ? modelValue! : (modelValue! && `/api/file${modelValue}`)
   },
 })
+let fileList = $ref([])
 function onChange({ raw }: any) {
   if (file === raw)
     return
+  if (fileList.length > 1)
+    fileList.shift()
+
   model = URL.createObjectURL(raw)
   file = raw
 }
@@ -50,6 +54,7 @@ defineExpose({
 <template>
   <el-upload
     ref="uploadRef"
+    v-model:file-list="fileList"
     class="avatar-uploader"
     :action="`/api/image/easyUpload?type=${paramsType}`"
     :headers="headers"
@@ -57,8 +62,10 @@ defineExpose({
     :show-file-list="false"
     :auto-upload="false"
     transition
-    b="~ dashed gray-300 rounded hover:primary"
     cursor-pointer
+    :multiple="false"
+    drag
+    accept="image/*"
     :on-change="onChange"
     :on-success="onSuccess"
     :before-upload="beforeUpload"
@@ -73,6 +80,10 @@ defineExpose({
 .avatar-uploader {
   .el-upload {
     display: flex;
+  }
+
+  .el-upload-dragger {
+    padding: 0;
   }
 
   .avatar {
