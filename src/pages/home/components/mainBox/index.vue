@@ -56,6 +56,7 @@ export default defineComponent({
     window.addEventListener('offline', this.offlineHandler)
     window.addEventListener('online', this.onlineHandler)
     window.addEventListener('beforeunload', e => this.reLoadPage(e))
+    window.t = this
   },
   methods: {
     // 无限循环请求员工数据
@@ -123,7 +124,7 @@ export default defineComponent({
         // console.log(websockeyPath)
         this.socket = new WebSocket(websockeyPath)
         // 监听socket错误信息
-        this.socket.onerror = this.error
+        this.socket.onclose = this.error
         // 监听socket消息
         this.socket.onmessage = this.getMessage
       }
@@ -165,6 +166,7 @@ export default defineComponent({
         ElMessage({
           message,
           type: 'error',
+          duration: 0,
           title: '连接出错',
         })
         if (!webSocketData.scokeyErr)

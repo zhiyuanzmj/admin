@@ -9,7 +9,7 @@ export interface Device {
   name?: string
   port?: number
   status?: 0 | 1
-  // 'type': 0
+  channel: string
 }
 
 export function getDeviceList(params?: object) {

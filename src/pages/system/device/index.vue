@@ -12,6 +12,7 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Device>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
     { headerName: '名称', field: 'name', value: '' },
+    { headerName: '窗口', field: 'channel', value: '' },
     { headerName: '位置', field: 'address', value: '' },
     { headerName: 'IP地址', field: 'addressIp', value: '' },
     { headerName: '端口', field: 'port', value: '' },

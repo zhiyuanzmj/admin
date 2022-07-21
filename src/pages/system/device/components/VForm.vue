@@ -51,6 +51,9 @@ async function submit() {
           <el-input v-model="row.loginPaw" />
         </el-form-item>
       </div>
+      <el-form-item prop="channel" label="窗口">
+        <el-input v-model="row.channel" />
+      </el-form-item>
       <el-form-item prop="address" label="位置">
         <el-input v-model="row.address" type="textarea" />
       </el-form-item>
