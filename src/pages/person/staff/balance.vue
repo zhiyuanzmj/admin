@@ -10,7 +10,14 @@ const { id } = defineProps<{ id: string }>()
 let row = $ref<Row>({})
 let payType = $ref('微信')
 let errorMessage = $ref('')
-const { data, close, status } = useWebSocket<any>(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}${baseURL}/webSocketServer/pay/1`)
+const { data, close, status, send } = useWebSocket<any>(`${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}${baseURL}/webSocketServer/pay/1`)
+const interval = setInterval(() => {
+  send(JSON.stringify({ key: 'pong' }))
+}, 10 * 1000)
+onUnmounted(() => {
+  clearInterval(interval)
+})
+
 watch(data, (val) => {
   val = JSON.parse(val)
   if (val.code === 200) {
