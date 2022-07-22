@@ -57,6 +57,12 @@ export default defineComponent({
     window.addEventListener('online', this.onlineHandler)
     window.addEventListener('beforeunload', e => this.reLoadPage(e))
     window.t = this
+    this.interval = setInterval(() => {
+      this.socket.readyState === 1 && this.socket.send(JSON.stringify({ key: 'pong' }))
+    }, 1000 * 10)
+  },
+  beforeUnmount() {
+    clearInterval(this.interval)
   },
   methods: {
     // 无限循环请求员工数据
@@ -178,7 +184,10 @@ export default defineComponent({
         const isEvenNum = data.window && data.window % 2 === 0 ? 1 : 0
         const message = webSocketData.message
         // let itemTimer = this.timer[isEvenNum]
-
+        if (data) {
+          this.personInfoList[isEvenNum] = data.personInfo
+          this.faceList[isEvenNum] = data.passFace
+        }
         // 先清除定时器和提示信息数据
         this.showErrorMessage[isEvenNum].status = false
         clearTimeout(this.timer[isEvenNum])
