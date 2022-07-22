@@ -75,7 +75,7 @@ function addHandler() {
 <template>
   <div layout>
     <VHeader>
-      <el-button ml-auto @click="$router.push({ name: 'balance', params: { id: row?.id } })">余额充值</el-button>
+      <!-- <el-button ml-auto @click="$router.push({ name: 'balance', params: { id: row?.id } })">余额充值</el-button> -->
       <el-button type="primary" @click="addHandler">
         <div fluent:add-12-filled mr-1 />新增
       </el-button>
