@@ -53,3 +53,19 @@ export function changeBalance(body: object) {
     body,
   })
 }
+
+export async function importExcel(file: any) {
+  const body = new FormData()
+  body.append('file', file)
+  return fetch('/api/person/importExcel', {
+    method: 'post',
+    body,
+    headers: getHeaders(),
+  })
+}
+
+export async function downloadExcel() {
+  return request('/person/downloadImport', {
+    responseType: 'blob',
+  })
+}

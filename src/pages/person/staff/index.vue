@@ -3,7 +3,7 @@ import { AgGridVue } from 'ag-grid-vue3'
 import { ElImage, ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
 import { getDepartmentList } from '../department/api'
 import type { Row } from './api'
-import { drop, getStaffList, put } from './api'
+import { downloadExcel, drop, getStaffList, importExcel, put } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
 
@@ -70,12 +70,34 @@ function addHandler() {
   show = true
   row = { sex: 1, status: 1 }
 }
+
+async function importExcelHandler({ raw }: any) {
+  await importExcel(raw)
+  ElMessage.success('导入成功')
+}
+
+async function downloadTemplate() {
+  download(await downloadExcel(), '人员信息模版.xlsx')
+}
 </script>
 
 <template>
   <div layout>
     <VHeader>
       <!-- <el-button ml-auto @click="$router.push({ name: 'balance', params: { id: row?.id } })">余额充值</el-button> -->
+      <el-upload
+        class="upload-demo"
+        :on-change="importExcelHandler"
+        :auto-upload="false"
+        :show-file-list="false"
+        action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+        multiple
+        :limit="1"
+      >
+        <el-button>导入Excel</el-button>
+      </el-upload>
+      <el-button ml-3 @click="downloadTemplate">下载模版</el-button>
+
       <el-button type="primary" @click="addHandler">
         <div fluent:add-12-filled mr-1 />新增
       </el-button>
