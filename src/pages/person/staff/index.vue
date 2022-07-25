@@ -86,7 +86,7 @@ async function downloadTemplate() {
     <VHeader>
       <!-- <el-button ml-auto @click="$router.push({ name: 'balance', params: { id: row?.id } })">余额充值</el-button> -->
       <el-upload
-        class="upload-demo"
+        class="mr-3"
         :on-change="importExcelHandler"
         :auto-upload="false"
         :show-file-list="false"
@@ -96,7 +96,7 @@ async function downloadTemplate() {
       >
         <el-button>导入Excel</el-button>
       </el-upload>
-      <el-button ml-3 @click="downloadTemplate">下载模版</el-button>
+      <el-button @click="downloadTemplate">下载模版</el-button>
 
       <el-button type="primary" @click="addHandler">
         <div fluent:add-12-filled mr-1 />新增
