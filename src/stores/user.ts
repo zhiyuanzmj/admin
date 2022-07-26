@@ -21,7 +21,7 @@ export const useUserStore = defineStore('main', {
       this.router.push(<string> this.route.query.redirect || '/')
     },
     async getPermissionList() {
-      const permission = [{ url: '/get/user' }]
+      const permission = this.userInfo.username === 'admin' ? [{ url: '/home' }] : [{ url: '/' }]
       return this.permissionList = permission.map((i: any) => i.url)
     },
     hasPermission(val: string) {

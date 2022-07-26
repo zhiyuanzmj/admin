@@ -82,7 +82,6 @@ function addHandler() {
 <route lang="yaml">
 name: user
 meta:
-  permission: /get/user
   title: 用户管理
   order: 1
 </route>

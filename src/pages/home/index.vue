@@ -2,7 +2,7 @@
 import HeaderBox from './components/headerBox/index.vue'
 import MainBox from './components/mainBox/index.vue'
 const props = defineProps<{ devNum: number }>()
-let devNum = $ref(props.devNum || 2)
+let devNum = $ref(props.devNum || 7)
 </script>
 
 <template>
@@ -28,7 +28,7 @@ let devNum = $ref(props.devNum || 2)
 path: /home/:devNum?
 name: home
 meta:
-  permission: false
+  permission: /home
   title: 人脸识别
   icon: i-iconoir:face-id
   layout: home
