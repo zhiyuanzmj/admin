@@ -61,7 +61,7 @@ export async function importExcel(file: any) {
     method: 'post',
     body,
     headers: getHeaders(),
-  })
+  }).then(i => i.json())
 }
 
 export async function downloadExcel() {
