@@ -12,6 +12,7 @@ let row = $ref<DepartmentRow>()
 const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
+    { headerName: 'ID', field: 'id' },
     { headerName: '部门', field: 'departmentName', value: '' },
     { headerName: '电话号码', field: 'phone', value: '' },
     { headerName: '描述', field: 'description', value: '' },
