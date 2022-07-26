@@ -80,14 +80,14 @@ function closeAllTags() {
             {{ tag.meta.title }}
             {{ tag.query?.titleLabel ? ` : ${tag.query?.titleLabel}` : '' }}
             <span ml-1 text-xs flex items-center hover:bg-gray-300 rounded-full>
-              <i ic:baseline-close @click.prevent.stop="closeTag(tag)" />
+              <i i-ic:baseline-close @click.prevent.stop="closeTag(tag)" />
             </span>
           </span>
         </template>
       </draggable>
     </scroll-pane>
     <el-dropdown bg="white dark:zinc-600" px-1 rounded my-auto mr-2 shadow cursor-pointer>
-      <i text-xs my=".5" fa6-solid:angle-down />
+      <i text-xs my=".5" i-fa6-solid:angle-down />
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item @click="tagsView.push(selectedTag.name)">

@@ -26,8 +26,7 @@ export default defineConfig({
     presetAttributify(),
     presetIcons({
       scale: 1.2,
-      // warn: true,
-      prefix: '',
+      warn: true,
       extraProperties: {
         display: 'inline-block',
       },
@@ -52,7 +51,7 @@ export default defineConfig({
   ],
   safelist: [
     'text-primary',
-    'ep:food', 'ep:user', 'ep:setting', 'iconoir:face-id', 'ep:data-line',
+    'i-ep:food', 'i-ep:user', 'i-ep:setting', 'i-iconoir:face-id', 'i-ep:data-line',
     ...'prose prose-sm m-auto text-left'.split(' '),
     ...['blue-500', 'teal-500', 'indigo-500', 'rose-500'].map(i => `group-hover:bg-${i} text-${i}`).join(' ').split(' '),
   ],

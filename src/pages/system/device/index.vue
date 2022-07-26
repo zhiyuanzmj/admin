@@ -34,11 +34,11 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Device>(
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', pinned: 'right', cellRenderer: { setup(props) {
       return () =>
         <div className="flex items-center justify-between">
-          <button className="fa6-solid:pen-to-square btn" onClick={() => {
+          <button className="i-fa6-solid:pen-to-square btn" onClick={() => {
             show = true
             row = props.params.data
           }}/>
-          <button className="fa6-solid:trash-can btn" onClick={() => onDrop([props.params.data])}/>
+          <button className="i-fa6-solid:trash-can btn" onClick={() => onDrop([props.params.data])}/>
         </div>
     } } },
   ],
@@ -64,7 +64,7 @@ function addHandler() {
   <div layout>
     <VHeader>
       <el-button class="!ml-auto" type="primary" @click="addHandler">
-        <div fluent:add-12-filled mr-1 />新增
+        <div i-fluent:add-12-filled mr-1 />新增
       </el-button>
     </VHeader>
 

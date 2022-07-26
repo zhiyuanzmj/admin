@@ -16,7 +16,7 @@ const { agGridBind, agGridOn } = useAgGrid<System>(
       const { params } = $(toRefs(props))
       return () =>
         <div className="flex items-center justify-between">
-          <button className="fa6-solid:pen-to-square btn" onClick={() => {
+          <button className="i-fa6-solid:pen-to-square btn" onClick={() => {
             show = true
             row = params.data
           }}/>

@@ -27,7 +27,7 @@ const row = ref({ ...user.userInfo })
 
 <template>
   <nav flex gap-3 items-center text-sm px-3>
-    <i cursor-pointer :class="isCollapse ? 'line-md:menu-fold-right' : 'line-md:menu-fold-left'" @click="isCollapse = !isCollapse" />
+    <i cursor-pointer :class="isCollapse ? 'i-line-md:menu-fold-right' : 'i-line-md:menu-fold-left'" @click="isCollapse = !isCollapse" />
 
     <el-breadcrumb mr-auto relative>
       <el-breadcrumb-item :to="{ path: '/' }">
@@ -42,12 +42,12 @@ const row = ref({ ...user.userInfo })
 
     <HeaderSearch />
     <Palette />
-    <button btn text-sm :class="expand ? 'fa6-solid:compress' : 'fa6-solid:expand'" @click="toggleExpand" />
+    <button btn text-sm :class="expand ? 'i-fa6-solid:compress' : 'i-fa6-solid:expand'" @click="toggleExpand" />
     <el-dropdown>
       <div flex items-center gap-1 cursor-pointer>
-        <i fa6-solid:circle-user text-xl text-gray-300 mx-1 />
+        <i i-fa6-solid:circle-user text-xl text-gray-300 mx-1 />
         {{ user.userInfo.nickname }}
-        <i fa-solid:sort-down self-start />
+        <i i-fa-solid:sort-down self-start />
       </div>
       <template #dropdown>
         <el-dropdown-item mt="!1.5" @click="$router.push('/')">

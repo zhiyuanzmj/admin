@@ -6,6 +6,6 @@
 redirect: /person/staff
 component: ~/layouts/default.vue
 meta:
-  icon: ep:user
+  icon: i-ep:user
   title: 人员管理
 </route>

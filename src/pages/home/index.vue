@@ -30,6 +30,6 @@ name: home
 meta:
   permission: false
   title: 人脸识别
-  icon: iconoir:face-id
+  icon: i-iconoir:face-id
   layout: home
 </route>

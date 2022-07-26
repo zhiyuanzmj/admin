@@ -6,6 +6,6 @@
 redirect: /system/user
 component: ~/layouts/default.vue
 meta:
-  icon: ep:setting
+  icon: i-ep:setting
   title: 系统管理
 </route>

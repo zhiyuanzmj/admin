@@ -25,11 +25,11 @@ const { agGridBind, agGridOn, selectedList } = useAgGrid<RoleRow>(
       const { params } = $(toRefs(props))
       return () =>
         <div className="flex items-center justify-between">
-          <button className="fa6-solid:pen-to-square btn" onClick={() => {
+          <button className="i-fa6-solid:pen-to-square btn" onClick={() => {
             show = true
             row = params.data
           }}/>
-          <button className="fa6-solid:trash-can btn" onClick={() => onDrop([params.data])}/>
+          <button className="i-fa6-solid:trash-can btn" onClick={() => onDrop([params.data])}/>
         </div>
     } } },
   ],
@@ -46,7 +46,7 @@ function addHandler() {
   <div layout>
     <VHeader>
       <el-button class="!ml-auto" type="primary" @click="addHandler">
-        <div fluent:add-12-filled mr-1 />新增
+        <div i-fluent:add-12-filled mr-1 />新增
       </el-button>
     </VHeader>
 

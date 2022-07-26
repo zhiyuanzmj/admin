@@ -7,10 +7,10 @@ import { getStaffList } from './person/staff/api'
 import { getDeviceList } from './system/device/api'
 import { useTagsviewStore } from '~/stores/tagsview'
 const list = $ref([
-  { icon: 'ic:outline-menu-book mb-1', color: 'blue-500', label: '今日菜单', count: 0, to: 'plan' },
-  { icon: 'ic:outline-local-dining', color: 'teal-500', label: '预报餐', count: 0, to: 'meal' },
-  { icon: 'ic:baseline-people-alt indigo-500', color: 'indigo-500', label: '人员信息', count: 0, to: 'staff' },
-  { icon: 'ic:sharp-settings rose-500', color: 'rose-500', label: '设备管理', count: 0, to: 'device' },
+  { icon: 'i-ic:outline-menu-book mb-1', color: 'blue-500', label: '今日菜单', count: 0, to: 'plan' },
+  { icon: 'i-ic:outline-local-dining', color: 'teal-500', label: '预报餐', count: 0, to: 'meal' },
+  { icon: 'i-ic:baseline-people-alt indigo-500', color: 'indigo-500', label: '人员信息', count: 0, to: 'staff' },
+  { icon: 'i-ic:sharp-settings rose-500', color: 'rose-500', label: '设备管理', count: 0, to: 'device' },
 ])
 async function getList() {
   const params = { pageIndex: 1, pageSize: 0 };
@@ -53,6 +53,6 @@ const tagsView = useTagsviewStore()
 <route lang="yaml">
 meta:
   layout: default
-  icon: icons8:home
+  icon: i-icons8:home
   title: 首页
 </route>

@@ -6,6 +6,6 @@
 redirect: /person/staff
 component: ~/layouts/default.vue
 meta:
-  icon: ep:data-line
+  icon: i-ep:data-line
   title: 统计分析
 </route>
