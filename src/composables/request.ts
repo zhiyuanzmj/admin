@@ -20,7 +20,7 @@ const _fetch = $fetch.create({
     NProgress.start()
     options.params = options.params && JSON.parse(JSON.stringify(options.params))
     options.body = options.body && JSON.parse(JSON.stringify(options.body))
-    options.headers = getHeaders()
+    options.headers = { ...options.headers, ...getHeaders() }
   },
   async onResponse({ response, options, request }) {
     NProgress.done()

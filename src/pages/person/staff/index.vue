@@ -71,9 +71,14 @@ function addHandler() {
   row = { sex: 1, status: 1 }
 }
 
+let buttonKey = $ref(0)
 async function importExcelHandler({ raw }: any) {
-  await importExcel(raw)
-  ElMessage.success('导入成功')
+  const { status } = await importExcel(raw)
+  if (status === 200)
+    ElMessage.success('导入成功')
+  else
+    ElMessage.error('导入失败')
+  buttonKey++
 }
 
 async function downloadTemplate() {
@@ -86,6 +91,7 @@ async function downloadTemplate() {
     <VHeader>
       <!-- <el-button ml-auto @click="$router.push({ name: 'balance', params: { id: row?.id } })">余额充值</el-button> -->
       <el-upload
+        :key="buttonKey"
         class="mr-3"
         :on-change="importExcelHandler"
         :auto-upload="false"
