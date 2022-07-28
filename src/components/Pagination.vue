@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { useRouteQuery } from '@vueuse/router'
 const {
   pageSizes = [10, 50, 100, 200],
   layout = 'total, sizes, prev, pager, next, jumper',
@@ -12,19 +11,15 @@ const {
 
 const getList = inject('getList', () => {})
 
-let pageNoStore = $(useRouteQuery<string>('pageIndex', '1'))
-let pageIndex = $computed({
-  get: () => Number(pageNoStore),
-  set: val => pageNoStore = val.toString(),
+let pageIndex = $(useRouteQuery<number>('pageIndex', 1))
+watch(() => pageIndex, () => {
+  getList()
 })
-watch(() => pageIndex, () => getList())
 
-let pageSizeStore = $(useRouteQuery<string>('pageSize', '50'))
-const pageSize = $computed({
-  get: () => Number(pageSizeStore),
-  set: val => pageSizeStore = val.toString(),
+const pageSize = $(useRouteQuery<number>('pageSize', 50))
+watch(() => pageSize, () => {
+  getList()
 })
-watch(() => pageSize, () => getList())
 
 const total = $(inject('total', ref(0)))
 watchEffect(() => {
@@ -46,6 +41,7 @@ const deselectAll = inject('deselectAll', () => {})
   <div flex items-center>
     <div v-if="$slots.default && list.length" flex items-center mr-auto>
       <el-checkbox
+        class="!mr-1"
         :model-value="isSelectAll"
         :indeterminate="selectedList.length > 0 && selectedList.length < list.length"
         @change="() => isSelectAll ? deselectAll() : selectAll() "
@@ -53,7 +49,7 @@ const deselectAll = inject('deselectAll', () => {})
         <span>{{ isSelectAll ? '取消' : '全选' }}</span>
       </el-checkbox>
       <slot />
-      <span v-if="selectedList.length" text="sm gray-500" whitespace-nowrap>
+      <span v-if="selectedList.length" text="sm gray-500 dark:gray-200" whitespace-nowrap>
         {{ `已选择 ${selectedList.length} 条` }}
       </span>
     </div>

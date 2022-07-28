@@ -144,6 +144,6 @@ const failColumnList = getColumnDefs().slice(1, -1)
 <route lang="yaml">
 name: staff
 meta:
-  hidden: true
+  order: 1
   title: 人员信息
 </route>
