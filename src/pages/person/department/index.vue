@@ -1,19 +1,33 @@
 <script setup lang="tsx" name="department">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
-import type { DepartmentRow } from './api'
-import { drop, getDepartmentList, put } from './api'
+import type { Department } from './api'
+import { drop, getDepartment, getDepartmentList, put } from './api'
 import VForm from './components/VForm.vue'
+import DepartmentTree from './components/DepartmentTree.vue'
 import { useAgGrid } from '~/composables'
 
 let show = $ref(false)
-let row = $ref<DepartmentRow>()
+let row = $ref<Department>()
+let treeKey = $ref(0)
+let departmentId = $(useRouteQuery<string>('departmentId'))
+let department = $ref<Department>()
 
-const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>(
+const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Department>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: 'ID', field: 'id' },
-    { headerName: '部门', field: 'departmentName', value: '' },
+    { headerName: 'ID', field: 'id', maxWidth: 80 },
+    { headerName: '名称', field: 'departmentName', value: '', cellRenderer: { setup: ({ params }) => () =>
+      <span
+        onClick={() => (departmentId = params.data[!params.rowIndex && departmentId ? 'parent' : 'id']!)}
+        className={`flex-inline items-center cursor-pointer gap-1.5 hover:text-primary ${departmentId && params.rowIndex ? 'ml-11' : ''}`}
+      >
+        {!params.rowIndex && departmentId
+          ? <i className={`text-gray-400 i-bx-bxs-down-arrow ${params.data?.hasChildren ? '' : 'hidden'}`} />
+          : params.data.hasChildren ? <i className={`text-gray-400 i-bx-bxs-right-arrow ${departmentId ? '-ml-6' : ''}`} /> : null}
+        <span>{params.data?.departmentName}</span>
+      </span>,
+    } },
     { headerName: '电话号码', field: 'phone', value: '' },
     { headerName: '描述', field: 'description', value: '' },
     { headerName: '状态', field: 'status', value: '1', form: { type: 'switch' }, cellRenderer: { setup: props => () =>
@@ -41,22 +55,34 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<DepartmentRow>
         </div>
     } } },
   ],
-  getDepartmentList,
+  async (params) => {
+    department = departmentId ? await getDepartment(departmentId).then(i => i.data) : { hasChildren: true }
+    if (department?.hasChildren) {
+      const { data, total } = await getDepartmentList({ ...params, parent: departmentId })
+      return { data: departmentId ? [department, ...data] : data, total }
+    }
+    return { data: department ? [department] : [], total: 0 }
+  },
 )
 
-async function onDrop(list: DepartmentRow[]) {
+async function onDrop(list: Department[]) {
   await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
   const [fulfilled, rejected] = await (await Promise.allSettled(list.map(i => drop(i.id))))
     .reduce((a, b) => (a[b.status === 'fulfilled' ? 0 : 1]++, a), [0, 0])
   fulfilled && ElMessage.success(`删除成功 ${fulfilled} 条`); await nextTick()
   rejected && ElMessage.error(`删除失败 ${rejected} 条`)
   getList()
+  treeKey++
 }
 
 function addHandler() {
   show = true
-  row = { status: 1 } as DepartmentRow
+  row = { status: 1, parent: departmentId }
 }
+
+watch(() => departmentId, () => {
+  getList()
+})
 </script>
 
 <template>
@@ -67,17 +93,20 @@ function addHandler() {
       </el-button>
     </VHeader>
 
-    <div main>
-      <VFilter />
-      <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
-      <Pagination>
-        <el-button type="primary" :disabled="!selectedList.length" text @click="onDrop(selectedList)">
-          删除
-        </el-button>
-      </Pagination>
+    <div flex="~ 1" gap-3 m-3>
+      <DepartmentTree v-if="department" :key="treeKey" v-model:departmentId="departmentId" :department="department" />
+      <div main m-0>
+        <VFilter />
+        <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
+        <Pagination>
+          <el-button type="primary" :disabled="!selectedList.length" text @click="onDrop(selectedList)">
+            删除
+          </el-button>
+        </Pagination>
+      </div>
     </div>
 
-    <VForm v-if="show" v-model:show="show" :row="row" />
+    <VForm v-if="show" v-model:show="show" v-model:treeKey="treeKey" :row="row" />
   </div>
 </template>
 

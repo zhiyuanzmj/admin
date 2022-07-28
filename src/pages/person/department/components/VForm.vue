@@ -2,17 +2,19 @@
 import type { FormInstance } from 'element-plus'
 import { ElLoading, ElMessage } from 'element-plus'
 import { cloneDeep } from 'lodash-es'
-import type { DepartmentRow } from '../api'
+import type { Department } from '../api'
 import { post, put } from '../api'
 
 const props = defineProps<{
   show: boolean
-  row: DepartmentRow
+  row: Department
+  treeKey: number
 }>()
 const row = $ref(cloneDeep({ ...props.row }))
 let show = $(useVModel(props, 'show'))
 const getList = inject('getList', () => {})
 const formRef = $shallowRef<FormInstance>()
+let treeKey = $(useVModel(props, 'treeKey'))
 
 async function submit() {
   await formRef?.validate()
@@ -21,6 +23,7 @@ async function submit() {
     row.id ? await put(row) : await post(row)
     ElMessage.success('操作成功')
     show = false
+    treeKey++
     getList()
   } finally {
     loading.close()
