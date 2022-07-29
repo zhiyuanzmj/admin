@@ -2,16 +2,11 @@
 import { AgGridVue } from 'ag-grid-vue3'
 import type { BalanceFlow } from './api'
 import { downloadExcel, getDepartmentStatisticsList } from './api'
-import { getDepartmentList } from '~/pages/person/department/api'
 
 const { agGridBind, agGridOn, params } = useAgGrid<BalanceFlow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '部门', valueGetter: ({ data }) => data.departmentName, field: 'departmentId', value: '', options: ({ value: departmentName, ...params }) =>
-      getDepartmentList({ ...params, departmentName }).then(({ data, total }) => ({
-        data: data.map(i => ({ label: i.departmentName, value: i.id })),
-        total,
-      })) },
+    { headerName: '部门', valueGetter: ({ data }) => data.departmentName, field: 'departmentId', value: '', form: { type: 'selectTree' } },
     { headerName: '时间', field: 'beginTime,endTime', unCheck: true, hide: true, value: '', form: { type: 'date', props: { type: 'daterange' } } },
     { headerName: '早餐次数', field: 'breakfastSunNum' },
     { headerName: '早餐金额(元)', field: 'breakfastSunTotal' },

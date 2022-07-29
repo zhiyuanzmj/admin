@@ -1,6 +1,6 @@
 <script setup lang="ts" name="balance">
 import { ElMessage } from 'element-plus'
-import type { DepartmentRow } from '../department/api'
+import type { Department } from '../department/api'
 import { getDepartmentList } from '../department/api'
 import type { Row } from './api'
 import { changeBalance, getStaffList } from './api'
@@ -31,7 +31,7 @@ onUnmounted(() => {
   close()
 })
 
-let departmentList = $ref<DepartmentRow[]>()
+let departmentList = $ref<Department[]>()
 async function fetchDepartmentList() {
   ({ data: departmentList } = await getDepartmentList({ pageIndex: 1, pageSize: 1000 }))
 }

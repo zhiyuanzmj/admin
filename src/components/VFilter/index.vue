@@ -3,6 +3,7 @@ import { useIntersectionObserver } from '@vueuse/core'
 import type { FormInstance } from 'element-plus'
 import FilterInput from './FilterInput.vue'
 import FilterSelect from './FilterSelect.vue'
+import FilterSelectTree from './FilterSelectTree.vue'
 import FilterRadio from './FilterRadio.vue'
 import FilterToggle from './FilterToggle.vue'
 import FilterCheckbox from './FilterCheckbox.vue'
@@ -66,14 +67,13 @@ onMounted(() => {
         <component
           :is="column.form?.type === 'switch' ? FilterToggle
             : column.form?.type === 'checkbox' ? FilterCheckbox
-              : column.form?.type === 'date' ? FilterDate
-                : column.options ? column.form?.type === 'radio' ? FilterRadio : FilterSelect
-                  : FilterInput"
+              : column.form?.type === 'selectTree' ? FilterSelectTree
+                : column.form?.type === 'date' ? FilterDate
+                  : column.options ? column.form?.type === 'radio' ? FilterRadio : FilterSelect
+                    : FilterInput"
           :index="i"
           :label="column.headerName"
           v-bind="column.form?.props"
-          dense
-          outlined
           :style="{ width: column.form?.width || formWidth }"
           :column="column"
         />

@@ -21,8 +21,9 @@ export function getDepartmentList(params: object) {
 }
 
 export function getDepartment(id: string) {
-  return request<Department>('/dep/getDepById', {
-    params: { id },
+  return request<Department>(`/dep/getDep/${id}`).then((i) => {
+    i.data.parentIds?.push(i.data.id!)
+    return i
   })
 }
 

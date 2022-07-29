@@ -1,9 +1,9 @@
-import type { DepartmentRow } from '../department/api'
+import type { Department } from '../department/api'
 import { request } from '~/composables/request'
 
 export interface Row {
   id?: string
-  department?: DepartmentRow
+  department?: Department
   name?: string
   phone?: string
   photoName?: string
@@ -24,6 +24,10 @@ export function getStaffList(params: object) {
   return request<Row[]>('/person/getPersonList', {
     params: { status: 1, ...params },
   })
+}
+
+export function getStaff(id: string) {
+  return request<Row>(`/person/getPerson/${id}`)
 }
 
 export function put(body: object) {

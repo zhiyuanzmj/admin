@@ -1,26 +1,32 @@
 <script setup lang="ts">
 import type { FormInstance } from 'element-plus'
 import { ElLoading, ElMessage } from 'element-plus'
-import { cloneDeep } from 'lodash-es'
-import { type DepartmentRow, getDepartmentList } from '../../department/api'
+import { getDepartmentList } from '../../department/api'
 import type { Row } from '../api'
-import { post, put } from '../api'
+import { getStaff, post, put } from '../api'
 import { request } from '~/composables/request'
 
 const props = defineProps<{
   show: boolean
   row: Row
 }>()
-const row = $ref(cloneDeep({ ...props.row }))
+let row = $ref<Row>(props.row)
+row.id && getStaff(row.id!).then(({ data }) => {
+  row = data
+})
+
 let show = $(useVModel(props, 'show'))
 const getList = inject('getList', () => {})
 const formRef = $shallowRef<FormInstance>()
 
-let departmentList = $ref<DepartmentRow[]>()
-async function fetchDepartmentList() {
-  ({ data: departmentList } = await getDepartmentList({ pageIndex: 1, pageSize: 1000 }))
+async function fetchDepartmentList(node: any, resolve: any) {
+  if (node.level === 0)
+    return resolve(await getDepartmentList({ pageIndex: 1, pageSize: 99999 }).then(i => i.data))
+  if (!node.data.hasChildren)
+    return resolve([])
+  const { data } = await getDepartmentList({ parent: node.data.id, pageIndex: 1, pageSize: 99999 })
+  resolve(data)
 }
-fetchDepartmentList()
 
 const uploadRef = shallowRef<any>()
 async function submit() {
@@ -55,10 +61,18 @@ async function addFacesPerson() {
       </el-form-item>
       <div flex gap-3>
         <el-form-item label="部门" :rules="{ required: true, message: '不能为空' }" prop="department.id">
-          <el-select v-model="row.department" value-key="id">
-            <el-option v-for="i in departmentList" :key="i.id" :label="i.departmentName" :value="i" />
-          </el-select>
+          <el-tree-select
+            v-model="row.department" value-key="id" collapse-tags :render-after-expand="false"
+            :props="{ label: 'departmentName', isLeaf: (data:any) => !data.hasChildren }" :load="fetchDepartmentList" lazy
+            :default-expanded-keys="row.department?.parentIds"
+          >
+            <template #default="{ data }">
+              <span v-if="data.hasChildren">{{ data.departmentName }}</span>
+              <el-option v-else :label="data.departmentName" :value="data" />
+            </template>
+          </el-tree-select>
         </el-form-item>
+
         <el-form-item prop="job" label="职位">
           <el-input v-model="row.job" />
         </el-form-item>

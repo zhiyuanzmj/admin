@@ -10,11 +10,6 @@ import { useAgGrid } from '~/composables'
 import DepartmentTree from '~/pages/person/department/components/DepartmentTree.vue'
 
 let show = $ref(false)
-let departmentId = $(useRouteQuery<string>('departmentId'))
-let department = $ref<Department>({})
-watch(() => departmentId, async () => {
-  ({ data: department } = await getDepartment(departmentId))
-}, { immediate: true })
 
 const previewSrcList = $computed(() => (list: Row[] = []) => list.map(i => `/api/file${i.photoName}`))
 let { agGridBind, agGridOn, selectedList, getList, list, row } = $(useAgGrid<Row>(
@@ -61,6 +56,15 @@ function getColumnDefs() {
     } } },
   ]
 }
+
+let departmentId = $(useRouteQuery<string>('departmentId'))
+let department = $ref<Department>({})
+watch(() => departmentId, async () => {
+  if (departmentId) {
+    department = await getDepartment(departmentId).then(i => i.data)
+    getList()
+  }
+}, { immediate: true })
 
 async function onDrop(list = [row]) {
   await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
