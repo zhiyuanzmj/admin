@@ -52,7 +52,6 @@ const model = computed({
     @update:model-value="getList()"
   >
     <template #default="{ data }">
-      {{ model }}
       <span v-if="data.hasChildren">{{ data.departmentName }}</span>
       <el-option v-else :label="data.departmentName" :value="data" />
     </template>
