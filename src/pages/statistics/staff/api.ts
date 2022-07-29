@@ -18,15 +18,15 @@ export interface Individual {
   'beginTime,endTime'?: string
 }
 
-export async function getIndividualStatisticsList(params?: object) {
-  return request<Individual[]>('/balanceFlow/individualStatistics', {
-    params: { status: 1, ...params },
+export async function getIndividualStatisticsList(params?: any) {
+  return request<Individual[]>('/balanceFlow/individualStatisticsList', {
+    params: { status: 1, ...params, departmentId: params.departmentId || 0 },
   })
 }
 
-export async function downloadExcel(params?: object) {
-  return request<BalanceFlow[]>('/balanceFlow/individualStatisticsDownload', {
-    params: { status: 1, ...params },
+export async function downloadExcel(params?: any) {
+  return request('/balanceFlow/individualStatisticsDownloadList', {
+    params: { status: 1, ...params, departmentId: params.departmentId || 0 },
     responseType: 'blob',
   })
 }
