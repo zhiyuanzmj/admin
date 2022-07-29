@@ -7,7 +7,7 @@ import { downloadExcel, getIndividualStatisticsList } from './api'
 const { agGridBind, agGridOn, params, columnList } = useAgGrid<Individual>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '部门', field: 'departmentId', form: { type: 'selectTree' }, value: '' },
+    { headerName: '部门', field: 'departmentId', valueGetter: ({ data }) => data.departmentName, form: { type: 'selectTree' }, value: '' },
     { headerName: '姓名', valueGetter: ({ data }) => data.userName, field: 'userId', value: '', options: ({ value: name, ...params }) =>
       getStaffList({ ...params, name, department: columnList.find(i => i.field === 'departmentId')?.value }).then(({ data, total }) => ({
         data: data.map(i => ({ label: i.name, value: i.id })),
@@ -27,6 +27,11 @@ const { agGridBind, agGridOn, params, columnList } = useAgGrid<Individual>(
   ],
   async params => getIndividualStatisticsList(params),
 )
+const departmentColumn = $computed(() => columnList.find(i => i.field === 'departmentId')!)
+const userColumn = $computed(() => columnList.find(i => i.field === 'userId')!)
+watch(() => departmentColumn.value, () => {
+  userColumn.value = ''
+}, { flush: 'sync' })
 
 async function exportExcel() {
   download(await downloadExcel(params.value), '人员统计.xlsx')
