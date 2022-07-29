@@ -47,6 +47,7 @@ async function exportExcel() {
     <div main>
       <VFilter />
       <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
+      <Pagination />
     </div>
   </div>
 </template>
