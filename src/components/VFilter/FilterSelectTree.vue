@@ -7,7 +7,7 @@ const { column } = defineProps<{
   column: Column
 }>()
 
-let department = $ref<Department>({ })
+let department = $ref<Department>()
 onMounted(async () => {
   await nextTick()
   column.value && getDepartment(column.value).then(i => department = i.data)
@@ -39,7 +39,6 @@ const model = computed({
   <el-tree-select
     v-model="model"
     clearable
-    collapse-tags
     :render-after-expand="false"
     node-key="id"
     :props="{
@@ -48,11 +47,12 @@ const model = computed({
     }"
     :load="load"
     lazy
-    :default-expanded-keys="department.parentIds"
+    :default-expanded-keys="model?.parentIds"
     @clear="getList"
     @update:model-value="getList()"
   >
     <template #default="{ data }">
+      {{ model }}
       <span v-if="data.hasChildren">{{ data.departmentName }}</span>
       <el-option v-else :label="data.departmentName" :value="data" />
     </template>

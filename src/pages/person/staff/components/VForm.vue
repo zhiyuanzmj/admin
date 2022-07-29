@@ -87,7 +87,7 @@ async function addFacesPerson() {
           <el-radio :label="0">女</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="手机号" w="3/4" prop="phone" :rules="[{ pattern: /^\d{11}$/, message: '请输入正确的手机号', trigger: 'blur' }, { required: true, message: '不能为空' }]">
+      <el-form-item label="手机号" w="3/4" prop="phone" :rules="[{ pattern: /^\d{11}$/, message: '请输入正确的手机号', trigger: 'blur' }]">
         <el-input v-model="row.phone" />
       </el-form-item>
       <el-form-item label="生日" prop="birthday">
