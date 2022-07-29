@@ -95,6 +95,7 @@ watch(() => departmentId, () => {
 
     <div flex="~ 1" gap-3 m-3>
       <DepartmentTree v-if="department" :key="treeKey" v-model:departmentId="departmentId" :department="department" />
+
       <div main m-0>
         <VFilter />
         <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />

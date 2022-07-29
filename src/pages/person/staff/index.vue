@@ -1,36 +1,44 @@
 <script setup lang="tsx" name="staff">
 import { AgGridVue } from 'ag-grid-vue3'
 import { ElImage, ElLoading, ElMessage, ElMessageBox, ElSwitch } from 'element-plus'
-import { getDepartmentList } from '../department/api'
+import type { Department } from '../department/api'
+import { getDepartment } from '../department/api'
 import type { Row } from './api'
 import { downloadExcel, drop, getStaffList, importExcel, put } from './api'
 import VForm from './components/VForm.vue'
 import { useAgGrid } from '~/composables'
+import DepartmentTree from '~/pages/person/department/components/DepartmentTree.vue'
 
 let show = $ref(false)
+let departmentId = $(useRouteQuery<string>('departmentId'))
+let department = $ref<Department>({})
+watch(() => departmentId, async () => {
+  ({ data: department } = await getDepartment(departmentId))
+}, { immediate: true })
 
-const getColumnDefs = () => [
-  { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-  { headerName: '姓名', field: 'name', value: '' },
-  { headerName: '部门', valueGetter: 'data.department.departmentName', field: 'department', value: '', options: ({ value: departmentName, ...params }) =>
-    getDepartmentList({ ...params, departmentName }).then(({ data, total }) => ({
-      data: data.map(i => ({ label: i.departmentName, value: i.id })),
-      total,
-    })),
-  },
-  { headerName: '照片', field: 'photoName', cellRenderer: { setup(props) {
-    const src = `/api/file${props.params.value}`
-    return () => <ElImage v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list)} src={src} class="h-10 mt-4 cursor-pointer"/>
-  } } },
-  { headerName: '性别', field: 'sex', valueGetter: ({ data }) => data.sex ? '男' : '女' },
-  { headerName: '手机号', field: 'phone', value: '' },
-  { headerName: '职位', field: 'job' },
-  { headerName: '职级', field: 'rank' },
-  { headerName: '余额', field: 'money' },
-  { headerName: '入职时间', field: 'entryDate' },
-  { headerName: '退休时间', field: 'retirementDate' },
-  { headerName: '住址', field: 'address' },
-  { headerName: '状态', field: 'status', value: '1', form: { type: 'switch' }, cellRenderer: { setup: props => () =>
+const previewSrcList = $computed(() => (list: Row[] = []) => list.map(i => `/api/file${i.photoName}`))
+let { agGridBind, agGridOn, selectedList, getList, list, row } = $(useAgGrid<Row>(
+  getColumnDefs,
+  params => getStaffList({ ...params, department: departmentId }),
+))
+function getColumnDefs() {
+  return [
+    { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
+    { headerName: '姓名', field: 'name', value: '' },
+    { headerName: '部门', valueGetter: 'data.department.departmentName', field: 'department' },
+    { headerName: '照片', field: 'photoName', cellRenderer: { setup(props: any) {
+      const src = `/api/file${props.params.value}`
+      return () => <ElImage v-show={props.params.value} initial-index={props.params.rowIndex} previewTeleported preview-src-list={previewSrcList(list)} src={src} class="h-10 mt-4 cursor-pointer"/>
+    } } },
+    { headerName: '性别', field: 'sex', valueGetter: ({ data }: any) => data.sex ? '男' : '女' },
+    { headerName: '手机号', field: 'phone', value: '' },
+    { headerName: '职位', field: 'job' },
+    { headerName: '职级', field: 'rank' },
+    { headerName: '余额', field: 'money' },
+    { headerName: '入职时间', field: 'entryDate' },
+    { headerName: '退休时间', field: 'retirementDate' },
+    { headerName: '住址', field: 'address' },
+    { headerName: '状态', field: 'status', value: '1', form: { type: 'switch' }, cellRenderer: { setup: (props: any) => () =>
         <ElSwitch
           model-value={props.params.value}
           onClick={async () => {
@@ -40,9 +48,9 @@ const getColumnDefs = () => [
             getList()
           } }
         />,
-  } },
-  { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', pinned: 'right', cellRenderer: { setup(props) {
-    return () =>
+    } },
+    { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', pinned: 'right', cellRenderer: { setup(props: any) {
+      return () =>
         <div className="flex items-center justify-between">
           <button className="i-fa6-solid:pen-to-square btn" onClick={() => {
             show = true
@@ -50,13 +58,9 @@ const getColumnDefs = () => [
           }}/>
           <button className="i-fa6-solid:trash-can btn" onClick={() => onDrop([props.params.data])}/>
         </div>
-  } } },
-]
-const previewSrcList = $computed(() => (list: Row[] = []) => list.map(i => `/api/file${i.photoName}`))
-let { agGridBind, agGridOn, selectedList, getList, list, row } = $(useAgGrid<Row>(
-  getColumnDefs,
-  getStaffList,
-))
+    } } },
+  ]
+}
 
 async function onDrop(list = [row]) {
   await ElMessageBox.confirm(`确定删除 ${list.length} 条数据`, '提示')
@@ -119,14 +123,18 @@ const failColumnList = getColumnDefs().slice(1, -1)
       </el-button>
     </VHeader>
 
-    <div main>
-      <VFilter />
-      <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
-      <Pagination>
-        <el-button type="primary" :disabled="!selectedList.length" text @click="onDrop(selectedList)">
-          删除
-        </el-button>
-      </Pagination>
+    <div flex="~ 1" gap-3 m-3>
+      <DepartmentTree v-if="department" v-model:departmentId="departmentId" :department="department" />
+
+      <div main m-0>
+        <VFilter />
+        <ag-grid-vue v-bind="agGridBind" v-on="agGridOn" />
+        <Pagination>
+          <el-button type="primary" :disabled="!selectedList.length" text @click="onDrop(selectedList)">
+            删除
+          </el-button>
+        </Pagination>
+      </div>
     </div>
 
     <VForm v-if="show" v-model:show="show" :row="row" />
