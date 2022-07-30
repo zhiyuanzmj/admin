@@ -35,7 +35,7 @@ const _fetch = $fetch.create({
 
     if (data.code === 200 || whiteList.includes(request.toString())) {
       response._data = {
-        message: data.msg,
+        ...data.data,
         data: data.data.data ?? data.data,
         total: data.data.total,
       }
