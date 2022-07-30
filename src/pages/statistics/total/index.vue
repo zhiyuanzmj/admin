@@ -12,7 +12,6 @@ const { agGridBind, agGridOn, params } = useAgGrid<ReceiptAndPayment>(
     { headerName: '退款金额(元)', field: 'refundMoney' },
     { headerName: '收入合计(元)', field: 'allReceipt' },
     { headerName: '支出合计(元)', field: 'allPayment' },
-
   ],
   getReceiptAndPaymentStatisticsList,
 )
@@ -39,5 +38,4 @@ async function exportExcel() {
 <route lang="yaml">
 meta:
   title: 收付款统计
-  order: 2
 </route>

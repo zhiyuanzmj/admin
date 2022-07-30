@@ -43,5 +43,4 @@ async function exportExcel() {
 <route lang="yaml">
 meta:
   title: 余额流水
-  order: 2
 </route>
