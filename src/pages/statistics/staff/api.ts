@@ -20,13 +20,13 @@ export interface Individual {
 
 export async function getIndividualStatisticsList(params?: any) {
   return request<Individual[]>('/balanceFlow/individualStatisticsList', {
-    params: { status: 1, ...params, departmentId: params.departmentId || 0 },
+    params: { status: 1, ...params, departmentId: params.departmentId },
   })
 }
 
 export async function downloadExcel(params?: any) {
   return request('/balanceFlow/individualStatisticsDownloadList', {
-    params: { status: 1, ...params, departmentId: params.departmentId || 0 },
+    params: { status: 1, ...params, departmentId: params.departmentId },
     responseType: 'blob',
   })
 }
