@@ -7,6 +7,8 @@ export interface ReceiptAndPayment {
   refundMoney: number
   allReceipt: number
   allPayment: number
+  departmentName: string
+  departmentId: string
   'beginTime,endTime': string
 }
 
