@@ -59,7 +59,7 @@ function getPinnedBottomRowData({ data, message }: any) {
   pinnedBottomRowData = [{
     ...data.reduce(
       (a: any, b: any) =>
-        (Object.keys(a).forEach(key => a[key] += b[key] || ''), a),
+        (Object.keys(a).forEach(key => a[key] += b[key] || 0), a),
       {
         breakfastSunNum: 0,
         breakfastSunTotal: 0,
