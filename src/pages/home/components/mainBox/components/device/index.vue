@@ -339,6 +339,7 @@ export default {
         }
 
         .detail-info {
+
           // background-color: pink;
           // height: 266px;
           position: relative;
@@ -346,6 +347,7 @@ export default {
           // 因为图片本来宽高就有一共18px的裂缝 158px多加18px = 176px进去
           // height: 24.629vh;
           box-sizing: border-box;
+          display: none;
           width: 302px;
           height: 176px;
 
