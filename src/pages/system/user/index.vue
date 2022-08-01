@@ -23,8 +23,8 @@ const { agGridBind, agGridOn, selectedList, getList } = useAgGrid<Row>(
             ElMessage.success('操作成功')
             getList()
           } }
-          active-value={0}
-          inactive-value={1}
+          active-value={1}
+          inactive-value={0}
         />,
     } },
     { headerName: '操作', field: 'actions', unCheck: true, minWidth: 70, maxWidth: 70, suppressMovable: true, lockPosition: 'right', pinned: 'right', cellRenderer: { setup(props) {
@@ -53,7 +53,7 @@ async function onDrop(list: Row[]) {
 
 function addHandler() {
   show = true
-  row = { state: 0 }
+  row = { state: 1 }
 }
 </script>
 
