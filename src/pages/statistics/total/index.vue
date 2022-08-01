@@ -54,7 +54,6 @@ function getPinnedBottomRowData({ data, message }: any) {
         allPayment: 0,
       }),
     ...message,
-    total: Object.values(message).reduce((a: any, b: any) => a + b, 0),
   }]
 }
 
