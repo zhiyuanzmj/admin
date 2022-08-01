@@ -28,7 +28,7 @@ let pinnedBottomRowData = $ref<any>()
 function getPinnedBottomRowData(list: any) {
   pinnedBottomRowData = [list.reduce(
     (a: any, b: any) =>
-      (Object.keys(a).forEach(key => a[key] += b[key] || ''), a),
+      (Object.keys(a).forEach(key => a[key] += b[key] || 0), a),
     {
       breakfastSunNum: 0,
       breakfastSunTotal: 0,
