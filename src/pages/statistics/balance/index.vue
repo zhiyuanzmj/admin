@@ -19,7 +19,8 @@ const { agGridBind, agGridOn, params } = useAgGrid<BalanceFlow>(
     { headerName: '变动时间', valueGetter: ({ data }) => data.gmtCreate, field: 'beginTime,endTime', value: '', form: { type: 'date', props: { type: 'daterange' } } },
     { headerName: '窗口', field: 'channel' },
   ],
-  params => getBalanceFlowList({ ...params, ...params.moneyType === '3' ? { arefund: 1, moneyType: undefined } : {} }),
+  getBalanceFlowList,
+  // params => getBalanceFlowList({ ...params, ...params.moneyType === '3' ? { arefund: 1, moneyType: undefined } : {} }),
 )
 
 async function exportExcel() {
