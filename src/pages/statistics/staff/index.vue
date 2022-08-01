@@ -71,7 +71,7 @@ function getPinnedBottomRowData({ data, message }: any) {
         sunTotal: 0,
       }),
     ...message,
-    total: Object.values(message).reduce((a: number, b: number) => a + b, 0),
+    total: Object.values(message).reduce((a: any, b: any) => a + b, 0),
   }]
 }
 </script>
