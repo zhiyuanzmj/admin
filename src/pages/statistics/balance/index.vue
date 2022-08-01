@@ -7,8 +7,8 @@ import { mealTypeList } from '~/pages/menu/plan/api'
 const { agGridBind, agGridOn, params } = useAgGrid<BalanceFlow>(
   () => [
     { field: 'select', minWidth: 40, maxWidth: 40, lockPosition: 'left', pinned: 'left', valueGetter: '', unCheck: true, suppressMovable: true, checkboxSelection: true, headerCheckboxSelection: true },
-    { headerName: '姓名', field: 'userName', value: '' },
     { headerName: '部门', valueGetter: ({ data }) => data.departmentName, field: 'departmentId', value: '', form: { type: 'selectTree' } },
+    { headerName: '姓名', field: 'userName', value: '' },
     { headerName: '手机', field: 'phone', value: '' },
     { headerName: '消费类型', field: 'payType', options: [{ label: '微信', value: '微信' }, { label: '支付宝', value: '支付宝' }, { label: '现金', value: '现金' }], value: '' },
     { headerName: '账户余额', field: 'balance' },
