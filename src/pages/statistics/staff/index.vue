@@ -51,7 +51,9 @@ watch(() => departmentColumn.value, () => {
 }, { flush: 'sync' })
 
 async function exportExcel() {
-  download(await downloadExcel(params.value), '人员统计.xlsx')
+  const loading = ElLoading.service()
+  download(await downloadExcel(params.value))
+  loading.close()
 }
 
 let pinnedBottomRowData = $ref<any>()

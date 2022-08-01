@@ -26,8 +26,10 @@ const _fetch = $fetch.create({
     NProgress.done()
     const data = response._data
 
-    if (['blob', 'text'].includes(options.responseType!))
+    if (['blob', 'text'].includes(options.responseType!)) {
+      data.fileName = decodeURI(response.headers.get('content-disposition')?.split('=')[1] as string)
       return
+    }
 
     /** 续签Token */
     if (response.status === 201)

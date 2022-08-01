@@ -58,7 +58,9 @@ function getPinnedBottomRowData({ data, message }: any) {
 }
 
 async function exportExcel() {
-  download(await downloadExcel(params.value), '收付款统计.xlsx')
+  const loading = ElLoading.service()
+  download(await downloadExcel(params.value))
+  loading.close()
 }
 </script>
 

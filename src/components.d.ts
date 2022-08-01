@@ -6,6 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Counter: typeof import('./components/Counter.vue')['default']
+    ElAlert: typeof import('element-plus/es')['ElAlert']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -40,6 +41,7 @@ declare module '@vue/runtime-core' {
     FilterSelect: typeof import('./components/VFilter/FilterSelect.vue')['default']
     FilterSelectTree: typeof import('./components/VFilter/FilterSelectTree.vue')['default']
     FilterToggle: typeof import('./components/VFilter/FilterToggle.vue')['default']
+    Loading: typeof import('element-plus/es')['ElLoadingDirective']
     Pagination: typeof import('./components/Pagination.vue')['default']
     README: typeof import('./components/README.md')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

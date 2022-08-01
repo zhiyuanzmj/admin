@@ -1,5 +1,6 @@
 <script setup lang="tsx" name="statistics-department">
 import { AgGridVue } from 'ag-grid-vue3'
+import { ElLoading } from 'element-plus'
 import type { BalanceFlow } from './api'
 import { downloadExcel, getDepartmentStatisticsList } from './api'
 
@@ -64,7 +65,9 @@ function getPinnedBottomRowData({ data, message }: any) {
 }
 
 async function exportExcel() {
-  download(await downloadExcel(params.value), '部门统计.xlsx')
+  const loading = ElLoading.service()
+  download(await downloadExcel(params.value))
+  loading.close()
 }
 </script>
 

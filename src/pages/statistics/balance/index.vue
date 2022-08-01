@@ -1,5 +1,6 @@
 <script setup lang="tsx" name="statistics-balance">
 import { AgGridVue } from 'ag-grid-vue3'
+import { ElLoading } from 'element-plus'
 import type { BalanceFlow } from './api'
 import { downloadExcel, getBalanceFlowList } from './api'
 import { mealTypeList } from '~/pages/menu/plan/api'
@@ -22,7 +23,9 @@ const { agGridBind, agGridOn, params } = useAgGrid<BalanceFlow>(
 )
 
 async function exportExcel() {
-  download(await downloadExcel(params.value), '余额流水.xlsx')
+  const loading = ElLoading.service()
+  download(await downloadExcel(params.value))
+  loading.close()
 }
 </script>
 

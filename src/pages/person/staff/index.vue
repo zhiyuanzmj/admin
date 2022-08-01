@@ -98,7 +98,9 @@ async function importExcelHandler({ raw }: any) {
 }
 
 async function downloadTemplate() {
-  download(await downloadExcel(), '人员信息模版.xlsx')
+  const loading = ElLoading.service()
+  download(await downloadExcel())
+  loading.close()
 }
 
 const failColumnList = getColumnDefs().slice(1, -1)

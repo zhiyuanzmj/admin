@@ -19,7 +19,7 @@ export async function getReceiptAndPaymentStatisticsList(params?: object) {
 }
 
 export async function downloadExcel(params?: object) {
-  return request<ReceiptAndPayment[]>('/balanceFlow/receiptAndPaymentStatisticsDownload', {
+  return request('/balanceFlow/receiptAndPaymentStatisticsDownload', {
     params: { status: 1, ...params },
     responseType: 'blob',
   })
